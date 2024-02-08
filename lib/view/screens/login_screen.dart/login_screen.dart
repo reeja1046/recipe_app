@@ -13,9 +13,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     var kWidth = MediaQuery.of(context).size.width;
     var kHeight = MediaQuery.of(context).size.height;
-    var kHeight20 = const SizedBox(height: 20);
-    var kHeigth10 = const SizedBox(height: 10);
-    var kHeight30 = const SizedBox(height: 30);
+    var kHeight20 = SizedBox(height: kHeight * 0.04);
+    var kHeight10 = SizedBox(height: kHeight * 0.02);
+    var kHeight30 = SizedBox(height: kHeight * 0.06);
 
     return Scaffold(
       body: ClipRect(
@@ -31,36 +31,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Transform(
                 transform: Matrix4.skewY(-0.5),
                 child: Container(
-                  width: 200,
+                  width: kWidth,
                   height: kHeight * 0.5,
                   decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: AssetImage('assets/chicken biriyani.jpg'))),
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage('assets/chicken biriyani.jpg'),
+                    ),
+                  ),
                 ),
               ),
             ),
             Positioned(
-              top: 80,
-              left: (kWidth -
-                      getTextWidth(
-                          'Culinary Craft', const TextStyle(fontSize: 30))) /
-                  2,
+              top: kHeight * 0.08,
+              left: kWidth * 0.1,
               child: const Text(
                 'Culinary Craft',
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Positioned(
-              top: 200,
-              left: 20,
-              right: 20,
+              top: kHeight * 0.2,
+              left: kWidth * 0.05,
+              right: kWidth * 0.05,
               child: Container(
-                height: kHeight * 0.65,
-                width: kWidth - 40,
+                height: kHeight * 0.7,
+                width: kWidth * 0.9,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   color: Colors.white,
@@ -78,30 +78,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     kHeight30,
                     const Text(
                       'Create An Account',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 24),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: EdgeInsets.all(kWidth * 0.05),
                       child: Column(
                         children: [
                           buildTextField(
-                              hintText: 'Full name',
-                              icon: Icons.person_2_outlined),
-                          kHeight20,
+                            hintText: 'Full name',
+                            icon: Icons.person_2_outlined,
+                          ),
+                          kHeight10,
                           buildTextField(
-                              hintText: 'Email', icon: Icons.email_outlined),
-                          kHeight20,
+                            hintText: 'Email',
+                            icon: Icons.email_outlined,
+                          ),
+                          kHeight10,
                           const PasswordTextField(),
-                          kHeight30,
+                          kHeight20,
                           buildElevatedButton(
                             'Sign Up',
                             onPressed: () {},
                           ),
-                          kHeigth10,
+                          kHeight10,
                           buildRichTextWithNavigation(),
                           kHeight30,
                           buildDividerWithText('Or Sign Up With'),
-                          kHeight30,
+                          kHeight20,
                           buildSocialLoginButtons(),
                         ],
                       ),

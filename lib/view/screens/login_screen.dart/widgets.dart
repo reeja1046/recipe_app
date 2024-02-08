@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 double getTextWidth(String text, TextStyle style) {
   final TextPainter textPainter = TextPainter(
     text: TextSpan(text: text, style: style),
@@ -29,7 +28,6 @@ Widget buildTextField({required IconData icon, required String hintText}) {
     ),
   );
 }
-
 
 class PasswordTextField extends StatefulWidget {
   const PasswordTextField({Key? key}) : super(key: key);
@@ -72,8 +70,6 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
     );
   }
 }
-
-
 
 Widget buildElevatedButton(String text, {required VoidCallback onPressed}) {
   return SizedBox(
@@ -151,14 +147,18 @@ Widget buildSocialLoginButtons() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      buildSocialLoginButton(icon: FontAwesomeIcons.google, label: 'Google'),
       buildSocialLoginButton(
-          icon: FontAwesomeIcons.facebook, label: 'Facebook'),
+          icon: FontAwesomeIcons.google, label: 'Google', color: Colors.red),
+      buildSocialLoginButton(
+          icon: FontAwesomeIcons.facebook,
+          label: 'Facebook',
+          color: Colors.blue),
     ],
   );
 }
 
-Widget buildSocialLoginButton({required IconData icon, required String label}) {
+Widget buildSocialLoginButton(
+    {required IconData icon, required String label, required var color}) {
   return SizedBox(
     width: 140,
     height: 30,
@@ -182,7 +182,7 @@ Widget buildSocialLoginButton({required IconData icon, required String label}) {
           children: [
             FaIcon(
               icon,
-              color: Colors.red,
+              color: color,
               size: 15,
             ),
             Text(
