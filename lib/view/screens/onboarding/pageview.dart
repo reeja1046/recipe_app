@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/view/screens/login_screen.dart/login_screen.dart';
-import 'package:recipe_app/view/screens/onboarding_screen.dart/widgets/onboardingone.dart';
-import 'package:recipe_app/view/screens/onboarding_screen.dart/widgets/onboardingthree.dart';
-import 'package:recipe_app/view/screens/onboarding_screen.dart/widgets/onboardingtwo.dart';
+import 'package:recipe_app/view/screens/login/sign_up/signup_screen.dart';
+import 'package:recipe_app/view/screens/onboarding/widgets/onboardingone.dart';
+import 'package:recipe_app/view/screens/onboarding/widgets/onboardingthree.dart';
+import 'package:recipe_app/view/screens/onboarding/widgets/onboardingtwo.dart';
 
 class PageScreen extends StatefulWidget {
   const PageScreen({super.key});

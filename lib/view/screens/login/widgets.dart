@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:recipe_app/view/screens/login/sign_in/signin_screen.dart';
 
 double getTextWidth(String text, TextStyle style) {
   final TextPainter textPainter = TextPainter(
@@ -93,10 +94,14 @@ Widget buildElevatedButton(String text, {required VoidCallback onPressed}) {
   );
 }
 
-Widget buildRichTextWithNavigation() {
+Widget buildRichTextWithNavigation(context) {
   return GestureDetector(
     onTap: () {
-      // Navigate to the sign-in page here
+      print('/////////////////////////');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SignInScreen()),
+      );
     },
     child: RichText(
       text: const TextSpan(

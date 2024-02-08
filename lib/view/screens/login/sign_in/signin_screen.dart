@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/view/screens/login_screen.dart/widgets.dart';
+import 'package:recipe_app/view/screens/login/widgets.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     var kWidth = MediaQuery.of(context).size.width;
@@ -44,7 +44,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             Positioned(
               top: kHeight * 0.08,
-              left: kWidth * 0.1,
+              left: (kWidth -
+                      getTextWidth(
+                          'Culinary Craft', const TextStyle(fontSize: 30))) /
+                  2,
               child: const Text(
                 'Culinary Craft',
                 style: TextStyle(
@@ -59,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               left: kWidth * 0.05,
               right: kWidth * 0.05,
               child: Container(
-                height: kHeight * 0.7,
+                height: kHeight * 0.65,
                 width: kWidth * 0.9,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
@@ -77,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     kHeight30,
                     const Text(
-                      'Create An Account',
+                      'Welcome Back !!!!',
                       style: TextStyle(fontSize: 24),
                     ),
                     Padding(
@@ -85,24 +88,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Column(
                         children: [
                           buildTextField(
-                            hintText: 'Full name',
-                            icon: Icons.person_2_outlined,
-                          ),
-                          kHeight10,
-                          buildTextField(
                             hintText: 'Email',
                             icon: Icons.email_outlined,
                           ),
                           kHeight10,
                           const PasswordTextField(),
+                          kHeight10,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  print('clicked forgot  password');
+                                },
+                                child: const Text(
+                                  'Forgot password?',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                            ],
+                          ),
                           kHeight20,
                           buildElevatedButton(
-                            'Sign Up',
+                            'Sign In',
                             onPressed: () {},
                           ),
-                          kHeight10,
-                          buildRichTextWithNavigation(),
-                          kHeight30,
+                          kHeight20,
                           buildDividerWithText('Or Sign Up With'),
                           kHeight20,
                           buildSocialLoginButtons(),
