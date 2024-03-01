@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/view/screens/home/quick_and_easy/card.dart';
+import 'package:recipe_app/view/screens/home/widget/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,7 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                       
+                      },
                       icon: const Icon(
                         Icons.menu,
                         color: Colors.black,
