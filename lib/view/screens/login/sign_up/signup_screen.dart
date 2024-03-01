@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/view/screens/login/widgets.dart';
+import 'package:recipe_app/view/widgets/navbar/navbar.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -101,7 +102,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           kHeight20,
                           buildElevatedButton(
                             'Sign Up',
-                            onPressed: () {},
+                            onPressed: () {
+                              print('clicked sign up button');
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                           BottomNavBar()));
+                            },
                           ),
                           kHeight10,
                           buildRichTextWithNavigation(context),

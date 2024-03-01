@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/view/screens/home/home_screen.dart';
 import 'package:recipe_app/view/screens/login/widgets.dart';
+import 'package:recipe_app/view/widgets/navbar/navbar.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -111,7 +113,12 @@ class _SignInScreenState extends State<SignInScreen> {
                           kHeight20,
                           buildElevatedButton(
                             'Sign In',
-                            onPressed: () {},
+                            onPressed: () {
+                              print('clicked sign in button');
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => BottomNavBar()));
+                            },
                           ),
                           kHeight20,
                           buildDividerWithText('Or Sign Up With'),

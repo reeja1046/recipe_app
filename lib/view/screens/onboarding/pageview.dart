@@ -39,12 +39,11 @@ class _PageScreenState extends State<PageScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
             DotsIndicator(
               numberOfDots: 3,
               currentPage: currentPage,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 60),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -53,7 +52,7 @@ class _PageScreenState extends State<PageScreen> {
                   child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => SignUpScreen()));
+                            builder: (context) => const SignUpScreen()));
                       },
                       child: const Text(
                         'Skipp >>',
@@ -82,7 +81,10 @@ class _PageScreenState extends State<PageScreen> {
                         ),
                       ),
                     ),
-                    child: const Text('Next'),
+                    child: const Text(
+                      'Next',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ],
@@ -91,8 +93,8 @@ class _PageScreenState extends State<PageScreen> {
               visible: currentPage == 2,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SignUpScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const SignUpScreen()));
                 },
                 style: ButtonStyle(
                   backgroundColor:
@@ -103,7 +105,10 @@ class _PageScreenState extends State<PageScreen> {
                     ),
                   ),
                 ),
-                child: const Text('Start'),
+                child: const Text(
+                  'Start',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],
@@ -129,7 +134,7 @@ class DotsIndicator extends StatelessWidget {
       children: List.generate(
         numberOfDots,
         (index) => Container(
-          margin: EdgeInsets.symmetric(horizontal: 5),
+          margin: const EdgeInsets.symmetric(horizontal: 5),
           width: 10,
           height: 10,
           decoration: BoxDecoration(

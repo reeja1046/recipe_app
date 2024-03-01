@@ -88,7 +88,7 @@ Widget buildElevatedButton(String text, {required VoidCallback onPressed}) {
       ),
       child: Text(
         text,
-        style: const TextStyle(fontSize: 18),
+        style: const TextStyle(fontSize: 18, color: Colors.white),
       ),
     ),
   );
@@ -167,35 +167,23 @@ Widget buildSocialLoginButton(
   return SizedBox(
     width: 140,
     height: 30,
-    child: Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(20.0),
+    child: OutlinedButton.icon(
+      onPressed: () {
+        print('pressed social button');
+      },
+      style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
-      child: ElevatedButton(
-        onPressed: () {},
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            FaIcon(
-              icon,
-              color: color,
-              size: 15,
-            ),
-            Text(
-              label,
-              style: const TextStyle(fontSize: 18, color: Colors.black),
-            ),
-          ],
-        ),
+      icon: FaIcon(
+        icon,
+        color: color,
+        size: 15,
+      ),
+      label: Text(
+        label,
+        style: const TextStyle(fontSize: 17, color: Colors.black),
       ),
     ),
   );

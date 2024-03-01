@@ -32,7 +32,7 @@ class OnBoardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: kHeight * 0.6,
+                    height: kHeight * 0.5,
                     width: kWidth,
                     child: Image(
                       image: AssetImage(imagePath),
