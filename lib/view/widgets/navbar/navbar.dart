@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/view/screens/account/profile.dart';
 import 'package:recipe_app/view/screens/cart/cart.dart';
 import 'package:recipe_app/view/screens/home/home_screen.dart';
-import 'package:recipe_app/view/screens/home/widget/drawer.dart';
 import 'package:recipe_app/view/screens/wishlist/wishlist.dart';
 import 'package:super_bottom_navigation_bar/super_bottom_navigation_bar.dart';
 
 class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int selectedIndex = 0;
   final List<Widget> pages = [
-    MyHomePage(),
+    const MyHomePage(),
     const MyWishList(),
     const MyCart(),
     const MyProfile(),
@@ -53,8 +55,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
             unSelectedIconColor: Colors.black,
           ),
           SuperBottomNavigationBarItem(
-            unSelectedIcon: Icons.settings_outlined,
-            selectedIcon: Icons.settings,
+            unSelectedIcon: Icons.person_outline_rounded,
+            selectedIcon: Icons.person,
             splashColor: Colors.amber,
             borderBottomColor: Colors.amber,
             selectedIconColor: Colors.amber,
