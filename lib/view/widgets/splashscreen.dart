@@ -9,37 +9,45 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool animate = false;
+
   @override
   void initState() {
-    gotoBoardingScreen();
+    startAnimation();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    var kwidth = MediaQuery.of(context).size.width * 0.25;
+    return Scaffold(
       body: Stack(
         children: [
-          Center(
-            child: Text(
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 1600),
+            top: MediaQuery.of(context).size.height * 0.5,
+            left: animate ? kwidth : -80,
+            child: const Text(
               'Culinary Craft',
               style: TextStyle(fontSize: 35, fontWeight: FontWeight.w600),
             ),
           ),
           //  circle 1 in the top-right corner
-          Positioned(
-            top: -20,
-            right: -20,
-            child: CircleAvatar(
-              backgroundImage: AssetImage('assets/chicken biriyani.jpg'),
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 1600),
+            top: animate ? -25 : -60,
+            right: animate ? -25 : -60,
+            child: const CircleAvatar(
+              backgroundImage: AssetImage('assets/chicken FR.jpg'),
               radius: 90,
             ),
           ),
           // Circle 2 in the bottom-left corner
-          Positioned(
-            bottom: -30,
-            left: -30,
-            child: CircleAvatar(
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 1600),
+            bottom: animate ? -25 : -60,
+            left: animate ? -25 : -60,
+            child: const CircleAvatar(
               backgroundImage: AssetImage('assets/hakka Noodles.jpg'),
               radius: 90,
             ),
@@ -49,13 +57,12 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  Future gotoBoardingScreen() async {
-    await Future.delayed(const Duration(seconds: 4));
-    // ignore: use_build_context_synchronously
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) =>const PageScreen(),
-      ),
-    );
+  Future<void> startAnimation() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    setState(() => animate = true);
+
+    await Future.delayed(const Duration(milliseconds: 5000));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const PageScreen()));
   }
 }

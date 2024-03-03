@@ -11,7 +11,10 @@ double getTextWidth(String text, TextStyle style) {
   return textPainter.width;
 }
 
-Widget buildTextField({required IconData icon, required String hintText}) {
+Widget buildTextField(
+    {required IconData icon,
+    required String hintText,
+    required TextEditingController controller}) {
   return Container(
     decoration: BoxDecoration(
       border: Border.all(color: Colors.grey),
@@ -20,6 +23,7 @@ Widget buildTextField({required IconData icon, required String hintText}) {
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: TextFormField(
+        controller: controller,
         decoration: InputDecoration(
           icon: Icon(icon),
           hintText: hintText,
@@ -31,7 +35,9 @@ Widget buildTextField({required IconData icon, required String hintText}) {
 }
 
 class PasswordTextField extends StatefulWidget {
-  const PasswordTextField({Key? key}) : super(key: key);
+  const PasswordTextField({super.key, required this.controller});
+
+  final TextEditingController controller;
 
   @override
   _PasswordTextFieldState createState() => _PasswordTextFieldState();
@@ -50,6 +56,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: TextFormField(
+          controller: widget.controller,
           obscureText: !_isPasswordVisible,
           decoration: InputDecoration(
             icon: const Icon(Icons.lock_outline),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/view/screens/home/quick_and_easy/card.dart';
-import 'package:recipe_app/view/screens/search/widgets/search_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -27,7 +26,6 @@ class _MyHomePageState extends State<MyHomePage>
       begin: 0.0,
       end: 1.0,
     ).animate(_controller);
-
     // Ensure that the drawer is initially closed
     // _controller.reverse();
   }

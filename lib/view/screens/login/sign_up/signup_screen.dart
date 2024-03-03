@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/serivces/auth_services.dart';
+import 'package:recipe_app/view/screens/home/home_screen.dart';
 import 'package:recipe_app/view/screens/login/widgets.dart';
 import 'package:recipe_app/view/widgets/navbar/navbar.dart';
 
@@ -10,6 +13,19 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final FirebaseAuthServies _authServies = FirebaseAuthServies();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var kWidth = MediaQuery.of(context).size.width;
@@ -89,6 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Column(
                         children: [
                           buildTextField(
+                            controller: _usernameController,
                             hintText: 'Full name',
                             icon: Icons.person_2_outlined,
                           ),
@@ -96,18 +113,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           buildTextField(
                             hintText: 'Email',
                             icon: Icons.email_outlined,
+                            controller: _emailController,
                           ),
                           kHeight10,
-                          const PasswordTextField(),
+                          PasswordTextField(controller: _passwordController),
                           kHeight20,
                           buildElevatedButton(
                             'Sign Up',
                             onPressed: () {
+                              _userSignUp();
                               print('clicked sign up button');
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                           BottomNavBar()));
+                                          const BottomNavBar()));
                             },
                           ),
                           kHeight10,
@@ -127,5 +146,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  void _userSignUp() async {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+    String email = _emailController.text;
+    print(username);
+    User? user = await _authServies.signUpWithEmailAndPassword(email, password);
+    if (user != null) {
+      print('User is successfully created');
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const MyHomePage()));
+    } else {
+      print('Some error occurred');
+    }
   }
 }
