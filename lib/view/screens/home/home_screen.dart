@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:recipe_app/view/screens/home/quick_and_easy/card.dart';
+import 'package:recipe_app/view/screens/search/recipe/recipe_search_screen.dart';
+import 'package:recipe_app/view/screens/search/widgets/search_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -66,10 +69,29 @@ class _MyHomePageState extends State<MyHomePage>
                     const SizedBox(
                       height: 10,
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.search,
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => SearchScreen())),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(15)),
+                        height: 40,
+                        width: MediaQuery.of(context).size.width,
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.search,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(

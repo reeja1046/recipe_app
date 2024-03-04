@@ -101,23 +101,23 @@ Widget buildElevatedButton(String text, {required VoidCallback onPressed}) {
   );
 }
 
-Widget buildRichTextWithNavigation(context) {
+Widget buildRichTextWithNavigation(context,{required navigate, required text1 , required clickbutton}) {
   return GestureDetector(
     onTap: () {
       print('/////////////////////////');
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const SignInScreen()),
+        MaterialPageRoute(builder: (context) => navigate),
       );
     },
     child: RichText(
-      text: const TextSpan(
-        text: 'Already have an account? ',
+      text: TextSpan(
+        text: text1,
         style: TextStyle(fontSize: 14, color: Colors.black),
         children: <TextSpan>[
           TextSpan(
-            text: 'Sign In',
-            style: TextStyle(
+            text: clickbutton,
+            style:const TextStyle(
               color: Colors.red,
               decoration: TextDecoration.underline,
             ),

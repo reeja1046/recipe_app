@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/constants/images_strings.dart';
 import 'package:recipe_app/view/screens/onboarding/pageview.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -37,8 +38,8 @@ class _SplashScreenState extends State<SplashScreen> {
             duration: const Duration(milliseconds: 1600),
             top: animate ? -25 : -60,
             right: animate ? -25 : -60,
-            child: const CircleAvatar(
-              backgroundImage: AssetImage('assets/chicken FR.jpg'),
+            child: CircleAvatar(
+              backgroundImage: AssetImage(tSplashScreenTopImage),
               radius: 90,
             ),
           ),
@@ -47,8 +48,8 @@ class _SplashScreenState extends State<SplashScreen> {
             duration: const Duration(milliseconds: 1600),
             bottom: animate ? -25 : -60,
             left: animate ? -25 : -60,
-            child: const CircleAvatar(
-              backgroundImage: AssetImage('assets/hakka Noodles.jpg'),
+            child: CircleAvatar(
+              backgroundImage: AssetImage(tSplashScreenBottomImage),
               radius: 90,
             ),
           ),
@@ -60,9 +61,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> startAnimation() async {
     await Future.delayed(const Duration(milliseconds: 500));
     setState(() => animate = true);
-
     await Future.delayed(const Duration(milliseconds: 5000));
     Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
         context, MaterialPageRoute(builder: (context) => const PageScreen()));
   }
 }

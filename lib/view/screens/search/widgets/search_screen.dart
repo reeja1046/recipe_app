@@ -1,80 +1,52 @@
-// import 'package:flutter/material.dart';
-
-// class SearchScreen extends StatelessWidget {
-//   const SearchScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold();
-//   }
-// }
 import 'package:flutter/material.dart';
+import 'package:recipe_app/view/screens/search/chef/chef_search_screen.dart';
+import 'package:recipe_app/view/screens/search/recipe/recipe_search_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchScreenState extends State<SearchScreen>
+    with SingleTickerProviderStateMixin {
   String _currentTab = 'Recipe';
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  _currentTab = 'Recipe';
-                });
-              },
-              child: Text(
-                'Recipe',
-                style: TextStyle(
-                  color: _currentTab == 'Recipe' ? Colors.white : Colors.grey,
-                ),
-              ),
-            ),
-            const SizedBox(width: 16),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  _currentTab = 'Chef';
-                });
-              },
-              child: Text(
-                'Chef',
-                style: TextStyle(
-                  color: _currentTab == 'Chef' ? Colors.white : Colors.grey,
-                ),
-              ),
-            ),
+        backgroundColor: Colors.amber,
+        centerTitle: true,
+        title: const Text(
+          'Search',
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+        ),
+        bottom: TabBar(
+            controller: _tabController,
+            tabs: const [
+              Tab(text: 'Recipe'),
+              Tab(text: 'Chef'),
+            ],
+            labelStyle:
+                const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: TabBarView(
+          controller: _tabController,
+          children: const [
+            RecipeSearchScreen(),
+            ChefSearchScreen(),
           ],
         ),
       ),
-      body: _currentTab == 'Recipe' ? const RecipeSearchScreen() : ChefSearchScreen(),
-    );
-  }
-}
-
-class RecipeSearchScreen extends StatelessWidget {
-  const RecipeSearchScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Recipe Search Screen'),
-    );
-  }
-}
-
-class ChefSearchScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Chef Search Screen'),
     );
   }
 }

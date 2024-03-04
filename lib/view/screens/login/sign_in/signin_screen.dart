@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/serivces/auth_services.dart';
-import 'package:recipe_app/view/screens/home/home_screen.dart';
+import 'package:recipe_app/view/screens/login/sign_up/signup_screen.dart';
 import 'package:recipe_app/view/screens/login/widgets.dart';
-import 'package:recipe_app/view/widgets/navbar/navbar.dart';
+import 'package:recipe_app/view/widgets/navbar.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -134,11 +134,13 @@ class _SignInScreenState extends State<SignInScreen> {
                             onPressed: () {
                               _userSignIn();
                               print('clicked sign in button');
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => const BottomNavBar()));
                             },
                           ),
+                          kHeight10,
+                          buildRichTextWithNavigation(context,
+                              clickbutton: 'Sign Up',
+                              navigate: const SignUpScreen(),
+                              text1: "Don't have an account?  "),
                           kHeight20,
                           buildDividerWithText('Or Sign Up With'),
                           kHeight20,
@@ -157,15 +159,14 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void _userSignIn() async {
-    String username = _usernameController.text;
     String password = _passwordController.text;
     String email = _emailController.text;
-    print(username);
+    print(email);
     User? user = await _authServies.signInWithEmailAndPassword(email, password);
     if (user != null) {
       print('User is successfully logged in');
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const MyHomePage()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const BottomNavBar()));
     } else {
       print('Some error occurred');
     }
