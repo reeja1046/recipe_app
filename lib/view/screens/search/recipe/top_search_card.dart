@@ -30,7 +30,7 @@ class TopSearchCard extends StatelessWidget {
             ),
             const Text(
               'Chicken Biriyani',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
             ),
           ],
         ),
@@ -48,14 +48,14 @@ class TopSearchCard extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
-                  'assets/chicken biriyani.jpg',
+                  'assets/egg noodles.jpg',
                   fit: BoxFit.cover,
                 ),
               ),
             ),
             const Text(
               'Chicken Biriyani',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
             ),
           ],
         ),
