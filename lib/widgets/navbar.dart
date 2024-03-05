@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/app/constants/colors.dart';
 import 'package:recipe_app/screens/account/profile.dart';
 import 'package:recipe_app/screens/cart/cart.dart';
 import 'package:recipe_app/screens/home/home_screen.dart';
@@ -33,33 +34,33 @@ class _BottomNavBarState extends State<BottomNavBar> {
           SuperBottomNavigationBarItem(
             unSelectedIcon: Icons.home_outlined,
             selectedIcon: Icons.home,
-            splashColor: Colors.amber,
-            borderBottomColor: Colors.amber,
-            selectedIconColor: Colors.amber,
+            splashColor: AppColor.baseColor,
+            borderBottomColor: AppColor.baseColor,
+            selectedIconColor: AppColor.baseColor,
             unSelectedIconColor: Colors.black,
           ),
           SuperBottomNavigationBarItem(
             unSelectedIcon: Icons.favorite_border,
             selectedIcon: Icons.favorite,
-            splashColor: Colors.amber,
-            borderBottomColor: Colors.amber,
-            selectedIconColor: Colors.amber,
+            splashColor: AppColor.baseColor,
+            borderBottomColor: AppColor.baseColor,
+            selectedIconColor: AppColor.baseColor,
             unSelectedIconColor: Colors.black,
           ),
           SuperBottomNavigationBarItem(
             unSelectedIcon: Icons.shopping_cart_outlined,
             selectedIcon: Icons.shopping_cart,
-            splashColor: Colors.amber,
-            borderBottomColor: Colors.amber,
-            selectedIconColor: Colors.amber,
+            splashColor: AppColor.baseColor,
+            borderBottomColor: AppColor.baseColor,
+            selectedIconColor: AppColor.baseColor,
             unSelectedIconColor: Colors.black,
           ),
           SuperBottomNavigationBarItem(
             unSelectedIcon: Icons.person_outline_rounded,
             selectedIcon: Icons.person,
-            splashColor: Colors.amber,
-            borderBottomColor: Colors.amber,
-            selectedIconColor: Colors.amber,
+            splashColor: AppColor.baseColor,
+            borderBottomColor: AppColor.baseColor,
+            selectedIconColor: AppColor.baseColor,
             unSelectedIconColor: Colors.black,
           ),
         ],

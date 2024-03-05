@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/screens/home/quick_and_easy/card.dart';
+import 'package:recipe_app/app/constants/colors.dart';
+import 'package:recipe_app/app/constants/text_strings.dart';
+import 'package:recipe_app/screens/categories/category.dart';
+import 'package:recipe_app/screens/home/widget/card.dart';
+import 'package:recipe_app/screens/categories/category_button.dart';
+import 'package:recipe_app/screens/home/widget/drawer_container.dart';
+import 'package:recipe_app/screens/home/widget/explore_card.dart';
 import 'package:recipe_app/screens/search/widgets/search_screen.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -68,8 +74,11 @@ class _MyHomePageState extends State<MyHomePage>
                       height: 10,
                     ),
                     GestureDetector(
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SearchScreen())),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => SearchScreen(),
+                        ),
+                      ),
                       child: Container(
                         decoration: BoxDecoration(
                             border: Border.all(
@@ -95,104 +104,36 @@ class _MyHomePageState extends State<MyHomePage>
                     const SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(20)),
-                      height: 150,
-                      width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Cook the best \nrecipes at home',
-                              style: TextStyle(
-                                  fontSize: 22,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(
-                              height: 30,
-                              width: 100,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'Explore',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                    exploreCard(context),
                     const SizedBox(
                       height: 20,
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Categories',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                        const Text('Categories', style: TextSize.titletextsize),
+                        TextButton(
+                          onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const CategoryScreen())),
+                          child: const Text(
+                            'View All',
+                            style: TextStyle(
+                                color: AppColor.baseColor, fontSize: 12),
+                          ),
                         ),
-                        Text(
-                          'View All',
-                          style: TextStyle(color: Colors.amber),
-                        )
                       ],
-                    ),
-                    const SizedBox(
-                      height: 10,
                     ),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: const Text('All'),
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          OutlinedButton(
-                              onPressed: () {}, child: const Text('Biriyani')),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          OutlinedButton(
-                              onPressed: () {}, child: const Text('Pulao')),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          OutlinedButton(
-                              onPressed: () {},
-                              child: const Text('Fried Rice')),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          OutlinedButton(
-                              onPressed: () {}, child: const Text('Noodles')),
-                        ],
-                      ),
+                      child: CategoryButtons(),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      'Recipe of the Day',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
+                    const Text('Recipe of the Day',
+                        style: TextSize.titletextsize),
                     const SizedBox(
                       height: 10,
                     ),
@@ -234,11 +175,7 @@ class _MyHomePageState extends State<MyHomePage>
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      'Quick And Easy',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
+                    const Text('Quick And Easy', style: TextSize.titletextsize),
                     const SizedBox(
                       height: 10,
                     ),
@@ -289,94 +226,5 @@ class _MyHomePageState extends State<MyHomePage>
   void dispose() {
     _controller.dispose();
     super.dispose();
-  }
-}
-
-class MyDrawerContainer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 300,
-      color: Colors.white,
-      child: ListView(
-        padding: const EdgeInsets.all(10),
-        children: [
-          ListTile(
-            title: const Text(
-              'Notifications',
-              style: TextStyle(color: Colors.black, fontSize: 18),
-            ),
-            leading:
-                const Icon(Icons.notifications, color: Colors.black, size: 30),
-            trailing: const Icon(
-              Icons.toggle_on,
-              size: 40,
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: const Text(
-              ' Privacy',
-              style: TextStyle(color: Colors.black, fontSize: 18),
-            ),
-            leading: const Icon(
-              Icons.lock,
-              color: Colors.black,
-              size: 30,
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: const Text(
-              'Terms And Conditions',
-              style: TextStyle(color: Colors.black, fontSize: 18),
-            ),
-            leading: const Icon(
-              Icons.bookmark,
-              color: Colors.black,
-              size: 30,
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: const Text(
-              'About Us',
-              style: TextStyle(color: Colors.black, fontSize: 18),
-            ),
-            leading: const Icon(
-              Icons.info_outline,
-              color: Colors.black,
-              size: 30,
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: const Text(
-              'Share',
-              style: TextStyle(color: Colors.black, fontSize: 18),
-            ),
-            leading: const Icon(
-              Icons.share,
-              color: Colors.black,
-              size: 30,
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: const Text(
-              'Logout',
-              style: TextStyle(color: Colors.black, fontSize: 18),
-            ),
-            leading: const Icon(
-              Icons.arrow_forward,
-              color: Colors.black,
-              size: 25,
-            ),
-            onTap: () {},
-          ),
-        ],
-      ),
-    );
   }
 }
