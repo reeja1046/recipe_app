@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/view/screens/search/chef/chef_search_screen.dart';
-import 'package:recipe_app/view/screens/search/recipe/recipe_search_screen.dart';
+import 'package:recipe_app/screens/search/chef/chef_search_screen.dart';
+import 'package:recipe_app/screens/search/recipe/recipe_search_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -9,7 +9,6 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen>
     with SingleTickerProviderStateMixin {
-  String _currentTab = 'Recipe';
   late TabController _tabController;
 
   @override

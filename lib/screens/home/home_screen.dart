@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:recipe_app/view/screens/home/quick_and_easy/card.dart';
-import 'package:recipe_app/view/screens/search/recipe/recipe_search_screen.dart';
-import 'package:recipe_app/view/screens/search/widgets/search_screen.dart';
+import 'package:recipe_app/screens/home/quick_and_easy/card.dart';
+import 'package:recipe_app/screens/search/widgets/search_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});

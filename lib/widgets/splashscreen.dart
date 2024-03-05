@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/constants/images_strings.dart';
-import 'package:recipe_app/view/screens/onboarding/pageview.dart';
+import 'package:recipe_app/app/constants/images_strings.dart';
+import 'package:recipe_app/screens/onboarding/pageview.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

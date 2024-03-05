@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:recipe_app/constants/show_toast.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:recipe_app/app/constants/show_toast.dart';
+import 'package:recipe_app/screens/home/home_screen.dart';
 
 class FirebaseAuthServies {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -37,5 +40,30 @@ class FirebaseAuthServies {
       print('Some Error Occured');
     }
     return null;
+  }
+
+  _signInWithGoogle(context) async {
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
+
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+            idToken: googleSignInAuthentication.idToken,
+            accessToken: googleSignInAuthentication.accessToken);
+
+        await _auth.signInWithCredential(credential);
+
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) =>const MyHomePage()));
+      }
+    } catch (e) {
+      showToast(message: "Some error occured $e");
+    }
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/view/screens/search/chef/popular_chef_listtile.dart';
+import 'package:recipe_app/screens/search/chef/popular_chef_listtile.dart';
 
 class ChefSearchScreen extends StatelessWidget {
   const ChefSearchScreen({super.key});
@@ -97,7 +97,7 @@ class ChefSearchScreen extends StatelessWidget {
             'Popular Search',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
-          PopularChefListTile(),
+         const PopularChefListTile(),
         ],
       ),
     );

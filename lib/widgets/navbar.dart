@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/view/screens/account/profile.dart';
-import 'package:recipe_app/view/screens/cart/cart.dart';
-import 'package:recipe_app/view/screens/home/home_screen.dart';
-import 'package:recipe_app/view/screens/wishlist/wishlist.dart';
+import 'package:recipe_app/screens/account/profile.dart';
+import 'package:recipe_app/screens/cart/cart.dart';
+import 'package:recipe_app/screens/home/home_screen.dart';
+import 'package:recipe_app/screens/wishlist/wishlist.dart';
 import 'package:super_bottom_navigation_bar/super_bottom_navigation_bar.dart';
 
 class BottomNavBar extends StatefulWidget {

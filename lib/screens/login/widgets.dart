@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:recipe_app/view/screens/login/sign_in/signin_screen.dart';
 
 double getTextWidth(String text, TextStyle style) {
   final TextPainter textPainter = TextPainter(
@@ -101,7 +100,8 @@ Widget buildElevatedButton(String text, {required VoidCallback onPressed}) {
   );
 }
 
-Widget buildRichTextWithNavigation(context,{required navigate, required text1 , required clickbutton}) {
+Widget buildRichTextWithNavigation(context,
+    {required navigate, required text1, required clickbutton}) {
   return GestureDetector(
     onTap: () {
       print('/////////////////////////');
@@ -117,7 +117,7 @@ Widget buildRichTextWithNavigation(context,{required navigate, required text1 , 
         children: <TextSpan>[
           TextSpan(
             text: clickbutton,
-            style:const TextStyle(
+            style: const TextStyle(
               color: Colors.red,
               decoration: TextDecoration.underline,
             ),

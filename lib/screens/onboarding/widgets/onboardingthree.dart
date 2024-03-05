@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/view/screens/onboarding/widgets/onboardwidgets.dart';
+import 'package:recipe_app/screens/onboarding/widgets/onboardwidgets.dart';
 
-class OnBoardingScreenTwo extends StatelessWidget {
-  const OnBoardingScreenTwo({super.key});
+class OnBoardingScreenThree extends StatelessWidget {
+  const OnBoardingScreenThree({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +15,11 @@ class OnBoardingScreenTwo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 OnBoardWidget(
-                  imagePath: 'assets/explore.webp',
-                  title1: 'Explore a variety of recipes for ',
-                  title2: ' every taste and skill level.',
-                  description1: 'Let us guide you to cook healthy',
-                  description2: 'meals like a pro chef.',
+                  imagePath: 'assets/start.jpg',
+                  title1: 'Tap, Cook, Enjoy – Your culinary',
+                  title2: 'adventure starts now!',
+                  description1: "Together, let's dive into the vibrant world",
+                  description2: 'of cooking with energy.',
                 )
               ],
             ),
