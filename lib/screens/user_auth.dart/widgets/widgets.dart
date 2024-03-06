@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:recipe_app/app/serivces/auth_services.dart';
 
 double getTextWidth(String text, TextStyle style) {
   final TextPainter textPainter = TextPainter(
@@ -113,7 +114,7 @@ Widget buildRichTextWithNavigation(context,
     child: RichText(
       text: TextSpan(
         text: text1,
-        style: TextStyle(fontSize: 14, color: Colors.black),
+        style: const TextStyle(fontSize: 14, color: Colors.black),
         children: <TextSpan>[
           TextSpan(
             text: clickbutton,
@@ -155,13 +156,23 @@ Widget buildDividerWithText(String text) {
   );
 }
 
-Widget buildSocialLoginButtons() {
+FirebaseAuthServies authService = FirebaseAuthServies();
+Widget buildSocialLoginButtons(context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       buildSocialLoginButton(
-          icon: FontAwesomeIcons.google, label: 'Google', color: Colors.red),
+        icon: FontAwesomeIcons.google,
+        label: 'Google',
+        color: Colors.red,
+        onPressed: () {
+          authService.signInWithGoogle(context);
+        },
+      ),
       buildSocialLoginButton(
+          onPressed: () {
+            authService.signInWithGoogle(context);
+          },
           icon: FontAwesomeIcons.facebook,
           label: 'Facebook',
           color: Colors.blue),
@@ -170,14 +181,15 @@ Widget buildSocialLoginButtons() {
 }
 
 Widget buildSocialLoginButton(
-    {required IconData icon, required String label, required var color}) {
+    {required IconData icon,
+    required String label,
+    required var color,
+    required VoidCallback onPressed}) {
   return SizedBox(
     width: 140,
     height: 30,
     child: OutlinedButton.icon(
-      onPressed: () {
-        print('pressed social button');
-      },
+      onPressed: onPressed,
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

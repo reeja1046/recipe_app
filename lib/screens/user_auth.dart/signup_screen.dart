@@ -1,22 +1,26 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/app/constants/sizedbox.dart';
 import 'package:recipe_app/app/serivces/auth_services.dart';
-import 'package:recipe_app/screens/login/sign_up/signup_screen.dart';
-import 'package:recipe_app/screens/login/widgets.dart';
+import 'package:recipe_app/screens/user_auth.dart/signin_screen.dart';
+import 'package:recipe_app/screens/user_auth.dart/widgets/widgets.dart';
 import 'package:recipe_app/widgets/navbar.dart';
+import 'package:toast/toast.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final FirebaseAuthServies _authServies = FirebaseAuthServies();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+
+  final SizedBoxHeightWidth _sizedbox = SizedBoxHeightWidth();
 
   @override
   void dispose() {
@@ -30,9 +34,6 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     var kWidth = MediaQuery.of(context).size.width;
     var kHeight = MediaQuery.of(context).size.height;
-    var kHeight20 = SizedBox(height: kHeight * 0.04);
-    var kHeight10 = SizedBox(height: kHeight * 0.02);
-    var kHeight30 = SizedBox(height: kHeight * 0.06);
 
     return Scaffold(
       body: ClipRect(
@@ -79,7 +80,7 @@ class _SignInScreenState extends State<SignInScreen> {
               left: kWidth * 0.05,
               right: kWidth * 0.05,
               child: Container(
-                height: kHeight * 0.65,
+                height: kHeight * 0.7,
                 width: kWidth * 0.9,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
@@ -95,9 +96,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    kHeight30,
+                    _sizedbox.kheight50,
                     const Text(
-                      'Welcome Back !!!!',
+                      'Create An Account',
                       style: TextStyle(fontSize: 24),
                     ),
                     Padding(
@@ -105,46 +106,37 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: Column(
                         children: [
                           buildTextField(
-                            controller: _emailController,
+                            controller: _usernameController,
+                            hintText: 'Full name',
+                            icon: Icons.person_2_outlined,
+                          ),
+                          _sizedbox.kheight20,
+                          buildTextField(
                             hintText: 'Email',
                             icon: Icons.email_outlined,
+                            controller: _emailController,
                           ),
-                          kHeight10,
-                          PasswordTextField(
-                            controller: _passwordController,
-                          ),
-                          kHeight10,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  print('clicked forgot  password');
-                                },
-                                child: const Text(
-                                  'Forgot password?',
-                                  style: TextStyle(color: Colors.red),
-                                ),
-                              ),
-                            ],
-                          ),
-                          kHeight20,
+                          _sizedbox.kheight20,
+                          PasswordTextField(controller: _passwordController),
+                          _sizedbox.kheight40,
                           buildElevatedButton(
-                            'Sign In',
+                            'Sign Up',
                             onPressed: () {
-                              _userSignIn();
-                              print('clicked sign in button');
+                              _userSignUp();
+                              print('clicked sign up button');
                             },
                           ),
-                          kHeight10,
-                          buildRichTextWithNavigation(context,
-                              clickbutton: 'Sign Up',
-                              navigate: const SignUpScreen(),
-                              text1: "Don't have an account?  "),
-                          kHeight20,
+                          _sizedbox.kheight20,
+                          buildRichTextWithNavigation(
+                            context,
+                            navigate: const SignInScreen(),
+                            text1: 'Already have an account? ',
+                            clickbutton: 'Sign In',
+                          ),
+                          _sizedbox.kheight50,
                           buildDividerWithText('Or Sign Up With'),
-                          kHeight20,
-                          buildSocialLoginButtons(),
+                          _sizedbox.kheight40,
+                          buildSocialLoginButtons(context),
                         ],
                       ),
                     ),
@@ -158,13 +150,15 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  void _userSignIn() async {
+  void _userSignUp() async {
+    String username = _usernameController.text;
     String password = _passwordController.text;
     String email = _emailController.text;
-    print(email);
-    User? user = await _authServies.signInWithEmailAndPassword(email, password);
+    ToastContext().init(context);
+    print(username);
+    User? user = await _authServies.signUpWithEmailAndPassword(email, password);
     if (user != null) {
-      print('User is successfully logged in');
+      print('User is successfully created');
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const BottomNavBar()));
     } else {

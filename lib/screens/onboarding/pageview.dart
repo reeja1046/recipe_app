@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/screens/login/sign_up/signup_screen.dart';
+import 'package:recipe_app/screens/user_auth.dart/signup_screen.dart';
 import 'package:recipe_app/screens/onboarding/widgets/onboardingone.dart';
 import 'package:recipe_app/screens/onboarding/widgets/onboardingthree.dart';
 import 'package:recipe_app/screens/onboarding/widgets/onboardingtwo.dart';

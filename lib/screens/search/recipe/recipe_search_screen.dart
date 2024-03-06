@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/screens/search/recipe/recipe_filter.dart';
-import 'package:recipe_app/screens/search/recipe/top_search_card.dart';
+import 'package:recipe_app/screens/search/recipe/widgets/recipe_filter.dart';
+import 'package:recipe_app/screens/search/recipe/widgets/top_search_card.dart';
 
 class RecipeSearchScreen extends StatelessWidget {
   const RecipeSearchScreen({super.key});

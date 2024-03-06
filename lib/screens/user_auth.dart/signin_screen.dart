@@ -1,22 +1,25 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/app/constants/sizedbox.dart';
 import 'package:recipe_app/app/serivces/auth_services.dart';
-import 'package:recipe_app/screens/login/sign_in/signin_screen.dart';
-import 'package:recipe_app/screens/login/widgets.dart';
+import 'package:recipe_app/screens/user_auth.dart/signup_screen.dart';
+import 'package:recipe_app/screens/user_auth.dart/widgets/widgets.dart';
 import 'package:recipe_app/widgets/navbar.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   final FirebaseAuthServies _authServies = FirebaseAuthServies();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+
+  final SizedBoxHeightWidth _sizedbox = SizedBoxHeightWidth();
 
   @override
   void dispose() {
@@ -30,9 +33,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     var kWidth = MediaQuery.of(context).size.width;
     var kHeight = MediaQuery.of(context).size.height;
-    var kHeight20 = SizedBox(height: kHeight * 0.04);
-    var kHeight10 = SizedBox(height: kHeight * 0.02);
-    var kHeight30 = SizedBox(height: kHeight * 0.06);
 
     return Scaffold(
       body: ClipRect(
@@ -79,7 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               left: kWidth * 0.05,
               right: kWidth * 0.05,
               child: Container(
-                height: kHeight * 0.7,
+                height: kHeight * 0.65,
                 width: kWidth * 0.9,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
@@ -95,9 +95,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    kHeight30,
+                    _sizedbox.kheight30,
                     const Text(
-                      'Create An Account',
+                      'Welcome Back !!!!',
                       style: TextStyle(fontSize: 24),
                     ),
                     Padding(
@@ -105,37 +105,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Column(
                         children: [
                           buildTextField(
-                            controller: _usernameController,
-                            hintText: 'Full name',
-                            icon: Icons.person_2_outlined,
-                          ),
-                          kHeight10,
-                          buildTextField(
+                            controller: _emailController,
                             hintText: 'Email',
                             icon: Icons.email_outlined,
-                            controller: _emailController,
                           ),
-                          kHeight10,
-                          PasswordTextField(controller: _passwordController),
-                          kHeight20,
+                          _sizedbox.kheight20,
+                          PasswordTextField(
+                            controller: _passwordController,
+                          ),
+                          _sizedbox.kheight20,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  print('clicked forgot  password');
+                                },
+                                child: const Text(
+                                  'Forgot password?',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                            ],
+                          ),
+                          _sizedbox.kheight20,
                           buildElevatedButton(
-                            'Sign Up',
+                            'Sign In',
                             onPressed: () {
-                              _userSignUp();
-                              print('clicked sign up button');
+                              _userSignIn();
+                              print('clicked sign in button');
                             },
                           ),
-                          kHeight10,
-                          buildRichTextWithNavigation(
-                            context,
-                            navigate: const SignInScreen(),
-                            text1: 'Already have an account? ',
-                            clickbutton: 'Sign In',
-                          ),
-                          kHeight30,
+                          _sizedbox.kheight10,
+                          buildRichTextWithNavigation(context,
+                              clickbutton: 'Sign Up',
+                              navigate: const SignUpScreen(),
+                              text1: "Don't have an account?  "),
+                          _sizedbox.kheight50,
                           buildDividerWithText('Or Sign Up With'),
-                          kHeight20,
-                          buildSocialLoginButtons(),
+                          _sizedbox.kheight40,
+                          // buildSocialLoginButtons(),
                         ],
                       ),
                     ),
@@ -149,14 +158,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  void _userSignUp() async {
-    String username = _usernameController.text;
+  void _userSignIn() async {
     String password = _passwordController.text;
     String email = _emailController.text;
-    print(username);
-    User? user = await _authServies.signUpWithEmailAndPassword(email, password);
+    print(email);
+    User? user = await _authServies.signInWithEmailAndPassword(email, password);
     if (user != null) {
-      print('User is successfully created');
+      print('User is successfully logged in');
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const BottomNavBar()));
     } else {

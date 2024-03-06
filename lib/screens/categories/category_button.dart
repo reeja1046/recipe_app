@@ -60,17 +60,21 @@ class CategoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        side: BorderSide(color: isSelected ? Colors.white : AppColor.baseColor),
-        backgroundColor: isSelected ? AppColor.baseColor : null,
-      ),
-      onPressed: onPressed,
-      child: Text(
-        text,
-        style: TextStyle(
-          color: isSelected ? Colors.white : Colors.black,
-          fontSize: 16,
+    return Container(
+      height: 35,
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          side:
+              BorderSide(color: isSelected ? Colors.white : AppColor.baseColor),
+          backgroundColor: isSelected ? AppColor.baseColor : null,
+        ),
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.black,
+            fontSize: 16,
+          ),
         ),
       ),
     );

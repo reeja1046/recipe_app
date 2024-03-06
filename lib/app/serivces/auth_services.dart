@@ -4,8 +4,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:recipe_app/app/constants/show_toast.dart';
 import 'package:recipe_app/screens/home/home_screen.dart';
 
+
 class FirebaseAuthServies {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  
   Future<User?> signUpWithEmailAndPassword(
       String email, String password) async {
     try {
@@ -16,8 +18,11 @@ class FirebaseAuthServies {
       print(e.code);
       print('/////////////*****************/////////////////');
       if (e.code == 'email-already-in-use') {
+        print('8888888888pppppppppppiiiiiii');
+        // ignore: use_build_context_synchronously
         showToast(message: 'The email already in use');
       } else {
+        // ignore: use_build_context_synchronously
         showToast(message: 'An error occured: ${e.code}');
       }
       // print('Some Error Occured');
@@ -42,12 +47,12 @@ class FirebaseAuthServies {
     return null;
   }
 
-  _signInWithGoogle(context) async {
-    final GoogleSignIn _googleSignIn = GoogleSignIn();
+  Future<void> signInWithGoogle(BuildContext context) async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
 
     try {
       final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
+          await googleSignIn.signIn();
 
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
@@ -60,10 +65,10 @@ class FirebaseAuthServies {
         await _auth.signInWithCredential(credential);
 
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) =>const MyHomePage()));
+            .push(MaterialPageRoute(builder: (context) => const MyHomePage()));
       }
     } catch (e) {
-      showToast(message: "Some error occured $e");
+      showToast( message: "Some error occured $e");
     }
   }
 }

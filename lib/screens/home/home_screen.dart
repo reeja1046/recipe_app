@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/app/constants/colors.dart';
+import 'package:recipe_app/app/constants/sizedbox.dart';
 import 'package:recipe_app/app/constants/text_strings.dart';
 import 'package:recipe_app/screens/categories/category.dart';
 import 'package:recipe_app/screens/home/widget/card.dart';
 import 'package:recipe_app/screens/categories/category_button.dart';
 import 'package:recipe_app/screens/home/widget/drawer_container.dart';
 import 'package:recipe_app/screens/home/widget/explore_card.dart';
-import 'package:recipe_app/screens/search/widgets/search_screen.dart';
+import 'package:recipe_app/screens/search/search_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
+  final SizedBoxHeightWidth sizeBoxHelper = SizedBoxHeightWidth();
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -33,8 +36,7 @@ class _MyHomePageState extends State<MyHomePage>
       begin: 0.0,
       end: 1.0,
     ).animate(_controller);
-    // Ensure that the drawer is initially closed
-    // _controller.reverse();
+ 
   }
 
   @override
@@ -70,9 +72,7 @@ class _MyHomePageState extends State<MyHomePage>
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    sizeBoxHelper.kheight10,
                     GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
@@ -101,13 +101,9 @@ class _MyHomePageState extends State<MyHomePage>
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    sizeBoxHelper.kheight20,
                     exploreCard(context),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    sizeBoxHelper.kheight20,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -129,14 +125,10 @@ class _MyHomePageState extends State<MyHomePage>
                       scrollDirection: Axis.horizontal,
                       child: CategoryButtons(),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    sizeBoxHelper.kheight10,
                     const Text('Recipe of the Day',
                         style: TextSize.titletextsize),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    sizeBoxHelper.kheight10,
                     Stack(
                       children: [
                         Container(
@@ -172,19 +164,13 @@ class _MyHomePageState extends State<MyHomePage>
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    sizeBoxHelper.kheight10,
                     const Text('Quick And Easy', style: TextSize.titletextsize),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    sizeBoxHelper.kheight10,
                     Column(
                       children: [
                         QuickAndEasyCard(context),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        sizeBoxHelper.kheight10,
                         QuickAndEasyCard(context),
                       ],
                     ),

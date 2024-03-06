@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/screens/search/recipe/slider_filter.dart';
+import 'package:recipe_app/screens/search/recipe/widgets/slider_filter.dart';
 
 class RecipeFilterScreen extends StatelessWidget {
   const RecipeFilterScreen({Key? key}) : super(key: key);

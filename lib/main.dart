@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/app/constants/colors.dart';
 import 'package:recipe_app/firebase_options.dart';
 import 'package:recipe_app/widgets/splashscreen.dart';
+import 'package:toast/toast.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
