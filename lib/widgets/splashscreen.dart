@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:recipe_app/app/constants/images_strings.dart';
 import 'package:recipe_app/screens/home/home_screen.dart';
 import 'package:recipe_app/screens/onboarding/pageview.dart';
+import 'package:recipe_app/widgets/navbar.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -72,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
   checkUser() {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      return const MyHomePage();
+      return const BottomNavBar();
     } else {
       return const PageScreen();
     }

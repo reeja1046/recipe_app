@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:recipe_app/app/constants/show_toast.dart';
-import 'package:recipe_app/screens/home/home_screen.dart';
+import 'package:recipe_app/widgets/navbar.dart';
 
 class PhoneAuthentication extends StatefulWidget {
   const PhoneAuthentication({super.key});
@@ -111,7 +111,7 @@ class _OtpVerificationState extends State<OtpVerification> {
     try {
       await FirebaseAuth.instance
           .signInWithCredential(credential)
-          .then((value) => Get.to(() => const MyHomePage()));
+          .then((value) => Get.to(() => const BottomNavBar()));
     } on FirebaseAuthException catch (e) {
       showToast(message: 'Error Occured: ${e.code}');
     } catch (e) {
