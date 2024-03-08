@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recipe_app/app/constants/images_strings.dart';
+import 'package:recipe_app/screens/home/home_screen.dart';
 import 'package:recipe_app/screens/onboarding/pageview.dart';
-import 'package:toast/toast.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // ToastContext().init(context);
     var kwidth = MediaQuery.of(context).size.width * 0.25;
     return Scaffold(
       body: Stack(
@@ -64,9 +65,16 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(milliseconds: 500));
     setState(() => animate = true);
     await Future.delayed(const Duration(milliseconds: 5000));
-    Navigator.pushReplacement(
-        // ignore: use_build_context_synchronously
-        context,
-        MaterialPageRoute(builder: (context) => const PageScreen()));
+    Widget destinationScreen = checkUser();
+    Get.to(() => destinationScreen);
+  }
+
+  checkUser() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return const MyHomePage();
+    } else {
+      return const PageScreen();
+    }
   }
 }

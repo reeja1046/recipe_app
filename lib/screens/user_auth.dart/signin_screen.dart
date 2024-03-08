@@ -144,7 +144,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           _sizedbox.kheight50,
                           buildDividerWithText('Or Sign Up With'),
                           _sizedbox.kheight40,
-                          // buildSocialLoginButtons(),
+                          buildSocialLoginButtons(context),
                         ],
                       ),
                     ),

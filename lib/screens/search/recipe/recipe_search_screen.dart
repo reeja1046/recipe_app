@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recipe_app/screens/search/recipe/widgets/recipe_filter.dart';
 import 'package:recipe_app/screens/search/recipe/widgets/top_search_card.dart';
 
@@ -54,8 +55,7 @@ class RecipeSearchScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: GestureDetector(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const RecipeFilterScreen())),
+                    onTap: () => Get.to(() => const RecipeFilterScreen()),
                     child: Image.asset(
                       'assets/filter.png',
                     ),

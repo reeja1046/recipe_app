@@ -6,6 +6,7 @@ void showToast({required String message}) {
     message,
     duration: Toast.lengthLong,
     gravity: Toast.bottom,
-    webTexColor: Colors.amber,
+    textStyle:const TextStyle(color: Colors.white, fontSize: 15),
+    backgroundColor: Colors.black,
   );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recipe_app/screens/user_auth.dart/signup_screen.dart';
 import 'package:recipe_app/screens/onboarding/widgets/onboardingone.dart';
 import 'package:recipe_app/screens/onboarding/widgets/onboardingthree.dart';
@@ -51,8 +52,7 @@ class _PageScreenState extends State<PageScreen> {
                   visible: currentPage < 2,
                   child: TextButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const SignUpScreen()));
+                        Get.to(() => const SignUpScreen());
                       },
                       child: const Text(
                         'Skipp >>',
@@ -93,8 +93,7 @@ class _PageScreenState extends State<PageScreen> {
               visible: currentPage == 2,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const SignUpScreen()));
+                  Get.to(() => const SignUpScreen());
                 },
                 style: ButtonStyle(
                   backgroundColor:

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:recipe_app/app/serivces/auth_services.dart';
+import 'package:recipe_app/screens/user_auth.dart/signin_screen.dart';
+import 'package:recipe_app/screens/user_auth.dart/widgets/phone_authentication.dart';
 
 double getTextWidth(String text, TextStyle style) {
   final TextPainter textPainter = TextPainter(
@@ -106,10 +109,8 @@ Widget buildRichTextWithNavigation(context,
   return GestureDetector(
     onTap: () {
       print('/////////////////////////');
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => navigate),
-      );
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const SignInScreen()));
     },
     child: RichText(
       text: TextSpan(
@@ -171,11 +172,11 @@ Widget buildSocialLoginButtons(context) {
       ),
       buildSocialLoginButton(
           onPressed: () {
-            authService.signInWithGoogle(context);
+            Get.to(() => const PhoneAuthentication());
           },
-          icon: FontAwesomeIcons.facebook,
-          label: 'Facebook',
-          color: Colors.blue),
+          icon: FontAwesomeIcons.phone,
+          label: 'Number',
+          color: Colors.red),
     ],
   );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recipe_app/app/constants/colors.dart';
 import 'package:recipe_app/app/constants/sizedbox.dart';
 import 'package:recipe_app/app/constants/text_strings.dart';
@@ -36,7 +37,6 @@ class _MyHomePageState extends State<MyHomePage>
       begin: 0.0,
       end: 1.0,
     ).animate(_controller);
- 
   }
 
   @override
@@ -74,11 +74,9 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     sizeBoxHelper.kheight10,
                     GestureDetector(
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => SearchScreen(),
-                        ),
-                      ),
+                      onTap: () {
+                        Get.to(() => SearchScreen());
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                             border: Border.all(
@@ -109,10 +107,9 @@ class _MyHomePageState extends State<MyHomePage>
                       children: [
                         const Text('Categories', style: TextSize.titletextsize),
                         TextButton(
-                          onPressed: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const CategoryScreen())),
+                          onPressed: () {
+                            Get.to(() => const CategoryScreen());
+                          },
                           child: const Text(
                             'View All',
                             style: TextStyle(

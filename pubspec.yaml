@@ -36,7 +36,9 @@ dependencies:
   flutter:
     sdk: flutter
   font_awesome_flutter: ^10.7.0
+  get: ^4.6.6
   google_sign_in: ^6.2.1
+  pinput: ^4.0.0
   super_bottom_navigation_bar: ^1.0.0
   toast: ^0.3.0
 

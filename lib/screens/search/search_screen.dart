@@ -5,6 +5,8 @@ import 'package:recipe_app/screens/search/chef/chef_search_screen.dart';
 import 'package:recipe_app/screens/search/recipe/recipe_search_screen.dart';
 
 class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
+
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
@@ -25,7 +27,7 @@ class _SearchScreenState extends State<SearchScreen>
       appBar: AppBar(
         backgroundColor: AppColor.baseColor,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Search',
           style: TextSize.appBarTitle,
         ),

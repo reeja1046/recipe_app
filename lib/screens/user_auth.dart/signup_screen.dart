@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recipe_app/app/constants/sizedbox.dart';
 import 'package:recipe_app/app/serivces/auth_services.dart';
 import 'package:recipe_app/screens/user_auth.dart/signin_screen.dart';
@@ -159,8 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     User? user = await _authServies.signUpWithEmailAndPassword(email, password);
     if (user != null) {
       print('User is successfully created');
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const BottomNavBar()));
+      Get.to(() => const BottomNavBar());
     } else {
       print('Some error occurred');
     }

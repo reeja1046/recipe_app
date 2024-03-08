@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/screens/user_auth.dart/signin_screen.dart';
 
 class MyDrawerContainer extends StatelessWidget {
   @override
@@ -72,6 +74,11 @@ class MyDrawerContainer extends StatelessWidget {
             onTap: () {},
           ),
           ListTile(
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const SignInScreen()));
+            },
             title: const Text(
               'Logout',
               style: TextStyle(color: Colors.black, fontSize: 18),
@@ -81,7 +88,6 @@ class MyDrawerContainer extends StatelessWidget {
               color: Colors.black,
               size: 25,
             ),
-            onTap: () {},
           ),
         ],
       ),
