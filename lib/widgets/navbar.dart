@@ -1,35 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recipe_app/app/constants/colors.dart';
-import 'package:recipe_app/screens/account/profile.dart';
-import 'package:recipe_app/screens/cart/cart.dart';
-import 'package:recipe_app/screens/home/home_screen.dart';
-import 'package:recipe_app/screens/wishlist/wishlist.dart';
+import 'package:recipe_app/app/controllers/bottomnavbar_controller.dart';
 import 'package:super_bottom_navigation_bar/super_bottom_navigation_bar.dart';
 
-class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _BottomNavBarState createState() => _BottomNavBarState();
-}
-
-class _BottomNavBarState extends State<BottomNavBar> {
-  int selectedIndex = 0;
-  final List<Widget> pages = [
-    const MyHomePage(),
-    const MyWishList(),
-    const MyCart(),
-    const MyProfile(),
-  ];
+class BottomNavBar extends StatelessWidget {
+  final BottomNavBarController controller = Get.put(BottomNavBarController());
+  BottomNavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[selectedIndex],
+      body: Obx(() => controller.pages[controller.selectedIndex.value]),
       bottomNavigationBar: SuperBottomNavigationBar(
         backgroundColor: Colors.white,
-        currentIndex: selectedIndex,
+        currentIndex: controller.selectedIndex.value,
         items: const [
           SuperBottomNavigationBarItem(
             unSelectedIcon: Icons.home_outlined,
@@ -65,9 +50,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ],
         onSelected: (index) {
-          setState(() {
-            selectedIndex = index;
-          });
+          controller.changeSelectedIndex(index);
         },
       ),
     );

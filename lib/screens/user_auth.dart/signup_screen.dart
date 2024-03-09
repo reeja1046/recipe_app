@@ -160,7 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     User? user = await _authServies.signUpWithEmailAndPassword(email, password);
     if (user != null) {
       print('User is successfully created');
-      Get.to(() => const BottomNavBar());
+      Get.to(() =>  BottomNavBar());
     } else {
       print('Some error occurred');
     }

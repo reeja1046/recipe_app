@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/app/constants/sizedbox.dart';
-import 'package:recipe_app/screens/account/widgets/header_part.dart';
-import 'package:recipe_app/screens/account/my_recipe_screen.dart';
+import 'package:recipe_app/screens/account/my_recipes/widgets/header_part.dart';
+import 'package:recipe_app/screens/account/my_recipes/my_recipe_screen.dart';
 
 class MyProfile extends StatelessWidget {
   const MyProfile({super.key});
@@ -18,16 +18,16 @@ class MyProfile extends StatelessWidget {
             child: Column(
               children: [
                 accountListTile(
-                    'Account', Icons.person, MyRecipeScreen(), context),
+                    'Account', Icons.person, const MyRecipeScreen(), context),
                 sizeBoxHelper.kheight10,
                 accountListTile(
-                    'My Recipes', Icons.collections, MyRecipeScreen(), context),
+                    'My Recipes', Icons.collections, const MyRecipeScreen(), context),
                 sizeBoxHelper.kheight10,
                 accountListTile('Units of Measurements', Icons.ad_units,
-                    MyRecipeScreen(), context),
+                    const MyRecipeScreen(), context),
                 sizeBoxHelper.kheight10,
                 accountListTile(
-                    'My Cookbooks', Icons.bookmark, MyRecipeScreen(), context),
+                    'My Cookbooks', Icons.bookmark, const MyRecipeScreen(), context),
               ],
             ),
           ),
@@ -49,7 +49,7 @@ Widget accountListTile(text, icon, navigate, context) {
       },
       title: Text(
         text,
-        style: TextStyle(fontSize: 17),
+        style: const TextStyle(fontSize: 17),
       ),
       leading: Icon(icon),
       trailing: IconButton(

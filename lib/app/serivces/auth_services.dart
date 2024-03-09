@@ -18,13 +18,10 @@ class FirebaseAuthServies {
       print('/////////////*****************/////////////////');
       if (e.code == 'email-already-in-use') {
         print('8888888888pppppppppppiiiiiii');
-        // ignore: use_build_context_synchronously
         showToast(message: 'The email already in use');
       } else {
-        // ignore: use_build_context_synchronously
         showToast(message: 'An error occured: ${e.code}');
       }
-      // print('Some Error Occured');
     }
     return null;
   }
@@ -63,8 +60,8 @@ class FirebaseAuthServies {
 
         await _auth.signInWithCredential(credential);
 
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const BottomNavBar()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => BottomNavBar()));
       }
     } catch (e) {
       showToast(message: "Some error occured $e");

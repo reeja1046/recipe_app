@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 
 class RadioButtonsRow extends StatefulWidget {
-  const RadioButtonsRow({super.key});
+  final Function(int, String) onDifficultyChanged;
+  final String difficultyText;
+
+  const RadioButtonsRow({
+    Key? key,
+    required this.onDifficultyChanged,
+    required this.difficultyText,
+  }) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _RadioButtonsRowState createState() => _RadioButtonsRowState();
 }
-
 class _RadioButtonsRowState extends State<RadioButtonsRow> {
   int selectedRadio = 0;
+  final Map<int, String> radioText = {
+    1: 'Easy',
+    2: 'Normal',
+    3: 'Professional',
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -19,29 +29,19 @@ class _RadioButtonsRowState extends State<RadioButtonsRow> {
         Row(
           children: [
             Radio(
-              value: 0,
-              groupValue: selectedRadio,
-              onChanged: (value) {
-                setState(() {
-                  selectedRadio = value as int;
-                });
-              },
-            ),
-            const Text('Easy'),
-          ],
-        ),
-        Row(
-          children: [
-            Radio(
               value: 1,
               groupValue: selectedRadio,
               onChanged: (value) {
                 setState(() {
                   selectedRadio = value as int;
+                  widget.onDifficultyChanged(
+                    selectedRadio,
+                    radioText[selectedRadio] ?? '',
+                  );
                 });
               },
             ),
-            const Text('Normal'),
+            const Text('Easy'),
           ],
         ),
         Row(
@@ -52,6 +52,28 @@ class _RadioButtonsRowState extends State<RadioButtonsRow> {
               onChanged: (value) {
                 setState(() {
                   selectedRadio = value as int;
+                  widget.onDifficultyChanged(
+                    selectedRadio,
+                    radioText[selectedRadio] ?? '',
+                  );
+                });
+              },
+            ),
+            const Text('Normal'),
+          ],
+        ),
+        Row(
+          children: [
+            Radio(
+              value: 3,
+              groupValue: selectedRadio,
+              onChanged: (value) {
+                setState(() {
+                  selectedRadio = value as int;
+                  widget.onDifficultyChanged(
+                    selectedRadio,
+                    radioText[selectedRadio] ?? '',
+                  );
                 });
               },
             ),

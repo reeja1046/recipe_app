@@ -166,7 +166,7 @@ class _SignInScreenState extends State<SignInScreen> {
     if (user != null) {
       print('User is successfully logged in');
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const BottomNavBar()));
+          MaterialPageRoute(builder: (context) =>  BottomNavBar()));
     } else {
       print('Some error occurred');
     }

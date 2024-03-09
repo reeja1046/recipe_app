@@ -111,7 +111,7 @@ class _OtpVerificationState extends State<OtpVerification> {
     try {
       await FirebaseAuth.instance
           .signInWithCredential(credential)
-          .then((value) => Get.to(() => const BottomNavBar()));
+          .then((value) => Get.to(() => BottomNavBar()));
     } on FirebaseAuthException catch (e) {
       showToast(message: 'Error Occured: ${e.code}');
     } catch (e) {

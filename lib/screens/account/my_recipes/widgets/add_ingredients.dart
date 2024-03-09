@@ -57,8 +57,6 @@ class IngredientRow extends StatelessWidget {
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Biriyani/Friedrice/Noodles',
-                  hintStyle: TextStyle(color: Colors.grey),
                   contentPadding: EdgeInsets.all(5),
                 ),
               ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/app/serivces/auth_services.dart';
-import 'package:recipe_app/screens/user_auth.dart/signin_screen.dart';
+import 'package:recipe_app/screens/user_auth.dart/signup_screen.dart';
 import 'package:recipe_app/screens/user_auth.dart/widgets/phone_authentication.dart';
 
 double getTextWidth(String text, TextStyle style) {
@@ -110,7 +110,7 @@ Widget buildRichTextWithNavigation(context,
     onTap: () {
       print('/////////////////////////');
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const SignInScreen()));
+          .push(MaterialPageRoute(builder: (context) => const SignUpScreen()));
     },
     child: RichText(
       text: TextSpan(
