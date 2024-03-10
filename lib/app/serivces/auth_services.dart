@@ -14,10 +14,9 @@ class FirebaseAuthServies {
           email: email, password: password);
       return credential.user;
     } on FirebaseAuthException catch (e) {
-      print(e.code);
-      print('/////////////*****************/////////////////');
+      
       if (e.code == 'email-already-in-use') {
-        print('8888888888pppppppppppiiiiiii');
+      
         showToast(message: 'The email already in use');
       } else {
         showToast(message: 'An error occured: ${e.code}');

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_app/app/constants/show_toast.dart';
 import 'package:recipe_app/app/constants/sizedbox.dart';
 import 'package:recipe_app/app/serivces/auth_services.dart';
 import 'package:recipe_app/screens/user_auth.dart/signin_screen.dart';
@@ -152,17 +153,43 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _userSignUp() async {
-    String username = _usernameController.text;
     String password = _passwordController.text;
     String email = _emailController.text;
+    String username = _usernameController.text;
     ToastContext().init(context);
-    print(username);
+
+// validate username
+
+    if (username.length <= 3) {
+      showToast(message: 'Name should be more than 3 characters');
+      return;
+    }
+
+//validate email
+
+    RegExp emailRegExp = RegExp(
+      r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$',
+    );
+    if (!emailRegExp.hasMatch(email)) {
+      showToast(message: 'Enter a valid email address');
+      return;
+    }
+
+// Validate password
+
+    if (password.length < 7 || password.contains(' ')) {
+      showToast(
+          message:
+              'Password should be at least 7 characters long, and no spaces are allowed');
+      return;
+    }
+
     User? user = await _authServies.signUpWithEmailAndPassword(email, password);
     if (user != null) {
-      print('User is successfully created');
-      Get.to(() =>  BottomNavBar());
+      showToast(message: 'User is successfully created');
+      Get.to(() => BottomNavBar());
     } else {
-      print('Some error occurred');
+      showToast(message: 'Some error occurred');
     }
   }
 }
