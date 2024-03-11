@@ -152,7 +152,7 @@ class _AddRecipeState extends State<AddRecipe> {
 
                             addRecipe(recipeData);
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => MyRecipeScreen()));
+                                builder: (context) =>const MyRecipeScreen()));
                           },
                           child: const Text(
                             'Add Recipe',
