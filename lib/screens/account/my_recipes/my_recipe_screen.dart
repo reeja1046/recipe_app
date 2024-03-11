@@ -40,7 +40,7 @@ class _MyRecipeScreenState extends State<MyRecipeScreen> {
                 }
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 final List<QueryDocumentSnapshot> documents =
@@ -77,6 +77,19 @@ class _MyRecipeScreenState extends State<MyRecipeScreen> {
                               imageUrl,
                               height: 120.0,
                               fit: BoxFit.cover,
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return Image.asset(
+                                    'assets/placeholder.jpg',
+                                    height: 120.0,
+                                    fit: BoxFit.cover,
+                                  );
+                                }
+                              },
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),

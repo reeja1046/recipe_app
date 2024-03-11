@@ -5,6 +5,7 @@ import 'package:recipe_app/app/constants/show_toast.dart';
 import 'package:recipe_app/app/constants/sizedbox.dart';
 import 'package:recipe_app/app/serivces/auth_services.dart';
 import 'package:recipe_app/screens/user_auth.dart/signin_screen.dart';
+import 'package:recipe_app/screens/user_auth.dart/widgets/userinput_validator.dart';
 import 'package:recipe_app/screens/user_auth.dart/widgets/widgets.dart';
 import 'package:recipe_app/widgets/navbar.dart';
 import 'package:toast/toast.dart';
@@ -17,7 +18,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final FirebaseAuthServies _authServies = FirebaseAuthServies();
+  final FirebaseAuthService _authServies = FirebaseAuthService();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -125,13 +126,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             'Sign Up',
                             onPressed: () {
                               _userSignUp();
-                              print('clicked sign up button');
                             },
                           ),
                           _sizedbox.kheight20,
                           buildRichTextWithNavigation(
                             context,
-                            navigate: const SignInScreen(),
+                            navigate: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignInScreen()),
+                              );
+                            },
                             text1: 'Already have an account? ',
                             clickbutton: 'Sign In',
                           ),
@@ -158,29 +164,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String username = _usernameController.text;
     ToastContext().init(context);
 
-// validate username
+    String? usernameError = InputValidator.validateUsername(username);
+    String? emailError = InputValidator.validateEmail(email);
+    String? passwordError = InputValidator.validatePassword(password);
 
-    if (username.length <= 3) {
-      showToast(message: 'Name should be more than 3 characters');
-      return;
-    }
-
-//validate email
-
-    RegExp emailRegExp = RegExp(
-      r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$',
-    );
-    if (!emailRegExp.hasMatch(email)) {
-      showToast(message: 'Enter a valid email address');
-      return;
-    }
-
-// Validate password
-
-    if (password.length < 7 || password.contains(' ')) {
-      showToast(
-          message:
-              'Password should be at least 7 characters long, and no spaces are allowed');
+    if (usernameError != null || emailError != null || passwordError != null) {
+      showToast(message: 'Invalid input. Please check the fields.');
       return;
     }
 

@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:recipe_app/app/constants/show_toast.dart';
 import 'package:recipe_app/app/constants/sizedbox.dart';
 import 'package:recipe_app/app/serivces/auth_services.dart';
 import 'package:recipe_app/screens/user_auth.dart/signup_screen.dart';
+import 'package:recipe_app/screens/user_auth.dart/widgets/forgot_password.dart';
 import 'package:recipe_app/screens/user_auth.dart/widgets/widgets.dart';
 import 'package:recipe_app/widgets/navbar.dart';
+import 'package:toast/toast.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -14,7 +18,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final FirebaseAuthServies _authServies = FirebaseAuthServies();
+  final FirebaseAuthService _authServies = FirebaseAuthService();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -119,6 +123,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             children: [
                               GestureDetector(
                                 onTap: () {
+                                  Get.to(() => const ForgotPassWord());
                                   print('clicked forgot  password');
                                 },
                                 child: const Text(
@@ -133,14 +138,17 @@ class _SignInScreenState extends State<SignInScreen> {
                             'Sign In',
                             onPressed: () {
                               _userSignIn();
-                              print('clicked sign in button');
                             },
                           ),
                           _sizedbox.kheight10,
                           buildRichTextWithNavigation(context,
-                              clickbutton: 'Sign Up',
-                              navigate: const SignUpScreen(),
-                              text1: "Don't have an account?  "),
+                              clickbutton: 'Sign Up', navigate: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignUpScreen()),
+                            );
+                          }, text1: "Don't have an account?  "),
                           _sizedbox.kheight50,
                           buildDividerWithText('Or Sign Up With'),
                           _sizedbox.kheight40,
@@ -161,14 +169,16 @@ class _SignInScreenState extends State<SignInScreen> {
   void _userSignIn() async {
     String password = _passwordController.text;
     String email = _emailController.text;
-    print(email);
+    ToastContext().init(context);
     User? user = await _authServies.signInWithEmailAndPassword(email, password);
     if (user != null) {
-      print('User is successfully logged in');
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) =>  BottomNavBar()));
+      showToast(message: 'User is successfully logged in');
+      Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
+          context,
+          MaterialPageRoute(builder: (context) => BottomNavBar()));
     } else {
-      print('Some error occurred');
+      showToast(message: 'Some error occurred');
     }
   }
 }

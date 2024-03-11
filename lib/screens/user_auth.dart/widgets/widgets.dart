@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/app/serivces/auth_services.dart';
-import 'package:recipe_app/screens/user_auth.dart/signup_screen.dart';
 import 'package:recipe_app/screens/user_auth.dart/widgets/phone_authentication.dart';
 
 double getTextWidth(String text, TextStyle style) {
@@ -108,9 +107,7 @@ Widget buildRichTextWithNavigation(context,
     {required navigate, required text1, required clickbutton}) {
   return GestureDetector(
     onTap: () {
-      print('/////////////////////////');
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const SignUpScreen()));
+      navigate();
     },
     child: RichText(
       text: TextSpan(
@@ -157,7 +154,7 @@ Widget buildDividerWithText(String text) {
   );
 }
 
-FirebaseAuthServies authService = FirebaseAuthServies();
+FirebaseAuthService authService = FirebaseAuthService();
 Widget buildSocialLoginButtons(context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,

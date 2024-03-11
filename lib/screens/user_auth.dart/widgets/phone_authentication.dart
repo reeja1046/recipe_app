@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:recipe_app/app/constants/show_toast.dart';
+import 'package:recipe_app/app/serivces/auth_services.dart';
 import 'package:recipe_app/widgets/navbar.dart';
 
 class PhoneAuthentication extends StatefulWidget {
@@ -13,28 +14,8 @@ class PhoneAuthentication extends StatefulWidget {
 }
 
 class _PhoneAuthenticationState extends State<PhoneAuthentication> {
+  FirebaseAuthService authService = FirebaseAuthService();
   TextEditingController phoneController = TextEditingController();
-
-  sendCode() async {
-    try {
-      await FirebaseAuth.instance.verifyPhoneNumber(
-          phoneNumber: '+91 ${phoneController.text}',
-          verificationCompleted: (PhoneAuthCredential credential) {},
-          verificationFailed: (FirebaseAuthException e) {
-            showToast(message: 'An error occured: ${e.code}');
-          },
-          codeSent: (String vid, int? token) {
-            Get.to(OtpVerification(vid: vid));
-          },
-          codeAutoRetrievalTimeout: (vid) {});
-    } on FirebaseAuthException catch (e) {
-      showToast(message: 'Error Occured : ${e.code}');
-    } catch (e) {
-      showToast(
-        message: 'Error Occured : ${e.toString()}',
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +52,7 @@ class _PhoneAuthenticationState extends State<PhoneAuthentication> {
                 child: SizedBox(
                   child: ElevatedButton(
                     onPressed: () {
-                      sendCode();
+                      authService.sendCode(phoneController.text);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
