@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/app/constants/colors.dart';
 
 class IngredientsForm extends StatefulWidget {
-  const IngredientsForm({Key? key}) : super(key: key);
+  final Function(List<String>) onIngredientsChanged;
+  const IngredientsForm({Key? key, required this.onIngredientsChanged})
+      : super(key: key);
 
   @override
   State<IngredientsForm> createState() => _IngredientsFormState();
@@ -110,6 +112,7 @@ class _IngredientsFormState extends State<IngredientsForm> {
                 ),
               TextButton(
                 onPressed: () {
+                  print(ingredientsList);
                   setState(() {
                     ingredientControllers.add(TextEditingController());
                     totalHeight += textFieldHeight + verticalPadding;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/app/constants/colors.dart';
 import 'package:recipe_app/app/constants/sizedbox.dart';
@@ -9,6 +10,7 @@ import 'package:recipe_app/screens/categories/category_button.dart';
 import 'package:recipe_app/screens/home/widget/drawer_container.dart';
 import 'package:recipe_app/screens/home/widget/explore_card.dart';
 import 'package:recipe_app/screens/search/search_screen.dart';
+import 'package:recipe_app/widgets/detailed_recipe.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -75,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage>
                     sizeBoxHelper.kheight10,
                     GestureDetector(
                       onTap: () {
-                        Get.to(() =>const SearchScreen());
+                        Get.to(() => const SearchScreen());
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -128,17 +130,23 @@ class _MyHomePageState extends State<MyHomePage>
                     sizeBoxHelper.kheight10,
                     Stack(
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          height: 220,
-                          width: MediaQuery.of(context).size.width,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.asset(
-                              'assets/chicken biriyani.jpg',
-                              fit: BoxFit.cover,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => DetailedRecipeScreen()));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            height: 220,
+                            width: MediaQuery.of(context).size.width,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.asset(
+                                'assets/chicken biriyani.jpg',
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),

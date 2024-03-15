@@ -23,9 +23,11 @@ class _AddRecipeState extends State<AddRecipe> {
   TextEditingController recipeCategoryController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController caloriesController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   String difficultyText = '';
   int selectedDifficulty = 0;
   String imageUrl = '';
+  List<String> ingredientsList = [];
   final RecipeService recipeService = RecipeService();
 
   SizedBoxHeightWidth sizedboxhelper = SizedBoxHeightWidth();
@@ -63,9 +65,33 @@ class _AddRecipeState extends State<AddRecipe> {
                       difficultyText: difficultyText,
                     ),
                     sizedboxhelper.kheight10,
+                    subtitletext('Description'),
+                    sizedboxhelper.kheight10,
+                    TextFormField(
+                      controller: descriptionController,
+                      decoration: InputDecoration(
+                        hintText: 'Enter a description about your recipe',
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide:
+                              const BorderSide(color: AppColor.baseColor),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide:
+                              const BorderSide(color: AppColor.baseColor),
+                        ),
+                      ),
+                      maxLines:
+                          5, // Allow multiple lines for longer descriptions
+                    ),
+                    sizedboxhelper.kheight10,
                     subtitletext('Ingredients'),
                     sizedboxhelper.kheight10,
-                    const IngredientsForm(),
+                    IngredientsForm(
+                      onIngredientsChanged: handleIngredientsChanged,
+                    ),
                     sizedboxhelper.kheight10,
                     subtitletext('Instructions'),
                     sizedboxhelper.kheight10,
@@ -109,9 +135,10 @@ class _AddRecipeState extends State<AddRecipe> {
                               'Difficulty': selectedDifficulty,
                               'DifficultyText': difficultyText,
                               'Image': imageUrl,
+                              'Description': descriptionController.text,
                             };
 
-                            addRecipe(recipeData);
+                            addRecipe(recipeData, ingredientsList);
                           },
                           child: const Text(
                             'Save',
@@ -145,15 +172,32 @@ class _AddRecipeState extends State<AddRecipe> {
     });
   }
 
-  void addRecipe(Map<String, dynamic> recipeData) {
+  void handleIngredientsChanged(List<String> ingredients) {
+    setState(() {
+      ingredientsList = ingredients;
+      print('Ingredients:');
+      for (var ingredient in ingredientsList) {
+        print(ingredient);
+      }
+    });
+  }
+
+  void addRecipe(
+      Map<String, dynamic> recipeData, List<String> ingredientsList) {
     String recipetime = timeController.text;
     String recipeCalories = caloriesController.text;
     String recipename = recipeNameController.text;
     String category = recipeCategoryController.text;
     String difficultylevel = difficultyText.toString();
+    String description = descriptionController.text;
     // int difficulty = selectedDifficulty;
-
+    print('Ingredients:');
+    for (var ingredient in ingredientsList) {
+      print('7777788888888886666666666666655555555');
+      print(ingredient);
+    }
     if (recipename.isEmpty ||
+        description.isEmpty ||
         category.isEmpty ||
         recipetime.isEmpty ||
         recipeCalories.isEmpty ||
@@ -185,6 +229,7 @@ class _AddRecipeState extends State<AddRecipe> {
     recipeCategoryController.clear();
     timeController.clear();
     caloriesController.clear();
+    descriptionController.clear();
     imageUrl = '';
     Navigator.of(context).push(
       MaterialPageRoute(
