@@ -8,7 +8,10 @@ class RecipeService {
   ) async {
     try {
       // Save the recipe data to Firestore
-      await firestore.collection('add_recipes').add(recipeData);
+      await firestore
+          .collection('add_recipes')
+          .add(recipeData)
+          .then((value) => {print("Recipe added with ID : ${value.id}")});
       print('Recipe saved to Firebase');
     } catch (e) {
       print('Error saving recipe: $e');

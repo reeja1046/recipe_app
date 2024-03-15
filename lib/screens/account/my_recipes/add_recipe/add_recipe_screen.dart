@@ -136,9 +136,10 @@ class _AddRecipeState extends State<AddRecipe> {
                               'DifficultyText': difficultyText,
                               'Image': imageUrl,
                               'Description': descriptionController.text,
+                              'Ingredients': ingredientsList,
                             };
 
-                            addRecipe(recipeData, ingredientsList);
+                            addRecipe(recipeData);
                           },
                           child: const Text(
                             'Save',
@@ -182,20 +183,14 @@ class _AddRecipeState extends State<AddRecipe> {
     });
   }
 
-  void addRecipe(
-      Map<String, dynamic> recipeData, List<String> ingredientsList) {
+  void addRecipe(Map<String, dynamic> recipeData) {
     String recipetime = timeController.text;
     String recipeCalories = caloriesController.text;
     String recipename = recipeNameController.text;
     String category = recipeCategoryController.text;
     String difficultylevel = difficultyText.toString();
     String description = descriptionController.text;
-    // int difficulty = selectedDifficulty;
-    print('Ingredients:');
-    for (var ingredient in ingredientsList) {
-      print('7777788888888886666666666666655555555');
-      print(ingredient);
-    }
+
     if (recipename.isEmpty ||
         description.isEmpty ||
         category.isEmpty ||
@@ -223,14 +218,20 @@ class _AddRecipeState extends State<AddRecipe> {
 
       return;
     }
+    // Add ingredientsList to recipeData
+    recipeData['Ingredients'] = ingredientsList;
 
     recipeService.saveRecipeToFirebase(recipeData);
+
+    // Clear input fields
     recipeNameController.clear();
     recipeCategoryController.clear();
     timeController.clear();
     caloriesController.clear();
     descriptionController.clear();
     imageUrl = '';
+
+    // Navigate back to MyRecipeScreen
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const MyRecipeScreen(),

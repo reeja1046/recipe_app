@@ -11,9 +11,6 @@ class IngredientsForm extends StatefulWidget {
 }
 
 class _IngredientsFormState extends State<IngredientsForm> {
-  List<IngredientModel> constingredientsList =
-      List.generate(4, (index) => IngredientModel());
-  List<String> ingredientsList = [];
   List<TextEditingController> ingredientControllers = [];
   double totalHeight = 320;
   final int maxIngredients = 4;
@@ -23,12 +20,14 @@ class _IngredientsFormState extends State<IngredientsForm> {
   @override
   void initState() {
     super.initState();
+    // Initialize ingredient controllers
     ingredientControllers =
         List.generate(maxIngredients, (index) => TextEditingController());
   }
 
   @override
   void dispose() {
+    // Dispose of all controllers
     for (var controller in ingredientControllers) {
       controller.dispose();
     }
@@ -53,12 +52,10 @@ class _IngredientsFormState extends State<IngredientsForm> {
               for (int i = 0; i < ingredientControllers.length; i++)
                 Padding(
                   padding: EdgeInsets.only(
-                    top: i == 0
-                        ? 0
-                        : verticalPadding, // No padding for the first row
+                    top: i == 0 ? 0 : verticalPadding,
                     bottom: i == ingredientControllers.length - 1
                         ? 0
-                        : verticalPadding, // No padding for the last row
+                        : verticalPadding,
                   ),
                   child: Row(
                     children: [
@@ -80,30 +77,19 @@ class _IngredientsFormState extends State<IngredientsForm> {
                             contentPadding: const EdgeInsets.only(left: 15),
                           ),
                           onChanged: (value) {
-                            setState(() {
-                              ingredientsList = List.generate(
-                                ingredientControllers.length,
-                                (index) => ingredientControllers[index].text,
-                              );
-                            });
+                            // Update ingredients list
+                            widget.onIngredientsChanged(getIngredientsList());
                           },
                         ),
                       ),
-                      if (i >= constingredientsList.length)
+                      if (i >= maxIngredients - 1)
                         IconButton(
                           onPressed: () {
-                            if (ingredientControllers.length ==
-                                maxIngredients) {
-                              ingredientControllers[i].clear();
-                            } else {
-                              setState(() {
-                                ingredientControllers.removeAt(i);
-                                ingredientsList.removeAt(i);
-
-                                totalHeight -=
-                                    textFieldHeight + verticalPadding;
-                              });
-                            }
+                            // Remove ingredient controller
+                            setState(() {
+                              ingredientControllers.removeAt(i);
+                              totalHeight -= textFieldHeight + verticalPadding;
+                            });
                           },
                           icon: const Icon(Icons.delete),
                         ),
@@ -112,7 +98,7 @@ class _IngredientsFormState extends State<IngredientsForm> {
                 ),
               TextButton(
                 onPressed: () {
-                  print(ingredientsList);
+                  // Add more ingredient controllers
                   setState(() {
                     ingredientControllers.add(TextEditingController());
                     totalHeight += textFieldHeight + verticalPadding;
@@ -129,9 +115,9 @@ class _IngredientsFormState extends State<IngredientsForm> {
       ),
     );
   }
-}
 
-class IngredientModel {
-  String name = '';
-  bool selected = false;
+  List<String> getIngredientsList() {
+    // Extract ingredients from controllers
+    return ingredientControllers.map((controller) => controller.text).toList();
+  }
 }
