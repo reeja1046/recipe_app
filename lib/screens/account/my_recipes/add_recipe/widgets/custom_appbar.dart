@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/app/constants/colors.dart';
+import 'package:recipe_app/app/constants/text_strings.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
@@ -7,7 +8,7 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      Container(
+      SizedBox(
         height: MediaQuery.of(context).size.height * 0.18,
         width: MediaQuery.of(context).size.width,
       ),
@@ -27,14 +28,14 @@ class CustomAppBar extends StatelessWidget {
             ),
             Text(
               'Create New Recipe',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextSize.appBarTitle,
             ),
           ],
         )),
       ),
       const Positioned(
         top: -5,
-        left: -20,
+        left: -35,
         child: CircleAvatar(
           radius: 70,
           backgroundImage: AssetImage('assets/chicken biriyani.jpg'),

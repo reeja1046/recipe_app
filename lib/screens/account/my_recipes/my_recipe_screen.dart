@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/app/constants/colors.dart';
-import 'package:recipe_app/screens/account/my_recipes/add_recipe_screen.dart';
+import 'package:recipe_app/screens/account/my_recipes/add_recipe/add_recipe_screen.dart';
 
 class MyRecipeScreen extends StatefulWidget {
   const MyRecipeScreen({super.key});

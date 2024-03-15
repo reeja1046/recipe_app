@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:recipe_app/app/constants/colors.dart';
 import 'package:recipe_app/app/constants/sizedbox.dart';
 import 'package:recipe_app/app/constants/text_strings.dart';
 import 'package:recipe_app/screens/account/my_account/widgets.dart';
-
-import '../my_recipes/add_recipe_screen.dart';
 
 class MyAccountEdit extends StatelessWidget {
   const MyAccountEdit({super.key});
@@ -29,7 +26,7 @@ class MyAccountEdit extends StatelessWidget {
               child: Column(
                 children: [
                   profilePic(),
-                  sizedboxhelper.kheight40,
+                  sizedboxhelper.kheight20,
                   textEnteringField(
                       text: 'Name', keyboardtype: TextInputType.number),
                   sizedboxhelper.kheight20,

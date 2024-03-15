@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage>
                     sizeBoxHelper.kheight10,
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => SearchScreen());
+                        Get.to(() =>const SearchScreen());
                       },
                       child: Container(
                         decoration: BoxDecoration(

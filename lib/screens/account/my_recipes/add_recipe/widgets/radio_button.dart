@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/app/constants/colors.dart';
 
 class RadioButtonsRow extends StatefulWidget {
   final Function(int, String) onDifficultyChanged;
@@ -13,6 +14,7 @@ class RadioButtonsRow extends StatefulWidget {
   @override
   _RadioButtonsRowState createState() => _RadioButtonsRowState();
 }
+
 class _RadioButtonsRowState extends State<RadioButtonsRow> {
   int selectedRadio = 0;
   final Map<int, String> radioText = {
@@ -40,8 +42,12 @@ class _RadioButtonsRowState extends State<RadioButtonsRow> {
                   );
                 });
               },
+              activeColor: AppColor.baseColor,
             ),
-            const Text('Easy'),
+            const Text(
+              'Easy',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
           ],
         ),
         Row(
@@ -58,8 +64,12 @@ class _RadioButtonsRowState extends State<RadioButtonsRow> {
                   );
                 });
               },
+              activeColor: AppColor.baseColor,
             ),
-            const Text('Normal'),
+            const Text(
+              'Normal',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
           ],
         ),
         Row(
@@ -76,8 +86,12 @@ class _RadioButtonsRowState extends State<RadioButtonsRow> {
                   );
                 });
               },
+              activeColor: AppColor.baseColor,
             ),
-            const Text('Professional'),
+            const Text(
+              'Professional',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
           ],
         ),
       ],

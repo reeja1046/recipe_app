@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/app/constants/colors.dart';
+import 'package:recipe_app/app/constants/sizedbox.dart';
+import 'package:recipe_app/app/constants/text_strings.dart';
 
 class BuildTimeAndCalories extends StatefulWidget {
   final Function(String, String) onTimeAndCaloriesChanged;
@@ -8,7 +11,10 @@ class BuildTimeAndCalories extends StatefulWidget {
 
   @override
   State<BuildTimeAndCalories> createState() => _BuildTimeAndCaloriesState();
-}class _BuildTimeAndCaloriesState extends State<BuildTimeAndCalories> {
+}
+
+class _BuildTimeAndCaloriesState extends State<BuildTimeAndCalories> {
+  SizedBoxHeightWidth sizedboxhelper = SizedBoxHeightWidth();
   TextEditingController timeController = TextEditingController();
   TextEditingController caloriesController = TextEditingController();
 
@@ -29,9 +35,9 @@ class BuildTimeAndCalories extends StatefulWidget {
       children: [
         const Text(
           'Est Time : ',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          style: TextSize.subtitletextsize,
         ),
-        const SizedBox(height: 10),
+        sizedboxhelper.kheight10,
         SizedBox(
           height: 38,
           width: 100,
@@ -41,11 +47,18 @@ class BuildTimeAndCalories extends StatefulWidget {
             onChanged: (value) {
               widget.onTimeAndCaloriesChanged(value, caloriesController.text);
             },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: const BorderSide(color: AppColor.baseColor),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: const BorderSide(color: AppColor.baseColor),
+              ),
               hintText: 'Time',
-              hintStyle: TextStyle(color: Colors.grey),
-              contentPadding: EdgeInsets.all(5),
+              hintStyle: const TextStyle(color: Colors.grey),
+              contentPadding: const EdgeInsets.all(10),
             ),
           ),
         ),
@@ -59,9 +72,9 @@ class BuildTimeAndCalories extends StatefulWidget {
       children: [
         const Text(
           'Calories : ',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          style: TextSize.subtitletextsize,
         ),
-        const SizedBox(height: 10),
+        sizedboxhelper.kheight10,
         SizedBox(
           height: 38,
           width: 100,
@@ -71,11 +84,18 @@ class BuildTimeAndCalories extends StatefulWidget {
             onChanged: (value) {
               widget.onTimeAndCaloriesChanged(timeController.text, value);
             },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: const BorderSide(color: AppColor.baseColor),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: const BorderSide(color: AppColor.baseColor),
+              ),
               hintText: 'Calories',
-              hintStyle: TextStyle(color: Colors.grey),
-              contentPadding: EdgeInsets.all(5),
+              hintStyle: const TextStyle(color: Colors.grey),
+              contentPadding: const EdgeInsets.all(10),
             ),
           ),
         ),
