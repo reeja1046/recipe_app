@@ -108,12 +108,12 @@ class _PhotoUploadSectionState extends State<PhotoUploadSection> {
                           });
                         },
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.red,
                           ),
                           padding: const EdgeInsets.all(4.0),
-                          child: Icon(
+                          child: const Icon(
                             Icons.close,
                             color: Colors.white,
                             size: 16.0,

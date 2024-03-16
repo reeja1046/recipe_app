@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/app/constants/colors.dart';
 import 'package:recipe_app/app/constants/sizedbox.dart';
@@ -120,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage>
                         ),
                       ],
                     ),
-                    SingleChildScrollView(
+                    const SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: CategoryButtons(),
                     ),
@@ -193,12 +192,12 @@ class _MyHomePageState extends State<MyHomePage>
                 left: 0,
                 right: 0,
                 child: Transform.translate(
-                  offset: Offset(0.0, _animation.value * 300),
+                  offset: Offset(0.0, _animation.value * 350),
                   child: child,
                 ),
               );
             },
-            child: MyDrawerContainer(),
+            child: const MyDrawerContainer(),
           ),
         ],
       ),

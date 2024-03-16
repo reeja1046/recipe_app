@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/app/constants/colors.dart';
-import 'package:recipe_app/app/constants/sizedbox.dart';
 import 'package:recipe_app/app/constants/text_strings.dart';
 
 Widget profilePic() {
@@ -32,7 +31,6 @@ Widget textEnteringField({
   required text,
   required keyboardtype,
 }) {
-  SizedBoxHeightWidth sizedBoxHelper = SizedBoxHeightWidth();
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -40,9 +38,8 @@ Widget textEnteringField({
         text,
         style: TextSize.subtitletextsize,
       ),
-      sizedBoxHelper.kheight10,
       SizedBox(
-        height: 42,
+        height: 30,
         child: TextFormField(
           keyboardType: keyboardtype,
           decoration: InputDecoration(

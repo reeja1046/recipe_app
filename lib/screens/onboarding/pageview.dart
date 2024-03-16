@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_app/app/constants/colors.dart';
 import 'package:recipe_app/screens/user_auth.dart/signup_screen.dart';
 import 'package:recipe_app/screens/onboarding/widgets/onboardingone.dart';
 import 'package:recipe_app/screens/onboarding/widgets/onboardingthree.dart';
@@ -51,13 +52,14 @@ class _PageScreenState extends State<PageScreen> {
                 Visibility(
                   visible: currentPage < 2,
                   child: TextButton(
-                      onPressed: () {
-                        Get.to(() => const SignUpScreen());
-                      },
-                      child: const Text(
-                        'Skipp >>',
-                        style: TextStyle(color: Colors.grey),
-                      )),
+                    onPressed: () {
+                      Get.to(() => const SignUpScreen());
+                    },
+                    child: const Text(
+                      'Skipp >>',
+                      style: TextStyle(color: AppColor.subGreyColor),
+                    ),
+                  ),
                 ),
                 Visibility(
                   visible: currentPage < 2,
@@ -138,7 +140,7 @@ class DotsIndicator extends StatelessWidget {
           height: 10,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: index == currentPage ? Colors.black : Colors.grey,
+            color: index == currentPage ? Colors.black : AppColor.subGreyColor,
           ),
         ),
       ),

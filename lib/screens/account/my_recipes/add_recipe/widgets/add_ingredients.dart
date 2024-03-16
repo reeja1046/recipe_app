@@ -20,14 +20,12 @@ class _IngredientsFormState extends State<IngredientsForm> {
   @override
   void initState() {
     super.initState();
-    // Initialize ingredient controllers
     ingredientControllers =
         List.generate(maxIngredients, (index) => TextEditingController());
   }
 
   @override
   void dispose() {
-    // Dispose of all controllers
     for (var controller in ingredientControllers) {
       controller.dispose();
     }
@@ -77,7 +75,6 @@ class _IngredientsFormState extends State<IngredientsForm> {
                             contentPadding: const EdgeInsets.only(left: 15),
                           ),
                           onChanged: (value) {
-                            // Update ingredients list
                             widget.onIngredientsChanged(getIngredientsList());
                           },
                         ),
@@ -85,7 +82,6 @@ class _IngredientsFormState extends State<IngredientsForm> {
                       if (i >= maxIngredients - 1)
                         IconButton(
                           onPressed: () {
-                            // Remove ingredient controller
                             setState(() {
                               ingredientControllers.removeAt(i);
                               totalHeight -= textFieldHeight + verticalPadding;
@@ -98,7 +94,6 @@ class _IngredientsFormState extends State<IngredientsForm> {
                 ),
               TextButton(
                 onPressed: () {
-                  // Add more ingredient controllers
                   setState(() {
                     ingredientControllers.add(TextEditingController());
                     totalHeight += textFieldHeight + verticalPadding;
@@ -117,7 +112,6 @@ class _IngredientsFormState extends State<IngredientsForm> {
   }
 
   List<String> getIngredientsList() {
-    // Extract ingredients from controllers
     return ingredientControllers.map((controller) => controller.text).toList();
   }
 }

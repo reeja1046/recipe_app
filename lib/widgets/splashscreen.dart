@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (user != null) {
       return BottomNavBar();
     } else {
-      return PageScreen();
+      return const PageScreen();
     }
   }
 }

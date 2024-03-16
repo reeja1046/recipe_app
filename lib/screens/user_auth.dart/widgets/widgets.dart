@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:recipe_app/app/constants/colors.dart';
 import 'package:recipe_app/app/serivces/auth_services.dart';
 import 'package:recipe_app/screens/user_auth.dart/widgets/phone_authentication.dart';
 
@@ -19,7 +20,7 @@ Widget buildTextField(
     required TextEditingController controller}) {
   return Container(
     decoration: BoxDecoration(
-      border: Border.all(color: Colors.grey),
+      border: Border.all(color: AppColor.subGreyColor),
       borderRadius: BorderRadius.circular(10.0),
     ),
     child: Padding(
@@ -162,7 +163,7 @@ Widget buildSocialLoginButtons(context) {
       buildSocialLoginButton(
         icon: FontAwesomeIcons.google,
         label: 'Google',
-        color: Colors.red,
+        color: AppColor.favButtonColor,
         onPressed: () {
           authService.signInWithGoogle(context);
         },
@@ -173,7 +174,7 @@ Widget buildSocialLoginButtons(context) {
           },
           icon: FontAwesomeIcons.phone,
           label: 'Number',
-          color: Colors.red),
+          color: AppColor.favButtonColor),
     ],
   );
 }

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/app/constants/colors.dart';
 
 class CategoryButtons extends StatefulWidget {
+  const CategoryButtons({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _CategoryButtonsState createState() => _CategoryButtonsState();
 }
 
@@ -52,7 +55,7 @@ class CategoryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isSelected;
 
-  CategoryButton({
+  const CategoryButton({super.key, 
     required this.text,
     required this.onPressed,
     required this.isSelected,
@@ -60,7 +63,7 @@ class CategoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 35,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(

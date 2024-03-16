@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_app/app/constants/colors.dart';
 import 'package:recipe_app/app/constants/show_toast.dart';
 import 'package:recipe_app/app/constants/sizedbox.dart';
 import 'package:recipe_app/app/serivces/auth_services.dart';
@@ -128,7 +129,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 },
                                 child: const Text(
                                   'Forgot password?',
-                                  style: TextStyle(color: Colors.red),
+                                  style: TextStyle(color: AppColor.favButtonColor),
                                 ),
                               ),
                             ],

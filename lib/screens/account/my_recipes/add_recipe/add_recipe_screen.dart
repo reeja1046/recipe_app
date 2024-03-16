@@ -28,6 +28,7 @@ class _AddRecipeState extends State<AddRecipe> {
   int selectedDifficulty = 0;
   String imageUrl = '';
   List<String> ingredientsList = [];
+  List<String> instructionsList = [];
   final RecipeService recipeService = RecipeService();
 
   SizedBoxHeightWidth sizedboxhelper = SizedBoxHeightWidth();
@@ -83,8 +84,7 @@ class _AddRecipeState extends State<AddRecipe> {
                               const BorderSide(color: AppColor.baseColor),
                         ),
                       ),
-                      maxLines:
-                          5, // Allow multiple lines for longer descriptions
+                      maxLines: 5,
                     ),
                     sizedboxhelper.kheight10,
                     subtitletext('Ingredients'),
@@ -95,7 +95,7 @@ class _AddRecipeState extends State<AddRecipe> {
                     sizedboxhelper.kheight10,
                     subtitletext('Instructions'),
                     sizedboxhelper.kheight10,
-                    const AddInstructions(),
+                     AddInstructions(onInstructionsAdded : handleInstructions),
                     sizedboxhelper.kheight10,
                     subtitletext('Upload Photos'),
                     sizedboxhelper.kheight10,
@@ -137,6 +137,7 @@ class _AddRecipeState extends State<AddRecipe> {
                               'Image': imageUrl,
                               'Description': descriptionController.text,
                               'Ingredients': ingredientsList,
+                              'Instructions': instructionsList,
                             };
 
                             addRecipe(recipeData);
@@ -183,6 +184,16 @@ class _AddRecipeState extends State<AddRecipe> {
     });
   }
 
+  void handleInstructions(List<String> instructions) {
+    setState(() {
+      instructionsList = instructions;
+      print('Ingredients:');
+      for (var instruction in instructionsList) {
+        print(instruction);
+      }
+    });
+  }
+
   void addRecipe(Map<String, dynamic> recipeData) {
     String recipetime = timeController.text;
     String recipeCalories = caloriesController.text;
@@ -220,6 +231,7 @@ class _AddRecipeState extends State<AddRecipe> {
     }
     // Add ingredientsList to recipeData
     recipeData['Ingredients'] = ingredientsList;
+    recipeData['Instructions'] = instructionsList;
 
     recipeService.saveRecipeToFirebase(recipeData);
 

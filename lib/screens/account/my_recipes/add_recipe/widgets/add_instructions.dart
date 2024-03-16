@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/app/constants/colors.dart';
 
 class AddInstructions extends StatefulWidget {
-  const AddInstructions({Key? key}) : super(key: key);
+  final Function(List<String>) onInstructionsAdded;
+  const AddInstructions({Key? key, required this.onInstructionsAdded})
+      : super(key: key);
 
   @override
   State<AddInstructions> createState() => _AddInstructionsState();
 }
 
 class _AddInstructionsState extends State<AddInstructions> {
-  List<InstructionsModel> constinstructionsList =
-      List.generate(4, (index) => InstructionsModel());
   List<String> instructionsList = [];
   List<TextEditingController> instructionsControllers = [];
   double totalHeight = 320;
@@ -78,16 +78,11 @@ class _AddInstructionsState extends State<AddInstructions> {
                             contentPadding: const EdgeInsets.only(left: 15),
                           ),
                           onChanged: (value) {
-                            setState(() {
-                              instructionsList = List.generate(
-                                instructionsControllers.length,
-                                (index) => instructionsControllers[index].text,
-                              );
-                            });
+                            widget.onInstructionsAdded(getInstructionsList());
                           },
                         ),
                       ),
-                      if (i >= constinstructionsList.length)
+                      if (i > maxIngredients - 1)
                         IconButton(
                           onPressed: () {
                             if (instructionsControllers.length ==
@@ -126,9 +121,10 @@ class _AddInstructionsState extends State<AddInstructions> {
       ),
     );
   }
-}
 
-class InstructionsModel {
-  String name = '';
-  bool selected = false;
+  List<String> getInstructionsList() {
+    return instructionsControllers
+        .map((controller) => controller.text)
+        .toList();
+  }
 }
