@@ -14,7 +14,7 @@ class _AddInstructionsState extends State<AddInstructions> {
   List<String> instructionsList = [];
   List<TextEditingController> instructionsControllers = [];
   double totalHeight = 320;
-  final int maxIngredients = 4;
+  final int maxInstructions = 4;
   final double textFieldHeight = 60;
   final double verticalPadding = 8.0;
 
@@ -22,7 +22,7 @@ class _AddInstructionsState extends State<AddInstructions> {
   void initState() {
     super.initState();
     instructionsControllers =
-        List.generate(maxIngredients, (index) => TextEditingController());
+        List.generate(maxInstructions, (index) => TextEditingController());
   }
 
   @override
@@ -44,7 +44,7 @@ class _AddInstructionsState extends State<AddInstructions> {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -82,17 +82,12 @@ class _AddInstructionsState extends State<AddInstructions> {
                           },
                         ),
                       ),
-                      if (i > maxIngredients - 1)
+                      if (i > maxInstructions - 1)
                         IconButton(
                           onPressed: () {
-                            if (instructionsControllers.length ==
-                                maxIngredients) {
-                              instructionsControllers[i].clear();
-                            } else {
+                            {
                               setState(() {
                                 instructionsControllers.removeAt(i);
-                                instructionsList.removeAt(i);
-
                                 totalHeight -=
                                     textFieldHeight + verticalPadding;
                               });

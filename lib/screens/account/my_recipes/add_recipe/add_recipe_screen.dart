@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/app/constants/colors.dart';
+import 'package:recipe_app/app/constants/show_toast.dart';
 import 'package:recipe_app/app/constants/sizedbox.dart';
 import 'package:recipe_app/app/constants/text_strings.dart';
 import 'package:recipe_app/app/serivces/add_service.dart';
@@ -95,7 +97,7 @@ class _AddRecipeState extends State<AddRecipe> {
                     sizedboxhelper.kheight10,
                     subtitletext('Instructions'),
                     sizedboxhelper.kheight10,
-                     AddInstructions(onInstructionsAdded : handleInstructions),
+                    AddInstructions(onInstructionsAdded: handleInstructions),
                     sizedboxhelper.kheight10,
                     subtitletext('Upload Photos'),
                     sizedboxhelper.kheight10,
@@ -195,6 +197,14 @@ class _AddRecipeState extends State<AddRecipe> {
   }
 
   void addRecipe(Map<String, dynamic> recipeData) {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+
+    // ignore: unnecessary_null_comparison
+    if (userId == null) {
+      showToast(message: 'User is not signed in');
+      return;
+    }
+
     String recipetime = timeController.text;
     String recipeCalories = caloriesController.text;
     String recipename = recipeNameController.text;
@@ -229,11 +239,12 @@ class _AddRecipeState extends State<AddRecipe> {
 
       return;
     }
-    // Add ingredientsList to recipeData
+    // Add to recipeData
     recipeData['Ingredients'] = ingredientsList;
     recipeData['Instructions'] = instructionsList;
+    recipeData['UserId'] = userId;
 
-    recipeService.saveRecipeToFirebase(recipeData);
+    recipeService.saveRecipeToFirebase(recipeData, userId);
 
     // Clear input fields
     recipeNameController.clear();
@@ -244,7 +255,7 @@ class _AddRecipeState extends State<AddRecipe> {
     imageUrl = '';
 
     // Navigate back to MyRecipeScreen
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => const MyRecipeScreen(),
       ),

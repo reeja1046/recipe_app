@@ -79,7 +79,7 @@ class _IngredientsFormState extends State<IngredientsForm> {
                           },
                         ),
                       ),
-                      if (i >= maxIngredients - 1)
+                      if (i > maxIngredients - 1)
                         IconButton(
                           onPressed: () {
                             setState(() {

@@ -163,6 +163,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String email = _emailController.text;
     String username = _usernameController.text;
     ToastContext().init(context);
+    print(password);
+    print(email);
+    print(username);
 
     String? usernameError = InputValidator.validateUsername(username);
     String? emailError = InputValidator.validateEmail(email);

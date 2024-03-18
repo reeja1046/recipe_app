@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/app/constants/colors.dart';
 import 'package:recipe_app/screens/account/my_recipes/add_recipe/add_recipe_screen.dart';
+import 'package:recipe_app/widgets/detailed_recipe.dart';
 
 class MyRecipeScreen extends StatefulWidget {
   const MyRecipeScreen({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class MyRecipeScreen extends StatefulWidget {
 
 class _MyRecipeScreenState extends State<MyRecipeScreen> {
   final CollectionReference recipesCollection =
-      FirebaseFirestore.instance.collection('add_recipes');
+      FirebaseFirestore.instance.collection('recipes');
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +68,8 @@ class _MyRecipeScreenState extends State<MyRecipeScreen> {
                   return GestureDetector(
                     onTap: () {
                       print('Tapped on $recipeName');
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const DetailedRecipeScreen()));
                     },
                     child: Card(
                       child: Column(
