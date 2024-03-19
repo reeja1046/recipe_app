@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:recipe_app/app/constants/show_toast.dart';
-import 'package:recipe_app/screens/user_auth.dart/widgets/phone_authentication.dart';
-import 'package:recipe_app/widgets/navbar.dart';
+import 'package:recipe_app/view/user_auth.dart/widgets/phone_authentication.dart';
+import 'package:recipe_app/widgets/bottomnavbar.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;

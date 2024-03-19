@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:recipe_app/app/constants/images_strings.dart';
 
 class RecipeService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
