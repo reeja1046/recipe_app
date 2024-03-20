@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:recipe_app/app/constants/colors.dart';
+import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/firebase_options.dart';
 import 'package:recipe_app/widgets/splashscreen.dart';
 

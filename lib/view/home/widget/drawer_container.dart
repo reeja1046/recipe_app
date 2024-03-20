@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/app/constants/text_strings.dart';
+import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/view/user_auth.dart/signin_screen.dart';
 
 class MyDrawerContainer extends StatelessWidget {

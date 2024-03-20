@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
-import 'package:recipe_app/app/constants/show_toast.dart';
-import 'package:recipe_app/app/serivces/auth_services.dart';
-import 'package:recipe_app/widgets/bottomnavbar.dart';
+import 'package:recipe_app/core/constants/show_toast.dart';
+import 'package:recipe_app/core/serivces/auth_services.dart';
+import 'package:recipe_app/widgets/bottom_navbar.dart';
 
 class PhoneAuthentication extends StatefulWidget {
   const PhoneAuthentication({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/app/constants/colors.dart';
-import 'package:recipe_app/app/constants/sizedbox.dart';
-import 'package:recipe_app/app/constants/text_strings.dart';
+import 'package:recipe_app/core/constants/colors.dart';
+import 'package:recipe_app/core/constants/sizedbox.dart';
+import 'package:recipe_app/core/constants/text_strings.dart';
 
 class BuildTimeAndCalories extends StatefulWidget {
   final Function(String, String) onTimeAndCaloriesChanged;

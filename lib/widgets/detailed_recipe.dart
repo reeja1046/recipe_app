@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/app/constants/colors.dart';
-import 'package:recipe_app/app/constants/sizedbox.dart';
-import 'package:recipe_app/app/constants/text_strings.dart';
+import 'package:recipe_app/core/constants/colors.dart';
+import 'package:recipe_app/core/constants/sizedbox.dart';
+import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/widgets/ingredients.dart';
 
 class DetailedRecipeScreen extends StatefulWidget {
@@ -14,7 +14,7 @@ class DetailedRecipeScreen extends StatefulWidget {
 
 class _DetailedRecipeScreenState extends State<DetailedRecipeScreen> {
   final CollectionReference recipeDetail =
-      FirebaseFirestore.instance.collection('recipes');
+      FirebaseFirestore.instance.collection('add recipes');
   // final CollectionReference userDetail =
   //     FirebaseFirestore.instance.collection('user');
 

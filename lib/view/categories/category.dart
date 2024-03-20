@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/app/constants/colors.dart';
-import 'package:recipe_app/app/constants/recipe_card.dart';
+import 'package:recipe_app/core/constants/colors.dart';
+import 'package:recipe_app/core/constants/recipe_card.dart';
 import 'package:recipe_app/view/categories/category_button.dart';
 
 class CategoryScreen extends StatelessWidget {
@@ -17,16 +17,16 @@ class CategoryScreen extends StatelessWidget {
           style: TextStyle(fontSize: 26),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
+      body: const Padding(
+        padding: EdgeInsets.all(10.0),
         child: SafeArea(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SingleChildScrollView(
                 scrollDirection: Axis.horizontal, child: CategoryButtons()),
-            const SizedBox(height: 16.0),
-            const Expanded(
+            SizedBox(height: 16.0),
+            Expanded(
               child: RecipeGridView(),
             ),
           ],

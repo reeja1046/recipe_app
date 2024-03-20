@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_app/app/constants/colors.dart';
+import 'package:recipe_app/core/constants/colors.dart';
+import 'package:recipe_app/view/onboarding/widgets/dots_indicator.dart';
 import 'package:recipe_app/view/user_auth.dart/signup_screen.dart';
-import 'package:recipe_app/view/onboarding/widgets/onboardingone.dart';
-import 'package:recipe_app/view/onboarding/widgets/onboardingthree.dart';
-import 'package:recipe_app/view/onboarding/widgets/onboardingtwo.dart';
+import 'package:recipe_app/view/onboarding/widgets/onboarding_one.dart';
+import 'package:recipe_app/view/onboarding/widgets/onboarding_three.dart';
+import 'package:recipe_app/view/onboarding/widgets/onboarding_two.dart';
 
 class PageScreen extends StatefulWidget {
   const PageScreen({super.key});
@@ -113,35 +114,6 @@ class _PageScreenState extends State<PageScreen> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class DotsIndicator extends StatelessWidget {
-  final int numberOfDots;
-  final int currentPage;
-
-  DotsIndicator({
-    required this.numberOfDots,
-    required this.currentPage,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        numberOfDots,
-        (index) => Container(
-          margin: const EdgeInsets.symmetric(horizontal: 5),
-          width: 10,
-          height: 10,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: index == currentPage ? Colors.black : AppColor.subGreyColor,
-          ),
         ),
       ),
     );

@@ -1,17 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/app/constants/colors.dart';
-import 'package:recipe_app/app/constants/show_toast.dart';
-import 'package:recipe_app/app/constants/sizedbox.dart';
-import 'package:recipe_app/app/constants/text_strings.dart';
-import 'package:recipe_app/app/serivces/add_service.dart';
-import 'package:recipe_app/view/account/my_recipes/my_recipe_screen.dart';
-import 'package:recipe_app/view/account/my_recipes/add_recipe/widgets/add_ingredients.dart';
-import 'package:recipe_app/view/account/my_recipes/add_recipe/widgets/add_instructions.dart';
-import 'package:recipe_app/view/account/my_recipes/add_recipe/widgets/custom_appbar.dart';
-import 'package:recipe_app/view/account/my_recipes/add_recipe/widgets/photo_upload_section.dart';
-import 'package:recipe_app/view/account/my_recipes/add_recipe/widgets/radio_button.dart';
-import 'package:recipe_app/view/account/my_recipes/add_recipe/widgets/time_and_calories.dart';
+import 'package:get/get.dart';
+import 'package:recipe_app/core/constants/colors.dart';
+import 'package:recipe_app/core/constants/show_toast.dart';
+import 'package:recipe_app/core/constants/sizedbox.dart';
+import 'package:recipe_app/core/constants/text_strings.dart';
+import 'package:recipe_app/core/serivces/add_service.dart';
+import 'package:recipe_app/controllers/addrecipe_controller.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/add_ingredients.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/add_instructions.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/custom_appbar.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/photo_upload_section.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/radio_button.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/time_and_calories.dart';
+import 'package:recipe_app/view/profile/recipes/my_recipe_screen.dart';
+
+import '../../../../models/allrecipe_class.dart';
 
 class AddRecipe extends StatefulWidget {
   const AddRecipe({Key? key}) : super(key: key);
@@ -21,6 +25,8 @@ class AddRecipe extends StatefulWidget {
 }
 
 class _AddRecipeState extends State<AddRecipe> {
+  final RecipeController rController = Get.put(RecipeController());
+
   TextEditingController recipeNameController = TextEditingController();
   TextEditingController recipeCategoryController = TextEditingController();
   TextEditingController timeController = TextEditingController();
@@ -32,6 +38,7 @@ class _AddRecipeState extends State<AddRecipe> {
   List<String> ingredientsList = [];
   List<String> instructionsList = [];
   final RecipeService recipeService = RecipeService();
+  String userId = FirebaseAuth.instance.currentUser!.uid;
 
   SizedBoxHeightWidth sizedboxhelper = SizedBoxHeightWidth();
 
@@ -87,6 +94,12 @@ class _AddRecipeState extends State<AddRecipe> {
                         ),
                       ),
                       maxLines: 5,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter recipe name';
+                        }
+                        return null;
+                      },
                     ),
                     sizedboxhelper.kheight10,
                     subtitletext('Ingredients'),
@@ -129,20 +142,18 @@ class _AddRecipeState extends State<AddRecipe> {
                             backgroundColor: AppColor.baseColor,
                           ),
                           onPressed: () async {
-                            Map<String, dynamic> recipeData = {
-                              'Name': recipeNameController.text,
-                              'Category': recipeCategoryController.text,
-                              'est Time': timeController.text,
-                              'Calories': caloriesController.text,
-                              'Difficulty': selectedDifficulty,
-                              'DifficultyText': difficultyText,
-                              'Image': imageUrl,
-                              'Description': descriptionController.text,
-                              'Ingredients': ingredientsList,
-                              'Instructions': instructionsList,
-                            };
-
-                            addRecipe(recipeData);
+                            final Recipes recipes = Recipes(
+                                imageUrl: imageUrl,
+                                calories: caloriesController.text,
+                                category: recipeCategoryController.text,
+                                difficultyText: difficultyText,
+                                description: descriptionController.text,
+                                ingredients: ingredientsList,
+                                instructions: instructionsList,
+                                etsTime: timeController.text,
+                                userId: userId,
+                                recipeName: recipeNameController.text);
+                            validateRecipe(recipes);
                           },
                           child: const Text(
                             'Save',
@@ -196,9 +207,7 @@ class _AddRecipeState extends State<AddRecipe> {
     });
   }
 
-  void addRecipe(Map<String, dynamic> recipeData) {
-    String userId = FirebaseAuth.instance.currentUser!.uid;
-
+  void validateRecipe(recipes) {
     // ignore: unnecessary_null_comparison
     if (userId == null) {
       showToast(message: 'User is not signed in');
@@ -239,13 +248,8 @@ class _AddRecipeState extends State<AddRecipe> {
 
       return;
     }
-    // Add to recipeData
-    recipeData['Ingredients'] = ingredientsList;
-    recipeData['Instructions'] = instructionsList;
-    recipeData['UserId'] = userId;
 
-    recipeService.saveRecipeToFirebase(recipeData, userId);
-
+    rController.addRecipes(recipes);
     // Clear input fields
     recipeNameController.clear();
     recipeCategoryController.clear();
@@ -257,7 +261,7 @@ class _AddRecipeState extends State<AddRecipe> {
     // Navigate back to MyRecipeScreen
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => const MyRecipeScreen(),
+        builder: (context) =>  MyRecipeScreen(),
       ),
     );
   }

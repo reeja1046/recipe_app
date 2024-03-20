@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/app/constants/colors.dart';
+import 'package:recipe_app/core/constants/colors.dart';
 
 class HeaderPart extends StatelessWidget {
   const HeaderPart({super.key});

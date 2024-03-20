@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_app/view/account/profile.dart';
+import 'package:recipe_app/view/profile/profile.dart';
 import 'package:recipe_app/view/cart/cart.dart';
 import 'package:recipe_app/view/home/home_screen.dart';
 import 'package:recipe_app/view/wishlist/wishlist.dart';

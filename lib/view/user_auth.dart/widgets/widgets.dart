@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:recipe_app/app/constants/colors.dart';
-import 'package:recipe_app/app/serivces/auth_services.dart';
+import 'package:recipe_app/core/constants/colors.dart';
+import 'package:recipe_app/core/serivces/auth_services.dart';
 import 'package:recipe_app/view/user_auth.dart/widgets/phone_authentication.dart';
 
 double getTextWidth(String text, TextStyle style) {

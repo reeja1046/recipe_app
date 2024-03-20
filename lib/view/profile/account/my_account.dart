@@ -3,14 +3,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/app/constants/colors.dart';
-import 'package:recipe_app/app/constants/show_toast.dart';
-import 'package:recipe_app/app/constants/sizedbox.dart';
-import 'package:recipe_app/app/constants/text_strings.dart';
-import 'package:recipe_app/app/serivces/add_service.dart';
-import 'package:recipe_app/view/account/my_account/date_picker.dart';
-import 'package:recipe_app/view/account/my_account/profile_photo_upload.dart';
-import 'package:recipe_app/view/account/my_account/textenteringfield.dart';
+import 'package:recipe_app/core/constants/colors.dart';
+import 'package:recipe_app/core/constants/show_toast.dart';
+import 'package:recipe_app/core/constants/sizedbox.dart';
+import 'package:recipe_app/core/constants/text_strings.dart';
+import 'package:recipe_app/core/serivces/add_service.dart';
+import 'package:recipe_app/view/profile/account/date_picker.dart';
+import 'package:recipe_app/view/profile/account/profile_photo_upload.dart';
+import 'package:recipe_app/view/profile/account/textenteringfield.dart';
 
 class MyAccountEdit extends StatefulWidget {
   const MyAccountEdit({super.key});

@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_app/app/constants/images_strings.dart';
+import 'package:recipe_app/core/constants/images_strings.dart';
 import 'package:recipe_app/view/onboarding/pageview.dart';
-import 'package:recipe_app/widgets/bottomnavbar.dart';
+import 'package:recipe_app/widgets/bottom_navbar.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

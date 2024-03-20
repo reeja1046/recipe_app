@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_app/app/serivces/auth_services.dart';
+import 'package:recipe_app/core/serivces/auth_services.dart';
 import 'package:recipe_app/view/user_auth.dart/signin_screen.dart';
 
 class ForgotPassWord extends StatefulWidget {

@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_app/app/constants/colors.dart';
-import 'package:recipe_app/app/constants/show_toast.dart';
-import 'package:recipe_app/app/constants/sizedbox.dart';
-import 'package:recipe_app/app/serivces/auth_services.dart';
+import 'package:recipe_app/core/constants/colors.dart';
+import 'package:recipe_app/core/constants/show_toast.dart';
+import 'package:recipe_app/core/constants/sizedbox.dart';
+import 'package:recipe_app/core/serivces/auth_services.dart';
 import 'package:recipe_app/view/user_auth.dart/signup_screen.dart';
 import 'package:recipe_app/view/user_auth.dart/widgets/forgot_password.dart';
 import 'package:recipe_app/view/user_auth.dart/widgets/widgets.dart';
-import 'package:recipe_app/widgets/bottomnavbar.dart';
+import 'package:recipe_app/widgets/bottom_navbar.dart';
 import 'package:toast/toast.dart';
 
 class SignInScreen extends StatefulWidget {

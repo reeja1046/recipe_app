@@ -1,20 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_app/app/constants/colors.dart';
-import 'package:recipe_app/view/account/my_recipes/add_recipe/add_recipe_screen.dart';
+import 'package:recipe_app/controllers/myrecipes_controller.dart';
+import 'package:recipe_app/core/constants/colors.dart';
+import 'package:recipe_app/models/myrecipe_class.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/add_recipe_screen.dart';
 import 'package:recipe_app/widgets/detailed_recipe.dart';
 
-class MyRecipeScreen extends StatefulWidget {
-  const MyRecipeScreen({Key? key}) : super(key: key);
+class MyRecipeScreen extends StatelessWidget {
+  MyRecipeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<MyRecipeScreen> createState() => _MyRecipeScreenState();
-}
-
-class _MyRecipeScreenState extends State<MyRecipeScreen> {
-  final CollectionReference recipesCollection =
-      FirebaseFirestore.instance.collection('recipes');
+  final MyRecipeController controller = Get.put(MyRecipeController());
 
   @override
   Widget build(BuildContext context) {
@@ -32,42 +27,22 @@ class _MyRecipeScreenState extends State<MyRecipeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: SafeArea(
-          child: StreamBuilder<QuerySnapshot>(
-            stream: recipesCollection.snapshots(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return const Text('Error');
-              }
-
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
-
-              final List<QueryDocumentSnapshot> documents = snapshot.data!.docs;
-              if (documents.isEmpty) {
-                return const Center(
-                  child: Text(
-                    'No recipes available.',
-                    style: TextStyle(fontSize: 18.0),
-                  ),
-                );
-              }
-
+          child: Obx(() {
+            if (controller.recipes.isEmpty) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 8.0,
                   mainAxisSpacing: 8.0,
                 ),
-                itemCount: documents.length,
+                itemCount: controller.recipes.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final String imageUrl =
-                      documents[index]['Image'] ?? 'assets/placeholder.jpg';
-                  final String recipeName = documents[index]['Name'] ?? '';
+                  final MyRecipes recipe = controller.recipes[index];
                   return GestureDetector(
                     onTap: () {
-                      print('Tapped on $recipeName');
+                      print('Tapped on ${recipe.recipeName}');
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const DetailedRecipeScreen()));
                     },
@@ -76,7 +51,7 @@ class _MyRecipeScreenState extends State<MyRecipeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Image.network(
-                            imageUrl,
+                            recipe.imageUrl,
                             height: 120.0,
                             fit: BoxFit.cover,
                             loadingBuilder: (BuildContext context, Widget child,
@@ -95,7 +70,7 @@ class _MyRecipeScreenState extends State<MyRecipeScreen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              recipeName,
+                              recipe.recipeName!,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16.0,
@@ -108,8 +83,8 @@ class _MyRecipeScreenState extends State<MyRecipeScreen> {
                   );
                 },
               );
-            },
-          ),
+            }
+          }),
         ),
       ),
       bottomNavigationBar: Padding(

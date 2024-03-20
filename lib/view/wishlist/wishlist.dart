@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/app/constants/colors.dart';
+import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/view/wishlist/favrecipegridview.dart';
-import 'package:recipe_app/widgets/bottomnavbar.dart';
+import 'package:recipe_app/widgets/bottom_navbar.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({super.key});

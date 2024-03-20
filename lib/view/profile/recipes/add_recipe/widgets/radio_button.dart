@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/app/constants/colors.dart';
+import 'package:recipe_app/core/constants/colors.dart';
 
 class RadioButtonsRow extends StatefulWidget {
   final Function(int, String) onDifficultyChanged;

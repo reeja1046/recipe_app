@@ -9,10 +9,10 @@ class RecipeService {
       print(userId);
       // Save the recipe data to Firestore
       await firestore
-          .collection('recipes')
+          .collection('add recipes')
           .doc(userId)
-          .set(recipeData)
-          // .add(recipeData)
+          .collection('recipes')
+          .add(recipeData)
           .then((value) => {print("Recipe added")});
       print('Recipe saved to Firebase');
     } catch (e) {

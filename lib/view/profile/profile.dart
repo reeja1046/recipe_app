@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/app/constants/sizedbox.dart';
-import 'package:recipe_app/view/account/my_account/my_account.dart';
-import 'package:recipe_app/view/account/widgets/header_part.dart';
-import 'package:recipe_app/view/account/my_recipes/my_recipe_screen.dart';
-import 'package:recipe_app/view/account/widgets/account_listtile.dart';
+import 'package:recipe_app/core/constants/sizedbox.dart';
+import 'package:recipe_app/view/profile/account/my_account.dart';
+import 'package:recipe_app/view/profile/widgets/header_part.dart';
+import 'package:recipe_app/view/profile/recipes/my_recipe_screen.dart';
+import 'package:recipe_app/view/profile/widgets/account_listtile.dart';
 
 class MyProfile extends StatelessWidget {
   const MyProfile({super.key});
@@ -23,13 +23,13 @@ class MyProfile extends StatelessWidget {
                     'Account', Icons.person, const MyAccountEdit(), context),
                 sizeBoxHelper.kheight10,
                 accountListTile('My Recipes', Icons.collections,
-                    const MyRecipeScreen(), context),
+                     MyRecipeScreen(), context),
                 sizeBoxHelper.kheight10,
                 accountListTile('Units of Measurements', Icons.ad_units,
-                    const MyRecipeScreen(), context),
+                     MyRecipeScreen(), context),
                 sizeBoxHelper.kheight10,
                 accountListTile('My Cookbooks', Icons.bookmark,
-                    const MyRecipeScreen(), context),
+                     MyRecipeScreen(), context),
               ],
             ),
           ),
