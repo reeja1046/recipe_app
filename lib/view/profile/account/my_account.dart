@@ -1,5 +1,4 @@
 // ignore_for_file: unnecessary_null_comparison
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +7,9 @@ import 'package:recipe_app/core/constants/show_toast.dart';
 import 'package:recipe_app/core/constants/sizedbox.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/core/serivces/add_service.dart';
-import 'package:recipe_app/view/profile/account/date_picker.dart';
-import 'package:recipe_app/view/profile/account/profile_photo_upload.dart';
-import 'package:recipe_app/view/profile/account/textenteringfield.dart';
+import 'package:recipe_app/view/profile/account/widgets/date_picker.dart';
+import 'package:recipe_app/view/profile/account/widgets/profile_photo_upload.dart';
+import 'package:recipe_app/view/profile/account/widgets/textenteringfield.dart';
 
 class MyAccountEdit extends StatefulWidget {
   const MyAccountEdit({super.key});
@@ -131,7 +130,7 @@ class _MyAccountEditState extends State<MyAccountEdit> {
                 child: Stack(
                   children: [
                     Container(
-                      height: 600,
+                      height: 650,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16.0),
                       ),
@@ -140,14 +139,17 @@ class _MyAccountEditState extends State<MyAccountEdit> {
                       top: 0,
                       left: 0,
                       right: 0,
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: ProfilePic(
-                          onImageSelected: (url) {
-                            setState(() {
-                              imageUrl = url;
-                            });
-                          },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30.0),
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: ProfilePic(
+                            onImageSelected: (url) {
+                              setState(() {
+                                imageUrl = url;
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ),

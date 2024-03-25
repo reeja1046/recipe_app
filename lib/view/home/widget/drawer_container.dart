@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:recipe_app/controllers/myrecipes_controller.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/view/user_auth.dart/signin_screen.dart';
 
@@ -98,6 +100,7 @@ class MyDrawerContainer extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () {
+                              Get.find<MyRecipeController>().recipes.clear();
                               FirebaseAuth.instance.signOut();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => const SignInScreen()));

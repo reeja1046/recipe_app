@@ -1,207 +1,224 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/core/constants/colors.dart';
+import 'package:recipe_app/core/constants/show_toast.dart';
 import 'package:recipe_app/core/constants/sizedbox.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/widgets/ingredients.dart';
+import 'package:toast/toast.dart';
 
-class DetailedRecipeScreen extends StatefulWidget {
-  const DetailedRecipeScreen({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class DetailedRecipeScreen extends StatelessWidget {
+  final String recipeId; // Pass the recipe ID to the screen
+  final String userId;
+  DetailedRecipeScreen({Key? key, required this.recipeId, required this.userId})
+      : super(key: key);
 
-  @override
-  State<DetailedRecipeScreen> createState() => _DetailedRecipeScreenState();
-}
+  final SizedBoxHeightWidth sizeBoxHelper = SizedBoxHeightWidth();
 
-class _DetailedRecipeScreenState extends State<DetailedRecipeScreen> {
-  final CollectionReference recipeDetail =
-      FirebaseFirestore.instance.collection('add recipes');
-  // final CollectionReference userDetail =
-  //     FirebaseFirestore.instance.collection('user');
+  String currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
-    final SizedBoxHeightWidth sizeBoxHelper = SizedBoxHeightWidth();
+    print(recipeId);
+    print(userId);
+    print('*********----------***********');
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: StreamBuilder<QuerySnapshot>(
-          stream: recipeDetail.snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError ||
-                snapshot.connectionState == ConnectionState.waiting) {
-              return const Text('Recipe');
-            }
-            final List<QueryDocumentSnapshot> documents = snapshot.data!.docs;
-
-            final Map<String, dynamic> recipeData =
-                documents.first.data() as Map<String, dynamic>;
-            final String recipeName = recipeData['Name'] ?? 'Recipe';
-            return Text(recipeName);
-          },
-        ),
-        actions: const [Icon(Icons.more_vert)],
+        title: const Text('Recipe Details'),
       ),
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: StreamBuilder<QuerySnapshot>(
-            stream: recipeDetail.snapshots(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return const Text('Error');
-              }
+      body: FutureBuilder<DocumentSnapshot>(
+        future: FirebaseFirestore.instance
+            .collection('add recipes')
+            .doc(userId)
+            .collection('recipes')
+            .doc(recipeId)
+            .get(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
 
-              final List<QueryDocumentSnapshot> documents = snapshot.data!.docs;
-              if (documents.isEmpty) {
-                return const Center(
-                  child: Text(
-                    'No Data Available.',
-                    style: TextStyle(fontSize: 18.0),
-                  ),
-                );
-              }
+          if (!snapshot.hasData || !snapshot.data!.exists) {
+            return const Center(child: Text('Recipe not found'));
+          }
 
-              final Map<String, dynamic> recipeData =
-                  documents.first.data() as Map<String, dynamic>;
-              final List<String> ingredients =
-                  List<String>.from(recipeData['Ingredients'] ?? []);
-              final List<String> instructions =
-                  List<String>.from(recipeData['Instructions'] ?? []);
+          final Map<String, dynamic> recipeData =
+              snapshot.data!.data() as Map<String, dynamic>;
+          print(recipeData);
 
-              return Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          final List<String> ingredients =
+              List<String>.from(recipeData['ingredients'] ?? []);
+          final List<String> instructions =
+              List<String>.from(recipeData['instructions'] ?? []);
+
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
                   children: [
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          height: 220,
-                          width: MediaQuery.of(context).size.width,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.network(
-                              recipeData['Image'],
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      height: 220,
+                      width: MediaQuery.of(context).size.width,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          recipeData['imageUrl'],
+                          fit: BoxFit.cover,
                         ),
-                        const Positioned(
-                          right: 20,
-                          top: 20,
-                          child: CircleAvatar(
-                            radius: 15,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.favorite_border_outlined,
-                              size: 24,
-                            ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 10,
+                      top: 10,
+                      child: IconButton(
+                        onPressed: () {
+                          addToFavorites(context, currentUserId, recipeData,
+                              userId, recipeId);
+                        },
+                        icon: const Icon(Icons.favorite_border_outlined),
+                        iconSize: 24,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Positioned(
+                      right: 10,
+                      bottom: 10,
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.timelapse,
+                            color: Colors.white,
                           ),
-                        ),
-                        Positioned(
-                          right: 10,
-                          bottom: 10,
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.timelapse,
-                                color: Colors.white,
-                              ),
-                              Text(
-                                '${recipeData['est Time']}',
-                                style: const TextStyle(color: Colors.white),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Chef : Ashish Joy',
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w600),
-                        ),
-                        Text(
-                          '${recipeData['DifficultyText']}',
-                          style: const TextStyle(fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                    sizeBoxHelper.kheight10,
-                    Text(
-                      '${recipeData['Description']}',
-                    ),
-                    sizeBoxHelper.kheight10,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Ingredients :',
-                          style: TextSize.subtitletextsize,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => IngredientsScreen()));
-                          },
-                          child: const Text(
-                            'Click here',
-                            style: TextStyle(color: AppColor.baseColor),
-                          ),
-                        ),
-                      ],
-                    ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: ingredients.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: const Icon(
-                            Icons.circle,
-                            size: 10,
-                          ),
-                          title: Text(ingredients[index]),
-                        );
-                      },
-                    ),
-                    sizeBoxHelper.kheight10,
-                    const Text(
-                      'Instructions',
-                      style: TextSize.subtitletextsize,
-                    ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: instructions.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: const Icon(
-                            Icons.circle,
-                            size: 10,
-                          ),
-                          title: Text(instructions[index]),
-                        );
-                      },
+                          Text(
+                            '${recipeData['etsTime']}',
+                            style: const TextStyle(color: Colors.white),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              );
-            },
-          ),
-        ),
+                sizeBoxHelper.kheight10,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${recipeData['recipeName']}',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500, fontSize: 18),
+                    ),
+                    Text(
+                      '${recipeData['difficultyText']}',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500, fontSize: 14),
+                    )
+                  ],
+                ),
+                sizeBoxHelper.kheight10,
+                Text(
+                  '${recipeData['description']}',
+                ),
+                sizeBoxHelper.kheight10,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Ingredients :',
+                      style: TextSize.subtitletextsize,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => IngredientsScreen()));
+                      },
+                      child: const Text(
+                        'Click here',
+                        style: TextStyle(color: AppColor.baseColor),
+                      ),
+                    ),
+                  ],
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: ingredients.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: const Icon(
+                        Icons.circle,
+                        size: 10,
+                      ),
+                      title: Text(ingredients[index]),
+                    );
+                  },
+                ),
+                sizeBoxHelper.kheight10,
+                const Text(
+                  'Instructions',
+                  style: TextSize.subtitletextsize,
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: instructions.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: const Icon(
+                        Icons.circle,
+                        size: 10,
+                      ),
+                      title: Text(instructions[index]),
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
+  }
+
+  void addToFavorites(BuildContext context, String currentUserId,
+      Map<String, dynamic> recipeData, String userId, String recipeId) {
+    ToastContext().init(context);
+    final favoritesRef = FirebaseFirestore.instance
+        .collection('add recipes')
+        .doc(currentUserId)
+        .collection('favorites'); // Reference to the favorites collection
+
+    final recipeName = recipeData['recipeName'];
+    recipeData['userId'] = userId;
+    recipeData['recipeId'] = recipeId;
+
+    // Check if the recipe already exists in the favorites collection
+    favoritesRef.doc(recipeName).get().then((docSnapshot) {
+      if (docSnapshot.exists) {
+        showToast(message: 'Recipe already exists in favorites!');
+        print('Recipe already exists in favorites!');
+      } else {
+        // Add the recipe to favorites collection with the recipe name as the document name
+        favoritesRef.doc(recipeName).set(recipeData).then((_) {
+          showToast(message: 'Recipe added to favorites!');
+          print('Recipe added to favorites!');
+        }).catchError((error) {
+          showToast(message: 'Failed to add recipe to favorites: $error');
+        });
+      }
+    }).catchError((error) {
+      showToast(message: 'Error checking recipe in favorites: $error');
+    });
   }
 }

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:recipe_app/view/profile/profile.dart';
 import 'package:recipe_app/view/cart/cart.dart';
 import 'package:recipe_app/view/home/home_screen.dart';
-import 'package:recipe_app/view/wishlist/wishlist.dart';
+import 'package:recipe_app/view/wishlist/favorite.dart';
 
 class BottomNavBarController extends GetxController {
   var selectedIndex = 0.obs;

@@ -7,6 +7,7 @@ import 'package:recipe_app/core/constants/sizedbox.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/core/serivces/add_service.dart';
 import 'package:recipe_app/controllers/addrecipe_controller.dart';
+import 'package:recipe_app/models/allrecipe_class.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/add_ingredients.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/add_instructions.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/custom_appbar.dart';
@@ -14,8 +15,6 @@ import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/photo_upload_
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/radio_button.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/time_and_calories.dart';
 import 'package:recipe_app/view/profile/recipes/my_recipe_screen.dart';
-
-import '../../../../models/allrecipe_class.dart';
 
 class AddRecipe extends StatefulWidget {
   const AddRecipe({Key? key}) : super(key: key);
@@ -51,7 +50,7 @@ class _AddRecipeState extends State<AddRecipe> {
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.only(left: 30, right: 30, bottom: 30),
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -70,6 +69,7 @@ class _AddRecipeState extends State<AddRecipe> {
                         'Biriyani/Friedrice/Noodles', recipeCategoryController),
                     sizedboxhelper.kheight10,
                     subtitletext('Difficulty'),
+                    sizedboxhelper.kheight10,
                     RadioButtonsRow(
                       onDifficultyChanged: updateDifficulty,
                       difficultyText: difficultyText,
@@ -94,12 +94,6 @@ class _AddRecipeState extends State<AddRecipe> {
                         ),
                       ),
                       maxLines: 5,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter recipe name';
-                        }
-                        return null;
-                      },
                     ),
                     sizedboxhelper.kheight10,
                     subtitletext('Ingredients'),
@@ -154,6 +148,7 @@ class _AddRecipeState extends State<AddRecipe> {
                                 userId: userId,
                                 recipeName: recipeNameController.text);
                             validateRecipe(recipes);
+                           
                           },
                           child: const Text(
                             'Save',
@@ -176,7 +171,6 @@ class _AddRecipeState extends State<AddRecipe> {
     setState(() {
       selectedDifficulty = difficulty;
       this.difficultyText = difficultyText;
-      print(this.difficultyText);
     });
   }
 
@@ -190,20 +184,12 @@ class _AddRecipeState extends State<AddRecipe> {
   void handleIngredientsChanged(List<String> ingredients) {
     setState(() {
       ingredientsList = ingredients;
-      print('Ingredients:');
-      for (var ingredient in ingredientsList) {
-        print(ingredient);
-      }
     });
   }
 
   void handleInstructions(List<String> instructions) {
     setState(() {
       instructionsList = instructions;
-      print('Ingredients:');
-      for (var instruction in instructionsList) {
-        print(instruction);
-      }
     });
   }
 
@@ -220,6 +206,7 @@ class _AddRecipeState extends State<AddRecipe> {
     String category = recipeCategoryController.text;
     String difficultylevel = difficultyText.toString();
     String description = descriptionController.text;
+    
 
     if (recipename.isEmpty ||
         description.isEmpty ||
@@ -249,7 +236,7 @@ class _AddRecipeState extends State<AddRecipe> {
       return;
     }
 
-    rController.addRecipes(recipes);
+    rController.addRecipes(recipes, userId);
     // Clear input fields
     recipeNameController.clear();
     recipeCategoryController.clear();
@@ -258,10 +245,12 @@ class _AddRecipeState extends State<AddRecipe> {
     descriptionController.clear();
     imageUrl = '';
 
+
+
     // Navigate back to MyRecipeScreen
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) =>  MyRecipeScreen(),
+        builder: (context) => MyRecipeScreen(),
       ),
     );
   }

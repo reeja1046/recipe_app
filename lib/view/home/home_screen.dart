@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/core/constants/colors.dart';
@@ -17,6 +18,7 @@ class MyHomePage extends StatelessWidget {
   final SizedBoxHeightWidth sizedboxhelper = SizedBoxHeightWidth();
 
   MyHomePage({super.key});
+  String userId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +116,10 @@ class MyHomePage extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(() => const DetailedRecipeScreen());
+                            Get.to(() => DetailedRecipeScreen(
+                                  recipeId: userId,
+                                  userId: userId,
+                                ));
                           },
                           child: Container(
                             decoration: BoxDecoration(

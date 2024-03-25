@@ -25,76 +25,83 @@ class _RadioButtonsRowState extends State<RadioButtonsRow> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Radio(
-              value: 1,
-              groupValue: selectedRadio,
-              onChanged: (value) {
-                setState(() {
-                  selectedRadio = value as int;
-                  widget.onDifficultyChanged(
-                    selectedRadio,
-                    radioText[selectedRadio] ?? '',
-                  );
-                });
-              },
-              activeColor: AppColor.baseColor,
-            ),
-            const Text(
-              'Easy',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Radio(
-              value: 2,
-              groupValue: selectedRadio,
-              onChanged: (value) {
-                setState(() {
-                  selectedRadio = value as int;
-                  widget.onDifficultyChanged(
-                    selectedRadio,
-                    radioText[selectedRadio] ?? '',
-                  );
-                });
-              },
-              activeColor: AppColor.baseColor,
-            ),
-            const Text(
-              'Normal',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Radio(
-              value: 3,
-              groupValue: selectedRadio,
-              onChanged: (value) {
-                setState(() {
-                  selectedRadio = value as int;
-                  widget.onDifficultyChanged(
-                    selectedRadio,
-                    radioText[selectedRadio] ?? '',
-                  );
-                });
-              },
-              activeColor: AppColor.baseColor,
-            ),
-            const Text(
-              'Professional',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
-      ],
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColor.baseColor),
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Row(
+            children: [
+              Radio(
+                value: 1,
+                groupValue: selectedRadio,
+                onChanged: (value) {
+                  setState(() {
+                    selectedRadio = value as int;
+                    widget.onDifficultyChanged(
+                      selectedRadio,
+                      radioText[selectedRadio] ?? '',
+                    );
+                  });
+                },
+                activeColor: AppColor.baseColor,
+              ),
+              const Text(
+                'Easy',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Radio(
+                value: 2,
+                groupValue: selectedRadio,
+                onChanged: (value) {
+                  setState(() {
+                    selectedRadio = value as int;
+                    widget.onDifficultyChanged(
+                      selectedRadio,
+                      radioText[selectedRadio] ?? '',
+                    );
+                  });
+                },
+                activeColor: AppColor.baseColor,
+              ),
+              const Text(
+                'Normal',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Radio(
+                value: 3,
+                groupValue: selectedRadio,
+                onChanged: (value) {
+                  setState(() {
+                    selectedRadio = value as int;
+                    widget.onDifficultyChanged(
+                      selectedRadio,
+                      radioText[selectedRadio] ?? '',
+                    );
+                  });
+                },
+                activeColor: AppColor.baseColor,
+              ),
+              const Text(
+                'Professional',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

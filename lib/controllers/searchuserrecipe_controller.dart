@@ -1,17 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/models/myrecipe_class.dart';
 
-class MyRecipeController extends GetxController {
+class UserRecipeController extends GetxController {
+  UserRecipeController({required this.userId});
   final CollectionReference recipesCollection =
       FirebaseFirestore.instance.collection('add recipes');
   final RxList<MyRecipes> recipes = <MyRecipes>[].obs;
 
-  final String userId = FirebaseAuth.instance.currentUser!.uid;
+  late String userId;
 
   @override
   void onInit() {
+    print(userId);
     print('%%##############');
     super.onInit();
     fetchRecipes();

@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class MyRecipes {
   String? recipeName;
-
-  String imageUrl;
+  String? recipeId;
+  String? imageUrl;
 
   MyRecipes({
+    required this.recipeId,
     required this.imageUrl,
     required this.recipeName,
   });
@@ -12,6 +15,8 @@ class MyRecipes {
     return {
       'recipeName': recipeName,
       'imageUrl': imageUrl,
+      'recipeId': recipeId,
     };
   }
+
 }

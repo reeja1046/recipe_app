@@ -17,7 +17,7 @@ class DateEnteringField extends StatefulWidget {
 }
 
 class _DateEnteringFieldState extends State<DateEnteringField> {
-  Future<void> _selectDate(BuildContext context) async {
+  Future<void> selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -47,7 +47,7 @@ class _DateEnteringFieldState extends State<DateEnteringField> {
           child: TextFormField(
             controller: widget.controller,
             readOnly: true,
-            onTap: () => _selectDate(context),
+            onTap: () => selectDate(context),
             decoration: InputDecoration(
               suffixIcon: const Icon(Icons.calendar_today),
               enabledBorder: OutlineInputBorder(

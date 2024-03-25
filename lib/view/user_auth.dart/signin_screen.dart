@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_app/controllers/myrecipes_controller.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/show_toast.dart';
 import 'package:recipe_app/core/constants/sizedbox.dart';
@@ -25,6 +26,8 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailController = TextEditingController();
 
   final SizedBoxHeightWidth _sizedbox = SizedBoxHeightWidth();
+  final MyRecipeController myRecipeController =
+      Get.put(MyRecipeController()); // Instantiate MyRecipeController
 
   @override
   void dispose() {
@@ -129,7 +132,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                 },
                                 child: const Text(
                                   'Forgot password?',
-                                  style: TextStyle(color: AppColor.favButtonColor),
+                                  style:
+                                      TextStyle(color: AppColor.favButtonColor),
                                 ),
                               ),
                             ],
@@ -174,6 +178,7 @@ class _SignInScreenState extends State<SignInScreen> {
     User? user = await _authServies.signInWithEmailAndPassword(email, password);
     if (user != null) {
       showToast(message: 'User is successfully logged in');
+      myRecipeController.fetchRecipes();
       Navigator.pushReplacement(
           // ignore: use_build_context_synchronously
           context,

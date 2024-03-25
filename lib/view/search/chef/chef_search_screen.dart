@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/view/search/chef/popular_chef_listtile.dart';
 
-class ChefSearchScreen extends StatelessWidget {
+class ChefSearchScreen extends StatefulWidget {
   const ChefSearchScreen({super.key});
 
+  @override
+  State<ChefSearchScreen> createState() => _ChefSearchScreenState();
+}
+
+class _ChefSearchScreenState extends State<ChefSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -36,68 +41,68 @@ class ChefSearchScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Recent Search',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-              ),
-              Text(
-                'Clear All',
-                style: TextStyle(color: Colors.amber),
-              )
-            ],
-          ),
-          const SizedBox(height: 10),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage('assets/hanna.jpg'),
-                  ),
-                  Text(
-                    'Hanna',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage('assets/ashishresume.jpg'),
-                  ),
-                  Text(
-                    'Ashish',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage('assets/hanna.jpg'),
-                  ),
-                  Text(
-                    'Harsha',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          // const SizedBox(height: 10),
+          // const Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Text(
+          //       'Recent Search',
+          //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          //     ),
+          //     Text(
+          //       'Clear All',
+          //       style: TextStyle(color: Colors.amber),
+          //     )
+          //   ],
+          // ),
+          // const SizedBox(height: 10),
+          // const Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Column(
+          //       children: [
+          //         CircleAvatar(
+          //           radius: 50,
+          //           backgroundImage: AssetImage('assets/hanna.jpg'),
+          //         ),
+          //         Text(
+          //           'Hanna',
+          //           style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+          //         ),
+          //       ],
+          //     ),
+          //     Column(
+          //       children: [
+          //         CircleAvatar(
+          //           radius: 50,
+          //           backgroundImage: AssetImage('assets/ashishresume.jpg'),
+          //         ),
+          //         Text(
+          //           'Ashish',
+          //           style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+          //         ),
+          //       ],
+          //     ),
+          //     Column(
+          //       children: [
+          //         CircleAvatar(
+          //           radius: 50,
+          //           backgroundImage: AssetImage('assets/hanna.jpg'),
+          //         ),
+          //         Text(
+          //           'Harsha',
+          //           style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+          //         ),
+          //       ],
+          //     ),
+          //   ],
+          // ),
           const SizedBox(height: 10),
           const Text(
             'Popular Search',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
-         const PopularChefListTile(),
+          const PopularChefListTile(),
         ],
       ),
     );

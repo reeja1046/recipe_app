@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/view/wishlist/favrecipegridview.dart';
-import 'package:recipe_app/widgets/bottom_navbar.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({super.key});
@@ -10,14 +9,8 @@ class FavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: ((context) => BottomNavBar())));
-          },
-        ),
         backgroundColor: AppColor.baseColor,
+        automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text(
           'Favorites',
