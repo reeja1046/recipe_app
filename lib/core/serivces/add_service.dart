@@ -28,10 +28,10 @@ class RecipeService {
     try {
       QuerySnapshot querySnapshot = await firestore.collectionGroup('recipes').get();
 
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         recipes.add(MyAllRecipes.fromFirestore(doc));
         print(recipes);
-      });
+      }
 
       return recipes;
     } catch (e) {

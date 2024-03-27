@@ -2,19 +2,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/core/constants/colors.dart';
-import 'package:recipe_app/core/constants/show_toast.dart';
 import 'package:recipe_app/core/constants/sizedbox.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/core/serivces/add_service.dart';
 import 'package:recipe_app/controllers/addrecipe_controller.dart';
-import 'package:recipe_app/models/allrecipe_class.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/add_ingredients.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/add_instructions.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/category_dropdown.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/custom_appbar.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/description_section.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/name_section.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/photo_upload_section.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/radio_button.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/recipe_validator.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/time_and_calories.dart';
-import 'package:recipe_app/view/profile/recipes/my_recipe_screen.dart';
 
 class AddRecipe extends StatefulWidget {
   const AddRecipe({Key? key}) : super(key: key);
@@ -40,6 +41,13 @@ class _AddRecipeState extends State<AddRecipe> {
   String userId = FirebaseAuth.instance.currentUser!.uid;
 
   SizedBoxHeightWidth sizedboxhelper = SizedBoxHeightWidth();
+  List<String> categories = [
+    'Category 1',
+    'Category 2',
+    'Category 3',
+    'Category 4',
+    'Category 5'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +64,10 @@ class _AddRecipeState extends State<AddRecipe> {
                   children: [
                     subtitletext('Name of Your Recipe'),
                     sizedboxhelper.kheight10,
-                    nameAndCategoryField(
-                        'Enter your name', recipeNameController),
+                    NameField(
+                      hintText: 'Enter your name',
+                      controller: recipeNameController,
+                    ),
                     sizedboxhelper.kheight10,
                     BuildTimeAndCalories(
                       onTimeAndCaloriesChanged: updateTimeAndCalories,
@@ -65,8 +75,11 @@ class _AddRecipeState extends State<AddRecipe> {
                     sizedboxhelper.kheight10,
                     subtitletext('Category'),
                     sizedboxhelper.kheight10,
-                    nameAndCategoryField(
-                        'Biriyani/Friedrice/Noodles', recipeCategoryController),
+                    CategoryDropdown(
+                      hintText: 'Biriyani/Friedrice/Noodles',
+                      controller: recipeCategoryController,
+                      categories: categories,
+                    ),
                     sizedboxhelper.kheight10,
                     subtitletext('Difficulty'),
                     sizedboxhelper.kheight10,
@@ -77,24 +90,7 @@ class _AddRecipeState extends State<AddRecipe> {
                     sizedboxhelper.kheight10,
                     subtitletext('Description'),
                     sizedboxhelper.kheight10,
-                    TextFormField(
-                      controller: descriptionController,
-                      decoration: InputDecoration(
-                        hintText: 'Enter a description about your recipe',
-                        hintStyle: const TextStyle(color: Colors.grey),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide:
-                              const BorderSide(color: AppColor.baseColor),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide:
-                              const BorderSide(color: AppColor.baseColor),
-                        ),
-                      ),
-                      maxLines: 5,
-                    ),
+                    DescriptionField(controller: descriptionController),
                     sizedboxhelper.kheight10,
                     subtitletext('Ingredients'),
                     sizedboxhelper.kheight10,
@@ -136,19 +132,20 @@ class _AddRecipeState extends State<AddRecipe> {
                             backgroundColor: AppColor.baseColor,
                           ),
                           onPressed: () async {
-                            final Recipes recipes = Recipes(
-                                imageUrl: imageUrl,
-                                calories: caloriesController.text,
-                                category: recipeCategoryController.text,
-                                difficultyText: difficultyText,
-                                description: descriptionController.text,
-                                ingredients: ingredientsList,
-                                instructions: instructionsList,
-                                etsTime: timeController.text,
-                                userId: userId,
-                                recipeName: recipeNameController.text);
-                            validateRecipe(recipes);
-                           
+                            RecipeValidator.validateRecipe(
+                              context,
+                              rController,
+                              recipeNameController,
+                              recipeCategoryController,
+                              timeController,
+                              caloriesController,
+                              descriptionController,
+                              difficultyText,
+                              userId,
+                              imageUrl,
+                              ingredientsList,
+                              instructionsList,
+                            );
                           },
                           child: const Text(
                             'Save',
@@ -191,90 +188,6 @@ class _AddRecipeState extends State<AddRecipe> {
     setState(() {
       instructionsList = instructions;
     });
-  }
-
-  void validateRecipe(recipes) {
-    // ignore: unnecessary_null_comparison
-    if (userId == null) {
-      showToast(message: 'User is not signed in');
-      return;
-    }
-
-    String recipetime = timeController.text;
-    String recipeCalories = caloriesController.text;
-    String recipename = recipeNameController.text;
-    String category = recipeCategoryController.text;
-    String difficultylevel = difficultyText.toString();
-    String description = descriptionController.text;
-    
-
-    if (recipename.isEmpty ||
-        description.isEmpty ||
-        category.isEmpty ||
-        recipetime.isEmpty ||
-        recipeCalories.isEmpty ||
-        difficultylevel.isEmpty ||
-        imageUrl.isEmpty) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('All fields are required'),
-            content: const Text('Please fill in all the required fields.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-
-      return;
-    }
-
-    rController.addRecipes(recipes, userId);
-    // Clear input fields
-    recipeNameController.clear();
-    recipeCategoryController.clear();
-    timeController.clear();
-    caloriesController.clear();
-    descriptionController.clear();
-    imageUrl = '';
-
-
-
-    // Navigate back to MyRecipeScreen
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => MyRecipeScreen(),
-      ),
-    );
-  }
-
-  Widget nameAndCategoryField(hintText, controller) {
-    return SizedBox(
-      height: 42,
-      child: TextFormField(
-        controller: controller,
-        decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.0),
-            borderSide: const BorderSide(color: AppColor.baseColor),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.0),
-            borderSide: const BorderSide(color: AppColor.baseColor),
-          ),
-          hintText: hintText,
-          hintStyle: const TextStyle(color: Colors.grey),
-          contentPadding: const EdgeInsets.only(left: 15),
-        ),
-      ),
-    );
   }
 
   Widget subtitletext(text) {

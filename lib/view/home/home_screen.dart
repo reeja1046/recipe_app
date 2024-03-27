@@ -13,6 +13,7 @@ import 'package:recipe_app/view/search/search_screen.dart';
 import 'package:recipe_app/widgets/detailed_recipe.dart';
 import 'package:recipe_app/controllers/home_controller.dart';
 
+// ignore: must_be_immutable
 class MyHomePage extends StatelessWidget {
   final HomeController hcontroller = Get.put(HomeController());
   final SizedBoxHeightWidth sizedboxhelper = SizedBoxHeightWidth();

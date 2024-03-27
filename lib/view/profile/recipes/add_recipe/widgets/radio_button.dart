@@ -12,6 +12,7 @@ class RadioButtonsRow extends StatefulWidget {
   }) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _RadioButtonsRowState createState() => _RadioButtonsRowState();
 }
 
@@ -19,8 +20,8 @@ class _RadioButtonsRowState extends State<RadioButtonsRow> {
   int selectedRadio = 0;
   final Map<int, String> radioText = {
     1: 'Easy',
-    2: 'Normal',
-    3: 'Professional',
+    2: 'Medium',
+    3: 'Hard',
   };
 
   @override
@@ -73,7 +74,7 @@ class _RadioButtonsRowState extends State<RadioButtonsRow> {
                 activeColor: AppColor.baseColor,
               ),
               const Text(
-                'Normal',
+                'Medium',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
             ],
@@ -95,7 +96,7 @@ class _RadioButtonsRowState extends State<RadioButtonsRow> {
                 activeColor: AppColor.baseColor,
               ),
               const Text(
-                'Professional',
+                'Hard',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
             ],

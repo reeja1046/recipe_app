@@ -6,7 +6,7 @@ class MyCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SafeArea(child: Text('jchsdvkj')),
     );
   }

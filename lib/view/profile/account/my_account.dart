@@ -250,6 +250,7 @@ class _MyAccountEditState extends State<MyAccountEdit> {
     if (userIdExists) {
       // User ID already exists in the database, handle accordingly
       showDialog(
+        // ignore: use_build_context_synchronously
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(

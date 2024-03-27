@@ -3,6 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recipe_app/core/constants/colors.dart';
+import 'package:recipe_app/core/constants/show_toast.dart';
 import 'package:recipe_app/core/serivces/add_service.dart';
 
 class PhotoUploadSection extends StatefulWidget {
@@ -66,7 +67,7 @@ class _PhotoUploadSectionState extends State<PhotoUploadSection> {
                     imageUrls.add(imageUrl);
                   });
                 } catch (error) {
-                  print('Error uploading image: $error');
+                  showToast(message: 'Error uploading image: $error');
                 }
               }
 

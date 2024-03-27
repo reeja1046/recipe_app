@@ -33,7 +33,7 @@ class MyUserController extends GetxController {
       return userList;
     } catch (e) {
       print('Error fetching user details: $e');
-      throw e;
+      rethrow;
     }
   }
 }
