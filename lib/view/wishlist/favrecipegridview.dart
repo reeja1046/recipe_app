@@ -48,7 +48,7 @@ class FavRecipeGridView extends StatelessWidget {
             return RecipeCard(
               recipeName: recipeData['recipeName'],
               calories: recipeData['calories'],
-              cookingTime: recipeData['cookingTime'],
+              cookingTime: recipeData['etsTime'],
               imageUrl: recipeData['imageUrl'],
               recipeId: recipeData['recipeId'],
               userId: recipeData['userId'],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_app/controllers/chefsearch_controller.dart';
+import 'package:recipe_app/controllers/chef_search.dart';
 import 'package:recipe_app/models/user_class.dart';
 import 'package:recipe_app/view/search/chef/chef_profile.dart';
 
@@ -27,8 +27,7 @@ class PopularChefListTile extends StatelessWidget {
             itemCount: users.length,
             itemBuilder: (BuildContext context, int index) {
               MyUsers user = users[index];
-              print(user.userName);
-              print(user.userId);
+
               return ListTile(
                 onTap: () {
                   Get.to(() => ChefProfile(
@@ -39,7 +38,6 @@ class PopularChefListTile extends StatelessWidget {
                   backgroundImage: NetworkImage(user.imageUrl!),
                 ),
                 title: Text(user.userName!),
-                // subtitle: Text('${user.followers!} followers'),
                 trailing: OutlinedButton(
                   onPressed: () {},
                   style: ButtonStyle(
@@ -53,11 +51,10 @@ class PopularChefListTile extends StatelessWidget {
               );
             },
             separatorBuilder: (BuildContext context, int index) =>
-                Divider(height: 10),
+                const Divider(height: 10),
           );
         } else {
-          return Text(
-              'No users found'); // Show message if no users are available
+          return const Text('No users found');
         }
       },
     );
