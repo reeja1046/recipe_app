@@ -1,43 +1,44 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-class CustomTimeBar extends StatefulWidget {
-  const CustomTimeBar({Key? key}) : super(key: key);
+// class CustomTimePicker extends StatefulWidget {
+//   final void Function(TimeOfDay)? onTimeSelected;
 
-  @override
-  _CustomTimeBarState createState() => _CustomTimeBarState();
-}
+//   const CustomTimePicker({Key? key, this.onTimeSelected}) : super(key: key);
 
-class _CustomTimeBarState extends State<CustomTimeBar> {
-  double _startTime = 0.0;
+//   @override
+//   _CustomTimePickerState createState() => _CustomTimePickerState();
+// }
 
-  @override
-  Widget build(BuildContext context) {
-    int hours = _startTime.floor();
-    int minutes = ((_startTime - hours) * 60).round();
+// class _CustomTimePickerState extends State<CustomTimePicker> {
+//   TimeOfDay _selectedTime = TimeOfDay.now();
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('Start Time: ${_formatTime(hours, minutes)}'),
-        Slider(
-          value: _startTime,
-          onChanged: (value) {
-            setState(() {
-              _startTime = value;
-            });
-          },
-          min: 0.0,
-          max: 24.0,
-          divisions: 24, // Assuming each hour is a division
-          label: _formatTime(hours, minutes),
-        ),
-      ],
-    );
-  }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: [
+//         Text(
+//           'Selected Time: ${_selectedTime.format(context)}',
+//           style: TextStyle(fontSize: 16.0),
+//         ),
+//         ElevatedButton(
+//           onPressed: () => _selectTime(context),
+//           child: Text('Select Time'),
+//         ),
+//       ],
+//     );
+//   }
 
-  String _formatTime(int hours, int minutes) {
-    String formattedHours = hours.toString().padLeft(2, '0');
-    String formattedMinutes = minutes.toString().padLeft(2, '0');
-    return '$formattedHours:$formattedMinutes';
-  }
-}
+//   Future<void> _selectTime(BuildContext context) async {
+//     final TimeOfDay? selectedTime = await showTimePicker(
+//       context: context,
+//       initialTime: _selectedTime,
+//     );
+//     if (selectedTime != null && widget.onTimeSelected != null) {
+//       setState(() {
+//         _selectedTime = selectedTime;
+//       });
+//       widget.onTimeSelected!(selectedTime);
+//     }
+//   }
+// }

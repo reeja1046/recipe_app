@@ -49,39 +49,30 @@ class _ChefSearchScreenState extends State<ChefSearchScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.black,
-                width: 1,
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: TextFormField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                labelText: 'Search',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  borderSide: const BorderSide(color: Colors.black),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  borderSide: const BorderSide(color: Colors.black),
+                ),
+                contentPadding: const EdgeInsets.only(left: 15),
+                prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear, color: Colors.grey),
+                  onPressed: () {
+                    _searchController.clear();
+                  },
+                ),
               ),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            height: 35,
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Icon(
-                    Icons.search,
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    child: TextField(
-                      controller: _searchController,
-                      onChanged: _searchChef,
-                      decoration: const InputDecoration(
-                        hintText: 'Search',
-                        hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.only(left: 8),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              onChanged: _searchChef,
             ),
           ),
           const SizedBox(height: 10),

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_app/controllers/myrecipes_controller.dart';
+import 'package:recipe_app/controllers/my_recipes.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/models/myrecipe_class.dart';
@@ -25,9 +25,24 @@ class MyRecipeScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text('My Recipes'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {},
+          PopupMenuButton(
+            itemBuilder: (BuildContext context) => [
+              const PopupMenuItem(
+                value: "edit",
+                child: Text("Edit"),
+              ),
+              const PopupMenuItem(
+                value: "delete",
+                child: Text("Delete"),
+              ),
+            ],
+            onSelected: (value) {
+              if (value == "edit") {
+                // Handle edit option
+              } else if (value == "delete") {
+                showDeleteOptions(context);
+              }
+            },
           ),
         ],
       ),
@@ -126,18 +141,70 @@ class MyRecipeScreen extends StatelessWidget {
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
-            ElevatedButton(
-              style:
-                  ElevatedButton.styleFrom(backgroundColor: AppColor.baseColor),
-              onPressed: () {},
-              child: const Text(
-                'Create Cookbook',
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-            ),
+            // ElevatedButton(
+            //   style:
+            //       ElevatedButton.styleFrom(backgroundColor: AppColor.baseColor),
+            //   onPressed: () {},
+            //   child: const Text(
+            //     'Create Cookbook',
+            //     style: TextStyle(color: Colors.white, fontSize: 16),
+            //   ),
+            // ),
           ],
         ),
       ),
+    );
+  }
+
+  void showDeleteOptions(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Select recipe to delete"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (MyRecipes recipe in controller.recipes)
+                ListTile(
+                  title: Text(recipe.recipeName!),
+                  onTap: () {
+                    _deleteRecipe(context, recipe);
+                  },
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // Function to delete the selected recipe
+  void _deleteRecipe(BuildContext context, MyRecipes recipe) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Delete Confirmation"),
+          content:
+              Text("Are you sure you want to delete ${recipe.recipeName}?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                controller.deleteRecipe(recipe);
+                Navigator.of(context).pop();
+              },
+              child: const Text("Delete"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Cancel"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

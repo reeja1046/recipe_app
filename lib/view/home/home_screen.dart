@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_app/controllers/home.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/sizedbox.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
@@ -11,7 +12,6 @@ import 'package:recipe_app/view/home/widget/drawer_container.dart';
 import 'package:recipe_app/view/home/widget/explore_card.dart';
 import 'package:recipe_app/view/search/search_screen.dart';
 import 'package:recipe_app/widgets/detailed_recipe.dart';
-import 'package:recipe_app/controllers/home_controller.dart';
 
 // ignore: must_be_immutable
 class MyHomePage extends StatelessWidget {

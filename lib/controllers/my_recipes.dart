@@ -44,4 +44,23 @@ class MyRecipeController extends GetxController {
       print('Error fetching recipes: $e');
     }
   }
+
+  void deleteRecipe(MyRecipes recipe) async {
+    try {
+      // Delete recipe locally
+      recipes.remove(recipe);
+      update();
+
+      // Delete recipe from Firestore
+      await FirebaseFirestore.instance
+          .collection('add recipes')
+          .doc(userId)
+          .collection('recipes')
+          .doc(recipe
+              .recipeId)
+          .delete();
+    } catch (error) {
+      print('Failed to delete recipe: $error');
+    }
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_app/controllers/bottom_navbar.dart';
 import 'package:recipe_app/core/constants/colors.dart';
-import 'package:recipe_app/controllers/bottomnavbar_controller.dart';
 import 'package:super_bottom_navigation_bar/super_bottom_navigation_bar.dart';
 
 class BottomNavBar extends StatelessWidget {

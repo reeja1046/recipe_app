@@ -1,11 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_app/controllers/add_recipe.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/sizedbox.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/core/serivces/add_service.dart';
-import 'package:recipe_app/controllers/addrecipe_controller.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/add_ingredients.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/add_instructions.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/category_dropdown.dart';
@@ -41,16 +42,44 @@ class _AddRecipeState extends State<AddRecipe> {
   String userId = FirebaseAuth.instance.currentUser!.uid;
 
   SizedBoxHeightWidth sizedboxhelper = SizedBoxHeightWidth();
-  List<String> categories = [
-    'Category 1',
-    'Category 2',
-    'Category 3',
-    'Category 4',
-    'Category 5'
-  ];
+  List<String> categories = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCategoriesFromFirestore();
+  }
+
+  Future<void> fetchCategoriesFromFirestore() async {
+    try {
+      final querySnapshot =
+          await FirebaseFirestore.instance.collection('categories').get();
+      final List<String> fetchedCategories =
+          querySnapshot.docs.map((doc) => doc['name'] as String).toList();
+      setState(() {
+        categories = fetchedCategories;
+      });
+    } catch (error) {
+      print('Failed to fetch categories: $error');
+      // Handle error as needed
+    }
+  }
+
+  void addNewCategory(String newCategoryName) {
+    FirebaseFirestore.instance.collection('categories').add({
+      'name': newCategoryName,
+    }).then((_) {
+      setState(() {
+        categories.add(newCategoryName);
+      });
+    }).catchError((error) {
+      print('Failed to add category: $error');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(categories);
     return Scaffold(
       body: Column(
         children: [
@@ -76,9 +105,10 @@ class _AddRecipeState extends State<AddRecipe> {
                     subtitletext('Category'),
                     sizedboxhelper.kheight10,
                     CategoryDropdown(
-                      hintText: 'Biriyani/Friedrice/Noodles',
+                      hintText: 'Select Category',
                       controller: recipeCategoryController,
                       categories: categories,
+                      onNewCategoryAdded: addNewCategory,
                     ),
                     sizedboxhelper.kheight10,
                     subtitletext('Difficulty'),

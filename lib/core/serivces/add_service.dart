@@ -22,15 +22,17 @@ class RecipeService {
     }
   }
 
-    Future<List<MyAllRecipes>> getAllRecipes() async {
-    List<MyAllRecipes> recipes = [];
+  Future<List<AllRecipesList>> getAllRecipes() async {
+    List<AllRecipesList> recipes = [];
 
     try {
-      QuerySnapshot querySnapshot = await firestore.collectionGroup('recipes').get();
+      QuerySnapshot querySnapshot =
+          await firestore.collectionGroup('recipes').get();
 
       for (var doc in querySnapshot.docs) {
-        recipes.add(MyAllRecipes.fromFirestore(doc));
+        recipes.add(AllRecipesList.fromFirestore(doc));
         print(recipes);
+        print('ajhsgdjhsgjgsfg63724888852343434343434343434324');
       }
 
       return recipes;
