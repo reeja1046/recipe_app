@@ -19,6 +19,7 @@ class RecipeValidator {
     List<String> ingredientsList,
     List<String> instructionsList,
   ) {
+    // ignore: unnecessary_null_comparison
     if (userId == null) {
       showToast(message: 'User is not signed in');
       return;

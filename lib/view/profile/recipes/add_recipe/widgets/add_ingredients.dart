@@ -24,13 +24,19 @@ class _IngredientsFormState extends State<IngredientsForm> {
   @override
   void initState() {
     super.initState();
-    // Initialize the ingredientControllers list with controllers for each initial ingredient
-    ingredientControllers = widget.initialIngredients.map((ingredient) {
-      TextEditingController controller = TextEditingController();
-      controller.text = ingredient;
-      totalHeight += textFieldHeight + verticalPadding - 10;
-      return controller;
-    }).toList();
+    if (widget.initialIngredients.isNotEmpty) {
+      // Initialize ingredientControllers with controllers for each initial ingredient
+      ingredientControllers = widget.initialIngredients.map((ingredient) {
+        TextEditingController controller = TextEditingController();
+        controller.text = ingredient;
+        totalHeight += textFieldHeight + verticalPadding - 10;
+        return controller;
+      }).toList();
+    } else {
+      // If initialIngredients is empty, generate controllers for the maximum number of ingredients
+      ingredientControllers =
+          List.generate(maxIngredients, (index) => TextEditingController());
+    }
   }
 
   @override

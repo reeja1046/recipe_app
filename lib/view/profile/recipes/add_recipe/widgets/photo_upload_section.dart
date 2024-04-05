@@ -8,7 +8,9 @@ import 'package:recipe_app/core/serivces/add_service.dart';
 
 class PhotoUploadSection extends StatefulWidget {
   final void Function(List<String>) onImagesSelected;
-  const PhotoUploadSection({Key? key, required this.onImagesSelected})
+  final String initialImage;
+  const PhotoUploadSection(
+      {Key? key, required this.onImagesSelected, required this.initialImage})
       : super(key: key);
 
   @override
@@ -19,6 +21,15 @@ class _PhotoUploadSectionState extends State<PhotoUploadSection> {
   RecipeService addrecipe = RecipeService();
   List<String> imageUrls = [];
   List<File> pickedImages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialImage.isNotEmpty) {
+      imageUrls.add(widget.initialImage);
+    }
+    print(widget.initialImage);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +45,38 @@ class _PhotoUploadSectionState extends State<PhotoUploadSection> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 16.0),
+          if (widget.initialImage.isNotEmpty)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(children: [
+                    IconButton(
+                      iconSize: 30,
+                      icon: const Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          print('Press close button');
+                          imageUrls.remove(widget.initialImage);
+                          pickedImages.removeWhere(
+                              (image) => image.path == widget.initialImage);
+                        });
+                      },
+                    ),
+                    Image.network(
+                      widget.initialImage,
+                      height: 100.0,
+                      width: 100.0,
+                      fit: BoxFit.cover,
+                    ),
+                  ]),
+                ),
+              ],
+            ),
           IconButton(
             icon: const Icon(
               Icons.photo_library,

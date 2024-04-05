@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:recipe_app/controllers/my_recipes.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
-import 'package:recipe_app/models/allrecipe_class.dart';
 import 'package:recipe_app/models/myrecipe_class.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/add_recipe_screen.dart';
 import 'package:recipe_app/widgets/detailed_recipe.dart';
@@ -132,7 +131,7 @@ class MyRecipeScreen extends StatelessWidget {
               style:
                   ElevatedButton.styleFrom(backgroundColor: AppColor.baseColor),
               onPressed: () {
-                Get.to(() => AddRecipe(
+                Get.to(() => const AddRecipe(
                       recipeDetail: null,
                     ));
               },
@@ -221,15 +220,7 @@ class MyRecipeScreen extends StatelessWidget {
                 ListTile(
                   title: Text(recipe.recipeName!),
                   onTap: () {
-                    print(recipe.recipeName);
-                    print(recipe.recipeId);
                     fetchRecipeDetails(recipe.recipeId);
-                    //    Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => AddRecipe(recipe: recipe),
-                    //   ),
-                    // );
                   },
                 ),
             ],

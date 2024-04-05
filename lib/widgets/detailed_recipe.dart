@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/show_toast.dart';
 import 'package:recipe_app/core/constants/sizedbox.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/add_recipe_screen.dart';
 import 'package:recipe_app/widgets/ingredients.dart';
 import 'package:toast/toast.dart';
 
@@ -26,7 +28,15 @@ class DetailedRecipeScreen extends StatelessWidget {
     print('*********----------***********');
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Recipe Details'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                fetchRecipeDetails();
+              },
+              icon: const Icon(Icons.edit))
+        ],
       ),
       body: FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance
@@ -220,5 +230,22 @@ class DetailedRecipeScreen extends StatelessWidget {
     }).catchError((error) {
       showToast(message: 'Error checking recipe in favorites: $error');
     });
+  }
+
+  fetchRecipeDetails() async {
+    print('^^^^^^^^^&&&&&&&&&&^^^^^^');
+    print(recipeId);
+    var recipeDetail = await FirebaseFirestore.instance
+        .collection('add recipes')
+        .doc(userId)
+        .collection('recipes')
+        .doc(recipeId)
+        .get();
+    print(recipeDetail.data());
+    var instruction = recipeDetail.data()!['instructions'];
+    print(instruction);
+    if (recipeDetail.data() != null) {
+      Get.to(() => AddRecipe(recipeDetail: recipeDetail));
+    }
   }
 }
