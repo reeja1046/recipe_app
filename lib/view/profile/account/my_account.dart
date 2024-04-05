@@ -9,7 +9,7 @@ import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/core/serivces/add_service.dart';
 import 'package:recipe_app/view/profile/account/widgets/date_picker.dart';
 import 'package:recipe_app/view/profile/account/widgets/profile_photo_upload.dart';
-import 'package:recipe_app/view/profile/account/widgets/textenteringfield.dart';
+import 'package:recipe_app/view/profile/account/widgets/text_entering_field.dart';
 
 class MyAccountEdit extends StatefulWidget {
   const MyAccountEdit({super.key});
@@ -29,6 +29,7 @@ class _MyAccountEditState extends State<MyAccountEdit> {
   final TextEditingController dobController = TextEditingController();
   final CollectionReference userDetail =
       FirebaseFirestore.instance.collection('user_profile');
+  String? selectedRole;
   @override
   void initState() {
     super.initState();
@@ -58,6 +59,8 @@ class _MyAccountEditState extends State<MyAccountEdit> {
           mobileNumberController.text = userData?['UserPhone'] ?? '';
           dobController.text = userData?['UserDob'] ?? '';
           imageUrl = userData?['UserProfileImage'] ?? '';
+
+          selectedRole = userData?['UserRole'];
         });
       }
     } catch (error) {
@@ -160,6 +163,7 @@ class _MyAccountEditState extends State<MyAccountEdit> {
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextEnteringField(
                               text: 'Name',
@@ -167,10 +171,42 @@ class _MyAccountEditState extends State<MyAccountEdit> {
                               controller: nameController,
                             ),
                             sizedboxhelper.kheight20,
-                            TextEnteringField(
-                              text: 'Role',
-                              keyboardtype: TextInputType.text,
-                              controller: roleController,
+                            const Text(
+                              'Role',
+                              style: TextSize.subtitletextsize,
+                            ),
+                            DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderSide: const BorderSide(
+                                      color: AppColor.baseColor),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderSide: const BorderSide(
+                                      color: AppColor.baseColor),
+                                ),
+                                hintText: 'Choose one',
+                                hintStyle: const TextStyle(
+                                    color: AppColor.subGreyColor),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                              ),
+                              value: selectedRole,
+                              items: <String>['Basic', 'Advanced', 'Expert']
+                                  .map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (String? value) {
+                                roleController.text = value ?? '';
+                                setState(() {
+                                  selectedRole = value!;
+                                });
+                              },
                             ),
                             sizedboxhelper.kheight20,
                             TextEnteringField(
@@ -190,17 +226,19 @@ class _MyAccountEditState extends State<MyAccountEdit> {
                               controller: dobController,
                             ),
                             sizedboxhelper.kheight30,
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColor.baseColor,
-                              ),
-                              onPressed: () {
-                                saveUserData();
-                              },
-                              child: const Text(
-                                'Save',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 17),
+                            Center(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColor.baseColor,
+                                ),
+                                onPressed: () {
+                                  saveUserData();
+                                },
+                                child: const Text(
+                                  'Save',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 17),
+                                ),
                               ),
                             ),
                           ],
@@ -214,26 +252,6 @@ class _MyAccountEditState extends State<MyAccountEdit> {
           ),
         ),
       ),
-      // bottomNavigationBar: Padding(
-      //   padding: const EdgeInsets.only(bottom: 30),
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       ElevatedButton(
-      //         style: ElevatedButton.styleFrom(
-      //           backgroundColor: AppColor.baseColor,
-      //         ),
-      //         onPressed: () {
-      //           saveUserData();
-      //         },
-      //         child: const Text(
-      //           'Save',
-      //           style: TextStyle(color: Colors.white, fontSize: 17),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 

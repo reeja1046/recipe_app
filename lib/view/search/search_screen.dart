@@ -33,6 +33,9 @@ class _SearchScreenState extends State<SearchScreen>
           style: TextSize.appBarTitle,
         ),
         bottom: TabBar(
+          labelColor: Colors.black,
+          indicatorColor: Colors.black,
+          indicatorSize: TabBarIndicatorSize.tab,
           controller: _tabController,
           tabs: const [
             Tab(text: 'Recipe'),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_app/controllers/recipe_search.dart';
+import 'package:recipe_app/controllers/chef_recipe_list.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/models/myrecipe_class.dart';

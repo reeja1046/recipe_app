@@ -161,13 +161,7 @@ class MyHomePage extends StatelessWidget {
                     sizedboxhelper.kheight10,
                     const Text('Quick And Easy', style: TextSize.titletextsize),
                     sizedboxhelper.kheight10,
-                    Column(
-                      children: [
-                        QuickAndEasyCard(context),
-                        sizedboxhelper.kheight10,
-                        QuickAndEasyCard(context),
-                      ],
-                    ),
+                    const QuickAndEasyCard(),
                   ],
                 ),
               ),

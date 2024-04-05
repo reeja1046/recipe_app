@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,6 +17,7 @@ class _ProfilePicState extends State<ProfilePic> {
   RecipeService addrecipe = RecipeService();
   String? imageUrl;
   File? pickedImage;
+  bool isSelectingImage = false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _ProfilePicState extends State<ProfilePic> {
                   )
                 : null,
           ),
-          if (pickedImage == null && imageUrl != null)
+          if (isSelectingImage)
             const Positioned.fill(
               child: Center(
                 child: CircularProgressIndicator(),
@@ -61,6 +61,9 @@ class _ProfilePicState extends State<ProfilePic> {
                 color: Colors.black,
               ),
               onPressed: () async {
+                setState(() {
+                  isSelectingImage = true;
+                });
                 ImagePicker imagePicker = ImagePicker();
 
                 XFile? file = await imagePicker.pickImage(
@@ -68,7 +71,9 @@ class _ProfilePicState extends State<ProfilePic> {
                   maxWidth: 1920,
                   imageQuality: 80,
                 );
-
+                setState(() {
+                  isSelectingImage = false;
+                });
                 // Check if image is selected
                 if (file == null) return;
 
@@ -86,7 +91,7 @@ class _ProfilePicState extends State<ProfilePic> {
                       await referenceImageToUpload.getDownloadURL();
                   setState(() {
                     pickedImage = File(file.path);
-                    this.imageUrl = imageUrl;
+                    this.imageUrl = imageUrl; // Update imageUrl here
                   });
                   widget.onImageSelected(imageUrl);
                 } catch (error) {

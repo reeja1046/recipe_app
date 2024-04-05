@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_app/controllers/chef_search.dart';
+import 'package:recipe_app/controllers/search_chef_list.dart';
 import 'package:recipe_app/models/user_class.dart';
 import 'package:recipe_app/view/search/chef/chef_profile.dart';
 import 'package:recipe_app/view/search/chef/popular_chef_listtile.dart';

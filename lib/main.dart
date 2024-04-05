@@ -31,9 +31,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
       theme: ThemeData(primarySwatch: AppColor.baseColor),
-      // initialBinding: BindingsBuilder(() {
-      //   Get.put(MyRecipeController()); // Initialize your controller
-      // }),
+      initialBinding: BindingsBuilder(() {
+        Get.put(MyRecipeController()); // Initialize your controller
+      }),
     );
   }
 }

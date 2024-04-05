@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/core/serivces/add_service.dart';
 import 'package:recipe_app/models/allrecipe_list.dart';
 import 'package:recipe_app/view/search/recipe/widgets/recipe_filter.dart';
@@ -134,11 +135,15 @@ class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
           const SizedBox(height: 10),
           const Text(
             'All Recipes',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            style: TextSize.subtitletextsize,
           ),
           const SizedBox(height: 10),
           _filteredRecipes.isEmpty
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(
+                  child: Text(
+                  'No Recipes Available',
+                  style: TextSize.titletextsize,
+                ))
               : GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -152,25 +157,40 @@ class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
                     AllRecipesList recipe = _filteredRecipes[index];
                     return GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
                             builder: (context) => DetailedRecipeScreen(
-                                  recipeId: recipe.recipeId!,
-                                  userId: recipe.userId!,
-                                )));
-                      },
-                      child: GridTile(
-                        footer: GridTileBar(
-                          backgroundColor: Colors.black45,
-                          title: Text(
-                            recipe.recipeName ?? '',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.white),
+                              recipeId: recipe.recipeId!,
+                              userId: recipe.userId!,
+                            ),
                           ),
-                        ),
-                        child: Image.network(
-                          recipe.imageUrl ?? '',
-                          fit: BoxFit.cover,
+                        );
+                      },
+                      child: Card(
+                        elevation: 4, 
+                        margin:
+                            const EdgeInsets.all(8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(
+                                recipe.imageUrl ?? '',
+                                fit: BoxFit.cover,
+                                height: 130,
+                              ),
+                            ),
+                            Text(
+                              recipe.recipeName ?? '',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     );

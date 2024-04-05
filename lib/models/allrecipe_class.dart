@@ -1,6 +1,6 @@
 class Recipes {
   String? recipeName;
-  String? etsTime;
+  String? time;
   String? calories;
   String? category;
   String? description;
@@ -16,7 +16,7 @@ class Recipes {
       required this.category,
       required this.description,
       required this.ingredients,
-      required this.etsTime,
+      required this.time,
       required this.recipeName,
       required this.difficultyText,
       required this.instructions,
@@ -25,7 +25,7 @@ class Recipes {
   Map<String, dynamic> toMap() {
     return {
       'recipeName': recipeName,
-      'etsTime': etsTime,
+      'time': time,
       'calories': calories,
       'category': category,
       'difficultyText': difficultyText,
@@ -37,4 +37,3 @@ class Recipes {
     };
   }
 }
-

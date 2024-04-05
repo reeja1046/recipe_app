@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/controllers/my_recipes.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
+import 'package:recipe_app/models/allrecipe_class.dart';
 import 'package:recipe_app/models/myrecipe_class.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/add_recipe_screen.dart';
 import 'package:recipe_app/widgets/detailed_recipe.dart';
@@ -17,13 +19,14 @@ class MyRecipeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(controller.toString());
-    print('################5555555555555###################');
-
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColor.baseColor,
         centerTitle: true,
-        title: const Text('My Recipes'),
+        title: const Text(
+          'My Recipes',
+          style: TextStyle(fontSize: 26),
+        ),
         actions: [
           PopupMenuButton(
             itemBuilder: (BuildContext context) => [
@@ -38,7 +41,7 @@ class MyRecipeScreen extends StatelessWidget {
             ],
             onSelected: (value) {
               if (value == "edit") {
-                // Handle edit option
+                showEditOptions(context);
               } else if (value == "delete") {
                 showDeleteOptions(context);
               }
@@ -50,7 +53,6 @@ class MyRecipeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: SafeArea(
           child: Obx(() {
-            print('%%%%%%%55555555555%%%%%%%%');
             if (controller.recipes.isEmpty) {
               return const Center(
                 child: Text(
@@ -59,7 +61,6 @@ class MyRecipeScreen extends StatelessWidget {
                 ),
               );
             } else {
-              print('********555555555**********');
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -72,9 +73,6 @@ class MyRecipeScreen extends StatelessWidget {
 
                   return GestureDetector(
                     onTap: () {
-                      print(recipe.recipeId);
-                      print("________________");
-                      print('Tapped on ${recipe.recipeName}');
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => DetailedRecipeScreen(
@@ -134,7 +132,9 @@ class MyRecipeScreen extends StatelessWidget {
               style:
                   ElevatedButton.styleFrom(backgroundColor: AppColor.baseColor),
               onPressed: () {
-                Get.to(() => const AddRecipe());
+                Get.to(() => AddRecipe(
+                      recipeDetail: null,
+                    ));
               },
               child: const Text(
                 'Add Recipe',
@@ -206,5 +206,53 @@ class MyRecipeScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  void showEditOptions(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Choose one to edit"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (MyRecipes recipe in controller.recipes)
+                ListTile(
+                  title: Text(recipe.recipeName!),
+                  onTap: () {
+                    print(recipe.recipeName);
+                    print(recipe.recipeId);
+                    fetchRecipeDetails(recipe.recipeId);
+                    //    Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => AddRecipe(recipe: recipe),
+                    //   ),
+                    // );
+                  },
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  fetchRecipeDetails(recipeId) async {
+    print('^^^^^^^^^&&&&&&&&&&^^^^^^');
+    print(recipeId);
+    var recipeDetail = await FirebaseFirestore.instance
+        .collection('add recipes')
+        .doc(userId)
+        .collection('recipes')
+        .doc(recipeId)
+        .get();
+    print(recipeDetail.data());
+    var instruction = recipeDetail.data()!['instructions'];
+    print(instruction);
+    if (recipeDetail.data() != null) {
+      Get.to(() => AddRecipe(recipeDetail: recipeDetail));
+    }
   }
 }

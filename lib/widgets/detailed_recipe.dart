@@ -102,7 +102,7 @@ class DetailedRecipeScreen extends StatelessWidget {
                             color: Colors.white,
                           ),
                           Text(
-                            '${recipeData['etsTime']}',
+                            '${recipeData['time']}',
                             style: const TextStyle(color: Colors.white),
                           )
                         ],

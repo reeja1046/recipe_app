@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/controllers/add_recipe.dart';
 import 'package:recipe_app/core/constants/colors.dart';
@@ -12,14 +13,15 @@ import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/add_instructi
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/category_dropdown.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/custom_appbar.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/description_section.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/difficulty.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/name_section.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/photo_upload_section.dart';
-import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/radio_button.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/recipe_validator.dart';
-import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/time_and_calories.dart';
+import 'package:recipe_app/view/profile/recipes/add_recipe/widgets/time.dart';
 
 class AddRecipe extends StatefulWidget {
-  const AddRecipe({Key? key}) : super(key: key);
+  final DocumentSnapshot<Map<String, dynamic>>? recipeDetail;
+  const AddRecipe({Key? key, required this.recipeDetail}) : super(key: key);
 
   @override
   State<AddRecipe> createState() => _AddRecipeState();
@@ -33,20 +35,25 @@ class _AddRecipeState extends State<AddRecipe> {
   TextEditingController timeController = TextEditingController();
   TextEditingController caloriesController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  String difficultyText = '';
-  int selectedDifficulty = 0;
+  TextEditingController difficultyController = TextEditingController();
+  List<String> ingredientsController = [];
   String imageUrl = '';
   List<String> ingredientsList = [];
   List<String> instructionsList = [];
   final RecipeService recipeService = RecipeService();
   String userId = FirebaseAuth.instance.currentUser!.uid;
-
+  double totalHeight = 120;
+  final double textFieldHeight = 60;
+  final double verticalPadding = 8.0;
   SizedBoxHeightWidth sizedboxhelper = SizedBoxHeightWidth();
   List<String> categories = [];
 
   @override
   void initState() {
     super.initState();
+    if (widget.recipeDetail != null) {
+      initializeWithRecipeData(widget.recipeDetail!);
+    }
     fetchCategoriesFromFirestore();
   }
 
@@ -63,6 +70,24 @@ class _AddRecipeState extends State<AddRecipe> {
       print('Failed to fetch categories: $error');
       // Handle error as needed
     }
+  }
+
+  void initializeWithRecipeData(
+      DocumentSnapshot<Map<String, dynamic>> recipeDetail) {
+    recipeNameController.text = recipeDetail.data()!['recipeName'] ?? '';
+    recipeCategoryController.text = recipeDetail.data()!['category'] ?? '';
+    timeController.text = recipeDetail.data()!['time'] ?? '';
+    caloriesController.text = recipeDetail.data()!['calories'] ?? '';
+    descriptionController.text = recipeDetail.data()!['description'] ?? '';
+    difficultyController.text = recipeDetail.data()!['difficultyText'] ?? '';
+
+    List<dynamic> fetchIngredients = recipeDetail.data()!['ingredients'];
+    print('::::::::::::::::::');
+    print(fetchIngredients);
+    print('::::::::::::::::::');
+    ingredientsList = List<String>.from(fetchIngredients);
+    print(ingredientsList);
+    print('::::::::::::::::::');
   }
 
   void addNewCategory(String newCategoryName) {
@@ -98,8 +123,30 @@ class _AddRecipeState extends State<AddRecipe> {
                       controller: recipeNameController,
                     ),
                     sizedboxhelper.kheight10,
-                    BuildTimeAndCalories(
-                      onTimeAndCaloriesChanged: updateTimeAndCalories,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            subtitletext('Est Time'),
+                            sizedboxhelper.kheight10,
+                            TimeField(
+                                hintText: 'in minutes',
+                                controller: timeController),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            subtitletext('Calories'),
+                            sizedboxhelper.kheight10,
+                            TimeField(
+                                hintText: 'calories',
+                                controller: caloriesController),
+                          ],
+                        ),
+                      ],
                     ),
                     sizedboxhelper.kheight10,
                     subtitletext('Category'),
@@ -113,9 +160,9 @@ class _AddRecipeState extends State<AddRecipe> {
                     sizedboxhelper.kheight10,
                     subtitletext('Difficulty'),
                     sizedboxhelper.kheight10,
-                    RadioButtonsRow(
-                      onDifficultyChanged: updateDifficulty,
-                      difficultyText: difficultyText,
+                    DifficultyDropDown(
+                      hintText: 'choose one',
+                      controller: difficultyController,
                     ),
                     sizedboxhelper.kheight10,
                     subtitletext('Description'),
@@ -126,6 +173,7 @@ class _AddRecipeState extends State<AddRecipe> {
                     sizedboxhelper.kheight10,
                     IngredientsForm(
                       onIngredientsChanged: handleIngredientsChanged,
+                      initialIngredients: ingredientsList,
                     ),
                     sizedboxhelper.kheight10,
                     subtitletext('Instructions'),
@@ -170,7 +218,7 @@ class _AddRecipeState extends State<AddRecipe> {
                               timeController,
                               caloriesController,
                               descriptionController,
-                              difficultyText,
+                              difficultyController,
                               userId,
                               imageUrl,
                               ingredientsList,
@@ -192,20 +240,6 @@ class _AddRecipeState extends State<AddRecipe> {
         ],
       ),
     );
-  }
-
-  void updateDifficulty(int difficulty, String difficultyText) {
-    setState(() {
-      selectedDifficulty = difficulty;
-      this.difficultyText = difficultyText;
-    });
-  }
-
-  void updateTimeAndCalories(String time, String calories) {
-    setState(() {
-      timeController.text = time;
-      caloriesController.text = calories;
-    });
   }
 
   void handleIngredientsChanged(List<String> ingredients) {

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 
 class RecipeGridView extends StatelessWidget {
-  const RecipeGridView({super.key});
+  final String category;
+  const RecipeGridView({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
+    print(category);
     List<RecipeCard> recipeCards = [
       RecipeCard(
         recipeName: 'Beef Biriyani',

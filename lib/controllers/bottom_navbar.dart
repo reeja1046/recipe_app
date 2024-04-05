@@ -14,11 +14,10 @@ class BottomNavBarController extends GetxController {
     selectedIndex.value = index;
   }
 
-    final List<Widget> pages = [
+  final List<Widget> pages = [
     MyHomePage(),
     const FavoriteScreen(),
     const MyCart(),
     const MyProfile(),
   ];
-  
 }

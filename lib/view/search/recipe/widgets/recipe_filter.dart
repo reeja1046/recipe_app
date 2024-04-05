@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/show_toast.dart';
@@ -256,7 +255,7 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
           estimatedTimeStr != null ? int.tryParse(estimatedTimeStr) : null;
 
       for (var recipe in recipes) {
-        int estTimeInt = int.tryParse(recipe.estTime ?? '') ?? 0;
+        int estTimeInt = int.tryParse(recipe.time ?? '') ?? 0;
         if (recipe.category == category &&
             (estimatedTime == null || estTimeInt <= estimatedTime) &&
             (difficultyLevel == null ||
@@ -267,8 +266,9 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
             imageUrl: recipe.imageUrl,
             userId: recipe.userId,
             category: recipe.category,
-            estTime: recipe.estTime,
+            time: recipe.time,
             difficultyLevel: recipe.difficultyLevel,
+            calories: '',
           ));
         }
       }

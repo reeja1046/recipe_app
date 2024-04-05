@@ -13,7 +13,7 @@ class RecipeValidator {
     TextEditingController timeController,
     TextEditingController caloriesController,
     TextEditingController descriptionController,
-    String difficultyText,
+    TextEditingController difficultyController,
     String userId,
     String imageUrl,
     List<String> ingredientsList,
@@ -28,7 +28,7 @@ class RecipeValidator {
     String recipeCalories = caloriesController.text;
     String recipename = recipeNameController.text;
     String category = recipeCategoryController.text;
-    String difficultylevel = difficultyText.toString();
+    String difficultylevel = difficultyController.text;
     String description = descriptionController.text;
 
     if (recipename.isEmpty ||
@@ -64,11 +64,11 @@ class RecipeValidator {
         imageUrl: imageUrl,
         calories: caloriesController.text,
         category: recipeCategoryController.text,
-        difficultyText: difficultyText,
+        difficultyText: difficultyController.text,
         description: descriptionController.text,
         ingredients: ingredientsList,
         instructions: instructionsList,
-        etsTime: timeController.text,
+        time: timeController.text,
         userId: userId,
         recipeName: recipeNameController.text,
       ),
@@ -89,5 +89,4 @@ class RecipeValidator {
       ),
     );
   }
-
 }

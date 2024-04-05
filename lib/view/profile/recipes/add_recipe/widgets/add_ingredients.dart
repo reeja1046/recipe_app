@@ -3,7 +3,11 @@ import 'package:recipe_app/core/constants/colors.dart';
 
 class IngredientsForm extends StatefulWidget {
   final Function(List<String>) onIngredientsChanged;
-  const IngredientsForm({Key? key, required this.onIngredientsChanged})
+  final List<String> initialIngredients;
+  const IngredientsForm(
+      {Key? key,
+      required this.onIngredientsChanged,
+      required this.initialIngredients})
       : super(key: key);
 
   @override
@@ -12,16 +16,21 @@ class IngredientsForm extends StatefulWidget {
 
 class _IngredientsFormState extends State<IngredientsForm> {
   List<TextEditingController> ingredientControllers = [];
-  double totalHeight = 320;
-  final int maxIngredients = 4;
+  double totalHeight = 120;
+  final int maxIngredients = 1;
   final double textFieldHeight = 60;
   final double verticalPadding = 8.0;
 
   @override
   void initState() {
     super.initState();
-    ingredientControllers =
-        List.generate(maxIngredients, (index) => TextEditingController());
+    // Initialize the ingredientControllers list with controllers for each initial ingredient
+    ingredientControllers = widget.initialIngredients.map((ingredient) {
+      TextEditingController controller = TextEditingController();
+      controller.text = ingredient;
+      totalHeight += textFieldHeight + verticalPadding - 10;
+      return controller;
+    }).toList();
   }
 
   @override
@@ -84,7 +93,8 @@ class _IngredientsFormState extends State<IngredientsForm> {
                           onPressed: () {
                             setState(() {
                               ingredientControllers.removeAt(i);
-                              totalHeight -= textFieldHeight + verticalPadding;
+                              totalHeight -=
+                                  textFieldHeight + verticalPadding - 2;
                             });
                           },
                           icon: const Icon(Icons.delete),
@@ -96,7 +106,7 @@ class _IngredientsFormState extends State<IngredientsForm> {
                 onPressed: () {
                   setState(() {
                     ingredientControllers.add(TextEditingController());
-                    totalHeight += textFieldHeight + verticalPadding;
+                    totalHeight += textFieldHeight + verticalPadding - 2;
                   });
                 },
                 child: const Text(

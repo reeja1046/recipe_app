@@ -1,65 +1,97 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/core/serivces/add_service.dart';
+import 'package:recipe_app/models/allrecipe_list.dart';
+import 'package:recipe_app/widgets/detailed_recipe.dart';
 
-class QuickAndEasyCard extends StatelessWidget {
-  final BuildContext context;
+class QuickAndEasyCard extends StatefulWidget {
+  const QuickAndEasyCard({super.key});
 
-  // ignore: prefer_const_constructors_in_immutables
-  QuickAndEasyCard(this.context, {super.key});
-  
+  @override
+  State<QuickAndEasyCard> createState() => _QuickAndEasyCardState();
+}
+
+class _QuickAndEasyCardState extends State<QuickAndEasyCard> {
+  List recipes = [];
+  @override
+  void initState() {
+    fetchRecipes();
+    super.initState();
+  }
+
+  Future<void> fetchRecipes() async {
+    final List<AllRecipesList> fetchedRecipes =
+        await RecipeService().getAllRecipes();
+
+    List<AllRecipesList> filteredRecipes = [];
+
+    for (var recipe in fetchedRecipes) {
+      int? estTimeInt = int.tryParse(recipe.time ?? '');
+      if (estTimeInt != null && estTimeInt < 30) {
+        filteredRecipes.add(recipe);
+      }
+      print(estTimeInt);
+
+      print('#######@@@@@@@@@###########');
+    }
+    print('&&&&&&******&&&&&*****&&&&*****&&&&&&&&&&*******');
+
+    setState(() {
+      recipes = filteredRecipes;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              height: 160,
-              width: MediaQuery.of(context).size.width * 0.44,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  'assets/chicken biriyani.jpg',
-                  fit: BoxFit.cover,
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 8.0,
+        mainAxisSpacing: 8.0,
+      ),
+      itemCount: recipes.length,
+      itemBuilder: (context, index) {
+        AllRecipesList recipe = recipes[index];
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => DetailedRecipeScreen(
+                  recipeId: recipe.recipeId!,
+                  userId: recipe.userId!,
                 ),
               ),
-            ),
-            const Text(
-              'Chicken Biriyani',
-              style: TextStyle(fontSize: 16),
-            ),
-          ],
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              height: 160,
-              width: MediaQuery.of(context).size.width * 0.44,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  'assets/chicken biriyani.jpg',
-                  fit: BoxFit.cover,
+            );
+          },
+          child: Card(
+            elevation: 4,
+            margin: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: Image.network(
+                    recipe.imageUrl ?? '',
+                    fit: BoxFit.cover,
+                    height: 130,
+                  ),
                 ),
-              ),
+                Text(
+                  recipe.recipeName ?? '',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-            const Text(
-              'Chicken Biriyani',
-              style: TextStyle(fontSize: 16),
-            ),
-          ],
-        ),
-      ],
+          ),
+        );
+      },
     );
   }
 }

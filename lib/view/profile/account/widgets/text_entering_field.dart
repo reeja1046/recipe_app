@@ -25,7 +25,7 @@ class _TextEnteringFieldState extends State<TextEnteringField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widget.text, // Accessing the text parameter using widget.text
+          widget.text, 
           style: TextSize.subtitletextsize,
         ),
         SizedBox(
@@ -33,7 +33,7 @@ class _TextEnteringFieldState extends State<TextEnteringField> {
           child: TextFormField(
             controller: widget.controller,
             keyboardType:
-                widget.keyboardtype, // Accessing the keyboardType parameter
+                widget.keyboardtype, 
             decoration: InputDecoration(
               suffixIcon: const Icon(Icons.edit),
               enabledBorder: OutlineInputBorder(
