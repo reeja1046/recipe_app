@@ -11,6 +11,7 @@ class CategoryButtons extends StatefulWidget {
   const CategoryButtons({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _CategoryButtonsState createState() => _CategoryButtonsState();
 }
 
@@ -61,7 +62,7 @@ class _CategoryButtonsState extends State<CategoryButtons> {
                     print(category);
                     selectCategory(category);
                   },
-                  isSelected: selectedCategory == category,
+                  isSelected: false,
                 ),
               );
             }).toList(),

@@ -15,6 +15,14 @@ class CategoryCard extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColor.baseColor,
         centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
+        ),
         title: const Text(
           'Categories',
           style: TextStyle(fontSize: 26),

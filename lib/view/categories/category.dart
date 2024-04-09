@@ -1,26 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:recipe_app/controllers/category.dart';
 import 'package:recipe_app/core/constants/colors.dart';
-import 'package:recipe_app/core/serivces/add_service.dart';
+import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/models/allrecipe_list.dart';
 import 'package:recipe_app/view/categories/category_button.dart';
 import 'package:recipe_app/widgets/detailed_recipe.dart';
+import 'package:recipe_app/widgets/user_payment.dart';
 
-class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({Key? key}) : super(key: key);
+class CategoryScreen extends StatelessWidget {
+  final CategoryController controller = Get.put(CategoryController());
 
-  @override
-  // ignore: library_private_types_in_public_api
-  _CategoryScreenState createState() => _CategoryScreenState();
-}
-
-class _CategoryScreenState extends State<CategoryScreen> {
-  List<AllRecipesList>? recipes;
-
-  @override
-  void initState() {
-    fetchRecipes();
-    super.initState();
-  }
+   CategoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +41,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           side: const BorderSide(color: AppColor.baseColor),
                           backgroundColor: AppColor.baseColor,
                         ),
-                        onPressed: () => fetchRecipes(),
+                        onPressed: () => controller.fetchRecipes(),
                         child: const Text(
                           'All',
                           style: TextStyle(
@@ -67,55 +58,187 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ),
               const SizedBox(height: 16.0),
               Expanded(
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0,
+                child: Obx(
+                  () => GridView.builder(
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 8.0,
+                      mainAxisSpacing: 8.0,
+                    ),
+                    itemCount: controller.recipes.length,
+                    itemBuilder: (context, index) {
+                      AllRecipesList recipe = controller.recipes[index];
+                      bool isRecipePremium = controller.isPremium.value &&
+                          recipe.userId == controller.currentUserId;
+
+                      return GestureDetector(
+                        onTap: () {
+                          if (isRecipePremium ||
+                              controller.currentUserId == recipe.userId) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => DetailedRecipeScreen(
+                                  recipeId: recipe.recipeId!,
+                                  userId: recipe.userId!,
+                                ),
+                              ),
+                            );
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text('Want to buy it?'),
+                                      IconButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        icon: const Icon(Icons.close),
+                                      ),
+                                    ],
+                                  ),
+                                  actions: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Get.to(() =>
+                                                const UserPaymentScreen());
+                                          },
+                                          child: const Text(
+                                            'Pay Now',
+                                            style: TextSize.subtitletextsize,
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            controller.addToCart(
+                                              controller.currentUserId!,
+                                              {
+                                                'recipeName': recipe.recipeName,
+                                              },
+                                              recipe.userId!,
+                                              recipe.recipeId!,
+                                              recipe.imageUrl!,
+                                            );
+                                          },
+                                          child: const Text(
+                                            'Add to Cart',
+                                            style: TextSize.subtitletextsize,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                        },
+                        child: isRecipePremium ||
+                                controller.currentUserId == recipe.userId
+                            ? SizedBox(
+                                child: Card(
+                                  elevation: 4,
+                                  margin: const EdgeInsets.all(8),
+                                  child: Stack(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            child: Image.network(
+                                              recipe.imageUrl ?? '',
+                                              fit: BoxFit.cover,
+                                              height: 130,
+                                            ),
+                                          ),
+                                          Text(
+                                            recipe.recipeName ?? '',
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : SizedBox(
+                                child: Card(
+                                  elevation: 4,
+                                  margin: const EdgeInsets.all(8),
+                                  child: Stack(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            child: Image.network(
+                                              recipe.imageUrl ?? '',
+                                              fit: BoxFit.cover,
+                                              height: 130,
+                                            ),
+                                          ),
+                                          Text(
+                                            recipe.recipeName ?? '',
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      if (!isRecipePremium)
+                                        Positioned.fill(
+                                          child: Container(
+                                            color: Colors.grey.withOpacity(0.7),
+                                            child: const Center(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(Icons.lock),
+                                                  SizedBox(width: 4),
+                                                  Text(
+                                                    'Buy to Unlock',
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                      );
+                    },
                   ),
-                  itemCount: recipes?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    AllRecipesList recipe = recipes![index];
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => DetailedRecipeScreen(
-                              recipeId: recipe.recipeId!,
-                              userId: recipe.userId!,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Card(
-                        elevation: 4,
-                        margin: const EdgeInsets.all(8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(6),
-                              child: Image.network(
-                                recipe.imageUrl ?? '',
-                                fit: BoxFit.cover,
-                                height: 130,
-                              ),
-                            ),
-                            Text(
-                              recipe.recipeName ?? '',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
                 ),
               ),
             ],
@@ -123,13 +246,5 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> fetchRecipes() async {
-    final List<AllRecipesList> fetchedRecipes =
-        await RecipeService().getAllRecipes();
-    setState(() {
-      recipes = fetchedRecipes;
-    });
   }
 }

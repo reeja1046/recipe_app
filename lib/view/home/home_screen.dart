@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/controllers/home.dart';
+import 'package:recipe_app/controllers/premium.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/sizedbox.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
@@ -16,6 +17,8 @@ import 'package:recipe_app/widgets/detailed_recipe.dart';
 // ignore: must_be_immutable
 class MyHomePage extends StatelessWidget {
   final HomeController hcontroller = Get.put(HomeController());
+  final PremiumController quickAndEasyController =
+      Get.put(PremiumController());
   final SizedBoxHeightWidth sizedboxhelper = SizedBoxHeightWidth();
 
   MyHomePage({super.key});
@@ -93,7 +96,7 @@ class MyHomePage extends StatelessWidget {
                         const Text('Categories', style: TextSize.titletextsize),
                         TextButton(
                           onPressed: () {
-                            Get.to(() => const CategoryScreen());
+                            Get.to(() => CategoryScreen());
                           },
                           child: const Text(
                             'View All',
@@ -161,7 +164,7 @@ class MyHomePage extends StatelessWidget {
                     sizedboxhelper.kheight10,
                     const Text('Quick And Easy', style: TextSize.titletextsize),
                     sizedboxhelper.kheight10,
-                    const QuickAndEasyCard(),
+                    QuickAndEasyCard(),
                   ],
                 ),
               ),

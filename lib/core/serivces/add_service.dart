@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:recipe_app/core/constants/show_toast.dart';
 import 'package:recipe_app/models/allrecipe_list.dart';
+import 'package:recipe_app/models/myrecipe_class.dart';
 
 class RecipeService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -21,6 +22,33 @@ class RecipeService {
       print('Error saving recipe: $e');
     }
   }
+
+
+  Future<List<MyRecipes>> fetchRecipesByUserId(String userId) async {
+    try {
+      // Fetch recipes from the specified user's collection
+      QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
+          .collection('add recipes')
+          .doc(userId)
+          .collection('recipes')
+          .get();
+
+      List<MyRecipes> recipes = snapshot.docs.map((doc) {
+        String recipeId = doc.id;
+        return MyRecipes(
+          recipeId: recipeId,
+          imageUrl: doc['imageUrl'] ?? 'assets/placeholder.jpg',
+          recipeName: doc['recipeName'] ?? '',
+        );
+      }).toList();
+
+      return recipes;
+    } catch (error) {
+      throw Exception('Failed to fetch recipes for user: $error');
+    }
+  }
+
+
 
   Future<List<AllRecipesList>> getAllRecipes() async {
     List<AllRecipesList> recipes = [];

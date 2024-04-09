@@ -12,6 +12,8 @@ class MyCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         title: const Text('My Cart'),
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -35,99 +37,151 @@ class MyCart extends StatelessWidget {
 
           final docs = snapshot.data!.docs;
 
-          return GestureDetector(
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Make the Payment to Enjoy!!'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Get.to(() => const UserPaymentScreen());
-                        },
-                        child: const Text(
-                          'Pay Now',
-                          style: TextSize.subtitletextsize,
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Make the Payment to Enjoy!!'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Get.to(() => const UserPaymentScreen());
+                          },
+                          child: const Text(
+                            'Pay Now',
+                            style: TextSize.subtitletextsize,
+                          ),
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text(
-                          'cancel',
-                          style: TextSize.subtitletextsize,
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 8.0,
-                mainAxisSpacing: 8.0,
-              ),
-              itemCount: docs.length,
-              itemBuilder: (context, index) {
-                final recipeData = docs[index].data() as Map<String, dynamic>;
-                return SizedBox(
-                  child: Card(
-                    elevation: 4,
-                    margin: const EdgeInsets.all(8),
-                    child: Stack(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(6),
-                              child: Image.network(
-                                recipeData['imageUrl'] ?? '',
-                                fit: BoxFit.cover,
-                                height: 130,
-                              ),
-                            ),
-                            Text(
-                              recipeData['recipeName'] ?? '',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Positioned.fill(
-                          child: Container(
-                            color: Colors.grey.withOpacity(0.7),
-                            child: const Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.lock),
-                                  SizedBox(width: 4),
-                                  Text(
-                                    'Buy to Unlock',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                            ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text(
+                            'cancel',
+                            style: TextSize.subtitletextsize,
                           ),
                         ),
                       ],
-                    ),
-                  ),
+                    );
+                  },
                 );
               },
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 8.0,
+                  mainAxisSpacing: 8.0,
+                ),
+                itemCount: docs.length,
+                itemBuilder: (context, index) {
+                  final recipeData = docs[index].data() as Map<String, dynamic>;
+                  return SizedBox(
+                    child: Card(
+                      elevation: 4,
+                      margin: const EdgeInsets.all(8),
+                      child: Stack(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(6),
+                                child: Image.network(
+                                  recipeData['imageUrl'] ?? '',
+                                  fit: BoxFit.cover,
+                                  height: 130,
+                                ),
+                              ),
+                              Text(
+                                recipeData['recipeName'] ?? '',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Positioned.fill(
+                            child: Container(
+                              color: Colors.grey.withOpacity(0.7),
+                              child: const Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.lock),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      'Buy to Unlock',
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 8,
+                            right: 8,
+                            child: GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Confirm Removal'),
+                                        content: const Text(
+                                          'Are you sure you want to remove this item from your cart?',
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              // Remove the item from the cart
+                                              FirebaseFirestore.instance
+                                                  .collection('add recipes')
+                                                  .doc(FirebaseAuth.instance
+                                                      .currentUser?.uid)
+                                                  .collection('my cart')
+                                                  .doc(docs[index].id)
+                                                  .delete();
+
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text(
+                                              'Remove',
+                                              style:
+                                                  TextStyle(color: Colors.red),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    });
+                              },
+                              child: const Icon(
+                                Icons.clear,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           );
         },
