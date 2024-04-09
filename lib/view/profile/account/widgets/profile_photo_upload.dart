@@ -3,18 +3,19 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recipe_app/core/constants/colors.dart';
-import 'package:recipe_app/core/serivces/add_service.dart';
 
 class ProfilePic extends StatefulWidget {
   final void Function(String) onImageSelected;
-  const ProfilePic({Key? key, required this.onImageSelected}) : super(key: key);
+  String currentImage;
+  ProfilePic(
+      {Key? key, required this.onImageSelected, required this.currentImage})
+      : super(key: key);
 
   @override
   State<ProfilePic> createState() => _ProfilePicState();
 }
 
 class _ProfilePicState extends State<ProfilePic> {
-  RecipeService addrecipe = RecipeService();
   String? imageUrl;
   File? pickedImage;
   bool isSelectingImage = false;
@@ -35,15 +36,16 @@ class _ProfilePicState extends State<ProfilePic> {
             backgroundColor: Colors.white,
             radius: 60,
             // Placeholder avatar when no image is selected
-            backgroundImage:
-                pickedImage != null ? FileImage(pickedImage!) : null,
-            child: pickedImage == null && imageUrl == null
+            backgroundImage: widget.currentImage.isNotEmpty
+                ? NetworkImage(widget.currentImage) // Load image from URL
+                : null, // If currentImage is empty, don't set backgroundImage
+            child: widget.currentImage.isEmpty
                 ? const Icon(
                     Icons.person,
                     size: 80,
                     color: AppColor.baseColor,
                   )
-                : null,
+                : null, // If currentImage is not empty, don't set child
           ),
           if (isSelectingImage)
             const Positioned.fill(

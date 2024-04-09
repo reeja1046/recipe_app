@@ -80,70 +80,73 @@ class _AddInstructionsState extends State<AddInstructions> {
               border: Border.all(color: AppColor.baseColor),
               borderRadius: BorderRadius.circular(12.0),
             ),
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 20.0, left: 5, right: 5, bottom: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (int i = 0; i < instructionsControllers.length; i++)
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: i == 0
-                              ? 0
-                              : verticalPadding, // No padding for the first row
-                          bottom: i == instructionsControllers.length - 1
-                              ? 0
-                              : verticalPadding, // No padding for the last row
-                        ),
-                        child: Row(
-                          children: [
-                            Flexible(
-                              child: TextFormField(
-                                maxLines: null,
-                                controller: instructionsControllers[i],
-                                decoration: InputDecoration(
-                                  labelText: 'Step ${i + 1}',
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    borderSide: const BorderSide(
-                                        color: AppColor.baseColor),
+            child: Scrollbar(
+              trackVisibility: true,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20.0, left: 5, right: 5, bottom: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (int i = 0; i < instructionsControllers.length; i++)
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: i == 0
+                                ? 0
+                                : verticalPadding, // No padding for the first row
+                            bottom: i == instructionsControllers.length - 1
+                                ? 0
+                                : verticalPadding, // No padding for the last row
+                          ),
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: TextFormField(
+                                  maxLines: null,
+                                  controller: instructionsControllers[i],
+                                  decoration: InputDecoration(
+                                    labelText: 'Step ${i + 1}',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      borderSide: const BorderSide(
+                                          color: AppColor.baseColor),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      borderSide: const BorderSide(
+                                          color: AppColor.baseColor),
+                                    ),
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 15),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    borderSide: const BorderSide(
-                                        color: AppColor.baseColor),
-                                  ),
-                                  contentPadding:
-                                      const EdgeInsets.only(left: 15),
+                                  onChanged: (value) {
+                                    widget.onInstructionsAdded(
+                                        getInstructionsList());
+                                    // setState(() {
+                                    //   totalHeight = calculateTotalHeight();
+                                    // });
+                                  },
                                 ),
-                                onChanged: (value) {
-                                  widget.onInstructionsAdded(
-                                      getInstructionsList());
-                                  // setState(() {
-                                  //   totalHeight = calculateTotalHeight();
-                                  // });
-                                },
                               ),
-                            ),
-                            if (i > maxInstructions - 1)
-                              IconButton(
-                                onPressed: () {
-                                  {
-                                    setState(() {
-                                      instructionsControllers.removeAt(i);
-                                      totalHeight -=
-                                          textFieldHeight + verticalPadding;
-                                    });
-                                  }
-                                },
-                                icon: const Icon(Icons.delete),
-                              ),
-                          ],
+                              if (i > maxInstructions - 1)
+                                IconButton(
+                                  onPressed: () {
+                                    {
+                                      setState(() {
+                                        instructionsControllers.removeAt(i);
+                                        totalHeight -=
+                                            textFieldHeight + verticalPadding;
+                                      });
+                                    }
+                                  },
+                                  icon: const Icon(Icons.delete),
+                                ),
+                            ],
+                          ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

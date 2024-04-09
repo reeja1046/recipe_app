@@ -141,9 +141,10 @@ class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
           _filteredRecipes.isEmpty
               ? const Center(
                   child: Text(
-                  'No Recipes Available',
-                  style: TextSize.titletextsize,
-                ))
+                    'No Recipes Available',
+                    style: TextSize.titletextsize,
+                  ),
+                )
               : GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -167,9 +168,8 @@ class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
                         );
                       },
                       child: Card(
-                        elevation: 4, 
-                        margin:
-                            const EdgeInsets.all(8),
+                        elevation: 4,
+                        margin: const EdgeInsets.all(8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [

@@ -14,7 +14,7 @@ class MyProfile extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const HeaderPart(),
+           HeaderPart(),
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(

@@ -8,13 +8,15 @@ class MyRecipeController extends GetxController {
       FirebaseFirestore.instance.collection('add recipes');
   final RxList<MyRecipes> recipes = <MyRecipes>[].obs;
 
-  final String userId = FirebaseAuth.instance.currentUser!.uid;
+  late String userId;
 
   @override
   void onInit() {
-    print('%%##############');
     super.onInit();
-    fetchRecipes();
+    if (FirebaseAuth.instance.currentUser != null) {
+      userId = FirebaseAuth.instance.currentUser!.uid;
+      fetchRecipes();
+    }
   }
 
   Future<void> fetchRecipes() async {
@@ -56,8 +58,7 @@ class MyRecipeController extends GetxController {
           .collection('add recipes')
           .doc(userId)
           .collection('recipes')
-          .doc(recipe
-              .recipeId)
+          .doc(recipe.recipeId)
           .delete();
     } catch (error) {
       print('Failed to delete recipe: $error');

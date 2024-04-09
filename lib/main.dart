@@ -14,26 +14,33 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  bool isUserSignedIn = FirebaseAuth.instance.currentUser != null;
+
+  runApp(MyApp(isUserSignedIn: isUserSignedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isUserSignedIn;
+
+  const MyApp({Key? key, required this.isUserSignedIn}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth.instance.authStateChanges().listen((user) {
-      if (user == null) {
-        Get.find<MyRecipeController>().recipes.clear(); // Clear recipes data
-      }
-    });
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
-      theme: ThemeData(primarySwatch: AppColor.baseColor),
-      initialBinding: BindingsBuilder(() {
-        Get.put(MyRecipeController()); // Initialize your controller
-      }),
-    );
+    if (isUserSignedIn) {
+      return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: const SplashScreen(),
+        theme: ThemeData(primarySwatch: AppColor.baseColor),
+        initialBinding: BindingsBuilder(() {
+          Get.put(MyRecipeController()); // Initialize your controller
+        }),
+      );
+    } else {
+      return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: const SplashScreen(),
+        theme: ThemeData(primarySwatch: AppColor.baseColor),
+      );
+    }
   }
 }

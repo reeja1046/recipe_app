@@ -2,17 +2,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/show_toast.dart';
 import 'package:recipe_app/core/constants/sizedbox.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/core/serivces/add_service.dart';
 import 'package:recipe_app/view/profile/account/widgets/date_picker.dart';
+import 'package:recipe_app/view/profile/account/widgets/payment_screen.dart';
 import 'package:recipe_app/view/profile/account/widgets/profile_photo_upload.dart';
 import 'package:recipe_app/view/profile/account/widgets/text_entering_field.dart';
 
 class MyAccountEdit extends StatefulWidget {
-  const MyAccountEdit({super.key});
+  const MyAccountEdit({Key? key}) : super(key: key);
 
   @override
   State<MyAccountEdit> createState() => _MyAccountEditState();
@@ -30,10 +32,13 @@ class _MyAccountEditState extends State<MyAccountEdit> {
   final CollectionReference userDetail =
       FirebaseFirestore.instance.collection('user_profile');
   String? selectedRole;
+  bool isPremium = false;
+
   @override
   void initState() {
     super.initState();
     fetchUserData();
+    checkUserPremiumStatus();
   }
 
   Future<void> fetchUserData() async {
@@ -68,6 +73,28 @@ class _MyAccountEditState extends State<MyAccountEdit> {
     }
   }
 
+  Future<void> checkUserPremiumStatus() async {
+    try {
+      // Get the current user ID
+      String? userId = FirebaseAuth.instance.currentUser?.uid;
+      if (userId != null) {
+        // Query Firestore to find documents where userId matches the current user's ID
+        QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+            .instance
+            .collection('premium')
+            .where('userId', isEqualTo: userId)
+            .get();
+
+        // If any documents are returned, the user is considered premium
+        setState(() {
+          isPremium = snapshot.docs.isNotEmpty;
+        });
+      }
+    } catch (error) {
+      print('Error checking premium status: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SizedBoxHeightWidth sizedboxhelper = SizedBoxHeightWidth();
@@ -87,35 +114,49 @@ class _MyAccountEditState extends State<MyAccountEdit> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('Want to make Premium Account ?'),
-                      actions: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text(
-                                'Cancel',
-                                style: TextSize.subtitletextsize,
+                      title: Text(isPremium
+                          ? 'Premium Account'
+                          : 'Want to make Premium Account?'),
+                      actions: isPremium
+                          ? [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'OK',
+                                  style: TextSize.subtitletextsize,
+                                ),
                               ),
-                            ),
-                            TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Logout',
-                                style: TextSize.subtitletextsize,
+                            ]
+                          : [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'Cancel',
+                                  style: TextSize.subtitletextsize,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              TextButton(
+                                onPressed: () {
+                                  Get.to(() => const PaymentScreen());
+                                },
+                                child: const Text(
+                                  'Click here',
+                                  style: TextSize.subtitletextsize,
+                                ),
+                              ),
+                            ],
                     );
                   },
                 );
               },
-              icon: const Icon(Icons.diamond_outlined),
+              icon: Icon(
+                isPremium ? Icons.star : Icons.diamond_outlined,
+                color: AppColor.baseColor,
+              ),
             ),
           )
         ],
@@ -147,6 +188,7 @@ class _MyAccountEditState extends State<MyAccountEdit> {
                         child: Container(
                           alignment: Alignment.center,
                           child: ProfilePic(
+                            currentImage: imageUrl,
                             onImageSelected: (url) {
                               setState(() {
                                 imageUrl = url;

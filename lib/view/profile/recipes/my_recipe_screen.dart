@@ -213,17 +213,24 @@ class MyRecipeScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text("Choose one to edit"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (MyRecipes recipe in controller.recipes)
-                ListTile(
-                  title: Text(recipe.recipeName!),
-                  onTap: () {
-                    fetchRecipeDetails(recipe.recipeId);
-                  },
+          content: SizedBox(
+            height: 200,
+            child: Scrollbar(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    for (MyRecipes recipe in controller.recipes)
+                      ListTile(
+                        title: Text(recipe.recipeName!),
+                        onTap: () {
+                          fetchRecipeDetails(recipe.recipeId);
+                        },
+                      ),
+                  ],
                 ),
-            ],
+              ),
+            ),
           ),
         );
       },

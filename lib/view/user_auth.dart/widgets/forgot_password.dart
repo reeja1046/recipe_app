@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_app/core/constants/show_toast.dart';
 import 'package:recipe_app/core/serivces/auth_services.dart';
 import 'package:recipe_app/view/user_auth.dart/signin_screen.dart';
+import 'package:toast/toast.dart';
 
 class ForgotPassWord extends StatefulWidget {
   const ForgotPassWord({super.key});
@@ -44,7 +46,10 @@ class _ForgotPassWordState extends State<ForgotPassWord> {
                 child: SizedBox(
                   child: ElevatedButton(
                     onPressed: () {
+                      ToastContext().init(context);
                       authService.resetPassword(emailresetController.text);
+                      showToast(
+                          message: 'Password reset request send to your email');
                       Get.to(() => SignInScreen());
                     },
                     style: ElevatedButton.styleFrom(

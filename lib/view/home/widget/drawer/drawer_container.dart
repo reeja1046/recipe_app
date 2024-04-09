@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
+import 'package:recipe_app/view/home/widget/drawer/privacy.dart';
 import 'package:recipe_app/view/user_auth.dart/signin_screen.dart';
 
 class MyDrawerContainer extends StatelessWidget {
@@ -15,19 +17,19 @@ class MyDrawerContainer extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(10),
         children: [
-          ListTile(
-            title: const Text(
-              'Notifications',
-              style: TextStyle(color: Colors.black, fontSize: 18),
-            ),
-            leading:
-                const Icon(Icons.notifications, color: Colors.black, size: 30),
-            trailing: const Icon(
-              Icons.toggle_on,
-              size: 40,
-            ),
-            onTap: () {},
-          ),
+          // ListTile(
+          //   title: const Text(
+          //     'Notifications',
+          //     style: TextStyle(color: Colors.black, fontSize: 18),
+          //   ),
+          //   leading:
+          //       const Icon(Icons.notifications, color: Colors.black, size: 30),
+          //   trailing: const Icon(
+          //     Icons.toggle_on,
+          //     size: 40,
+          //   ),
+          //   onTap: () {},
+          // ),
           ListTile(
             title: const Text(
               ' Privacy',
@@ -38,7 +40,9 @@ class MyDrawerContainer extends StatelessWidget {
               color: Colors.black,
               size: 30,
             ),
-            onTap: () {},
+            onTap: () {
+              Get.to(() => const PrivacyScreen());
+            },
           ),
           ListTile(
             title: const Text(

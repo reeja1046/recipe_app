@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/controllers/search_chef_list.dart';
@@ -16,6 +17,7 @@ class _ChefSearchScreenState extends State<ChefSearchScreen> {
   late TextEditingController _searchController;
   late List<MyUsers> _searchResults;
   late List<MyUsers> _allChefs;
+  String currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   void initState() {
@@ -45,6 +47,7 @@ class _ChefSearchScreenState extends State<ChefSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(currentUserId);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,26 +98,28 @@ class _ChefSearchScreenState extends State<ChefSearchScreen> {
         itemBuilder: (BuildContext context, int index) {
           MyUsers user = _searchResults[index];
           return ListTile(
-            onTap: () {
-              Get.to(() => ChefProfile(
-                    user: user,
-                  ));
-            },
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(user.imageUrl!),
-            ),
-            title: Text(user.userName!),
-            trailing: OutlinedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all(const Size(0, 30)),
+              onTap: () {
+                Get.to(() => ChefProfile(
+                      user: user,
+                    ));
+              },
+              leading: CircleAvatar(
+                backgroundImage: NetworkImage(user.imageUrl!),
               ),
-              child: const Text(
-                'Follow',
-                style: TextStyle(color: Colors.amber),
-              ),
-            ),
-          );
+              title: Text(user.userName!),
+              trailing: user.userId != currentUserId
+                  ? OutlinedButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        minimumSize:
+                            MaterialStateProperty.all(const Size(0, 30)),
+                      ),
+                      child: const Text(
+                        'Follow',
+                        style: TextStyle(color: Colors.amber),
+                      ),
+                    )
+                  : null);
         },
         separatorBuilder: (BuildContext context, int index) =>
             const Divider(height: 10),

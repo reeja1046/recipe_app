@@ -9,6 +9,7 @@ class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _CategoryScreenState createState() => _CategoryScreenState();
 }
 
@@ -68,7 +69,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
               Expanded(
                 child: GridView.builder(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 8.0,

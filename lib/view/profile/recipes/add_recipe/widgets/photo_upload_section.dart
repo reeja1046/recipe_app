@@ -6,10 +6,11 @@ import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/show_toast.dart';
 import 'package:recipe_app/core/serivces/add_service.dart';
 
+// ignore: must_be_immutable
 class PhotoUploadSection extends StatefulWidget {
   final void Function(List<String>) onImagesSelected;
-  final String initialImage;
-  const PhotoUploadSection(
+  String initialImage;
+  PhotoUploadSection(
       {Key? key, required this.onImagesSelected, required this.initialImage})
       : super(key: key);
 
@@ -62,17 +63,19 @@ class _PhotoUploadSectionState extends State<PhotoUploadSection> {
                         setState(() {
                           print('Press close button');
                           imageUrls.remove(widget.initialImage);
+                          widget.initialImage = '';
                           pickedImages.removeWhere(
                               (image) => image.path == widget.initialImage);
                         });
                       },
                     ),
-                    Image.network(
-                      widget.initialImage,
-                      height: 100.0,
-                      width: 100.0,
-                      fit: BoxFit.cover,
-                    ),
+                    if (widget.initialImage != null)
+                      Image.network(
+                        widget.initialImage,
+                        height: 100.0,
+                        width: 100.0,
+                        fit: BoxFit.cover,
+                      ),
                   ]),
                 ),
               ],

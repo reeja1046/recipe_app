@@ -17,7 +17,8 @@ class BottomNavBarController extends GetxController {
   final List<Widget> pages = [
     MyHomePage(),
     const FavoriteScreen(),
-    const MyCart(),
+    MyCart(),
+    
     const MyProfile(),
   ];
 }

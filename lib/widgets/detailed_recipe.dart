@@ -6,7 +6,9 @@ import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/show_toast.dart';
 import 'package:recipe_app/core/constants/sizedbox.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
+import 'package:recipe_app/models/user_class.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/add_recipe_screen.dart';
+import 'package:recipe_app/view/search/chef/chef_profile.dart';
 import 'package:recipe_app/widgets/ingredients.dart';
 import 'package:toast/toast.dart';
 
@@ -21,9 +23,34 @@ class DetailedRecipeScreen extends StatelessWidget {
 
   String currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
+  Future<MyUsers?> fetchUserDetails(String userId) async {
+    try {
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('user_profile')
+          .doc(userId)
+          .get();
+      Map<String, dynamic>? userData =
+          userSnapshot.data() as Map<String, dynamic>?;
+      if (userData != null && userData.isNotEmpty) {
+        String? userName = userData['UserName'];
+        String? imageUrl = userData['UserProfileImage'];
+
+        print('::::::::::::::::::::::::::');
+        print(userName);
+        return MyUsers(userId: userId, imageUrl: imageUrl, userName: userName);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching username: $e');
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     print(recipeId);
+    print(currentUserId);
     print(userId);
     print('*********----------***********');
     return Scaffold(
@@ -31,11 +58,12 @@ class DetailedRecipeScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text('Recipe Details'),
         actions: [
-          IconButton(
-              onPressed: () {
-                fetchRecipeDetails();
-              },
-              icon: const Icon(Icons.edit))
+          if (currentUserId == userId)
+            IconButton(
+                onPressed: () {
+                  fetchRecipeDetails();
+                },
+                icon: const Icon(Icons.edit))
         ],
       ),
       body: FutureBuilder<DocumentSnapshot>(
@@ -136,6 +164,41 @@ class DetailedRecipeScreen extends StatelessWidget {
                     )
                   ],
                 ),
+                sizeBoxHelper.kheight10,
+                if (currentUserId != userId)
+                  Container(
+                    child: FutureBuilder<MyUsers?>(
+                      future: fetchUserDetails(userId),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<MyUsers?> snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (snapshot.hasData) {
+                          MyUsers user = MyUsers(
+                            userId: userId,
+                            imageUrl: snapshot.data!.imageUrl ?? '',
+                            userName: snapshot.data!.userName ?? '',
+                          );
+                          return InkWell(
+                            onTap: () => Get.to(
+                              () => ChefProfile(
+                                user: user,
+                              ),
+                            ),
+                            child: Text(
+                              'Chef: ${snapshot.data!.userName}',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                          );
+                        } else {
+                          return const Text('Chef: Unknown');
+                        }
+                      },
+                    ),
+                  ),
                 sizeBoxHelper.kheight10,
                 Text(
                   '${recipeData['description']}',
