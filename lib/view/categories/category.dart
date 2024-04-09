@@ -11,8 +11,6 @@ import 'package:recipe_app/widgets/user_payment.dart';
 class CategoryScreen extends StatelessWidget {
   final CategoryController controller = Get.put(CategoryController());
 
-   CategoryScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,22 +68,11 @@ class CategoryScreen extends StatelessWidget {
                     itemCount: controller.recipes.length,
                     itemBuilder: (context, index) {
                       AllRecipesList recipe = controller.recipes[index];
-                      bool isRecipePremium = controller.isPremium.value &&
-                          recipe.userId == controller.currentUserId;
 
                       return GestureDetector(
                         onTap: () {
-                          if (isRecipePremium ||
-                              controller.currentUserId == recipe.userId) {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => DetailedRecipeScreen(
-                                  recipeId: recipe.recipeId!,
-                                  userId: recipe.userId!,
-                                ),
-                              ),
-                            );
-                          } else {
+                          if (controller.premiumUserIds
+                              .contains(recipe.userId)) {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -121,6 +108,7 @@ class CategoryScreen extends StatelessWidget {
                                         TextButton(
                                           onPressed: () {
                                             controller.addToCart(
+                                              context,
                                               controller.currentUserId!,
                                               {
                                                 'recipeName': recipe.recipeName,
@@ -141,10 +129,18 @@ class CategoryScreen extends StatelessWidget {
                                 );
                               },
                             );
+                          } else {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => DetailedRecipeScreen(
+                                  recipeId: recipe.recipeId!,
+                                  userId: recipe.userId!,
+                                ),
+                              ),
+                            );
                           }
                         },
-                        child: isRecipePremium ||
-                                controller.currentUserId == recipe.userId
+                        child: controller.premiumUserIds.contains(recipe.userId)
                             ? SizedBox(
                                 child: Card(
                                   elevation: 4,
@@ -174,6 +170,28 @@ class CategoryScreen extends StatelessWidget {
                                             ),
                                           ),
                                         ],
+                                      ),
+                                      Positioned.fill(
+                                        child: Container(
+                                          color: Colors.grey.withOpacity(0.7),
+                                          child: const Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.lock),
+                                                SizedBox(width: 4),
+                                                Text(
+                                                  'Buy to Unlock',
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -209,29 +227,6 @@ class CategoryScreen extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      if (!isRecipePremium)
-                                        Positioned.fill(
-                                          child: Container(
-                                            color: Colors.grey.withOpacity(0.7),
-                                            child: const Center(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Icon(Icons.lock),
-                                                  SizedBox(width: 4),
-                                                  Text(
-                                                    'Buy to Unlock',
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.w600),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
                                     ],
                                   ),
                                 ),
