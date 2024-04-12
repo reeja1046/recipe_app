@@ -100,6 +100,7 @@ class _MyAccountEditState extends State<MyAccountEdit> {
     SizedBoxHeightWidth sizedboxhelper = SizedBoxHeightWidth();
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColor.baseColor,
         title: const Text(
           'Account',
           style: TextSize.appBarTitle,
@@ -125,7 +126,7 @@ class _MyAccountEditState extends State<MyAccountEdit> {
                                 },
                                 child: const Text(
                                   'OK',
-                                  style: TextSize.subtitletextsize,
+                                  style: TextSize.subtitletext,
                                 ),
                               ),
                             ]
@@ -136,7 +137,7 @@ class _MyAccountEditState extends State<MyAccountEdit> {
                                 },
                                 child: const Text(
                                   'Cancel',
-                                  style: TextSize.subtitletextsize,
+                                  style: TextSize.subtitletext,
                                 ),
                               ),
                               TextButton(
@@ -145,7 +146,7 @@ class _MyAccountEditState extends State<MyAccountEdit> {
                                 },
                                 child: const Text(
                                   'Click here',
-                                  style: TextSize.subtitletextsize,
+                                  style: TextSize.subtitletext,
                                 ),
                               ),
                             ],
@@ -155,7 +156,7 @@ class _MyAccountEditState extends State<MyAccountEdit> {
               },
               icon: Icon(
                 isPremium ? Icons.star : Icons.diamond_outlined,
-                color: AppColor.baseColor,
+                color: AppColor.subBlackColor,
               ),
             ),
           )
@@ -215,7 +216,7 @@ class _MyAccountEditState extends State<MyAccountEdit> {
                             sizedboxhelper.kheight20,
                             const Text(
                               'Role',
-                              style: TextSize.subtitletextsize,
+                              style: TextSize.subtitletext,
                             ),
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(

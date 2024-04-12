@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/controllers/search_chef_list.dart';
 import 'package:recipe_app/models/user_class.dart';
-import 'package:recipe_app/view/search/chef/chef_profile.dart';
-import 'package:recipe_app/view/search/chef/popular_chef_listtile.dart';
+import 'package:recipe_app/view/search/chef/widgets/chef_profile.dart';
+import 'package:recipe_app/view/search/chef/widgets/popular_chef_listtile.dart';
 
 class ChefSearchScreen extends StatefulWidget {
   const ChefSearchScreen({super.key});
@@ -98,28 +98,29 @@ class _ChefSearchScreenState extends State<ChefSearchScreen> {
         itemBuilder: (BuildContext context, int index) {
           MyUsers user = _searchResults[index];
           return ListTile(
-              onTap: () {
-                Get.to(() => ChefProfile(
-                      user: user,
-                    ));
-              },
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(user.imageUrl!),
-              ),
-              title: Text(user.userName!),
-              trailing: user.userId != currentUserId
-                  ? OutlinedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        minimumSize:
-                            MaterialStateProperty.all(const Size(0, 30)),
-                      ),
-                      child: const Text(
-                        'Follow',
-                        style: TextStyle(color: Colors.amber),
-                      ),
-                    )
-                  : null);
+            onTap: () {
+              Get.to(() => ChefProfile(
+                    user: user,
+                  ));
+            },
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(user.imageUrl!),
+            ),
+            title: Text(user.userName!),
+            // trailing: user.userId != currentUserId
+            //     ? OutlinedButton(
+            //         onPressed: () {},
+            //         style: ButtonStyle(
+            //           minimumSize:
+            //               MaterialStateProperty.all(const Size(0, 30)),
+            //         ),
+            //         child: const Text(
+            //           'Follow',
+            //           style: TextStyle(color: Colors.amber),
+            //         ),
+            //       )
+            //     : null
+          );
         },
         separatorBuilder: (BuildContext context, int index) =>
             const Divider(height: 10),

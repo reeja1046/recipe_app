@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/controllers/chef_recipe_list.dart';
-import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/models/myrecipe_class.dart';
 import 'package:recipe_app/models/user_class.dart';
@@ -27,7 +26,7 @@ class ChefProfile extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: Text(
               'My Recipes',
-              style: TextSize.titletextsize,
+              style: TextSize.mainTitleText,
             ),
           ),
           Expanded(
@@ -96,17 +95,17 @@ class ChefProfile extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(backgroundColor: AppColor.baseColor),
-          onPressed: () {},
-          child: const Text(
-            'Follow',
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ),
-      ),
+      // bottomNavigationBar: Padding(
+      //   padding: const EdgeInsets.all(12.0),
+      //   child: ElevatedButton(
+      //     style: ElevatedButton.styleFrom(backgroundColor: AppColor.baseColor),
+      //     onPressed: () {},
+      //     child: const Text(
+      //       'Follow',
+      //       style: TextStyle(color: Colors.white, fontSize: 16),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

@@ -44,7 +44,7 @@ class RecipeSearchGridView extends StatelessWidget {
                     title: Text(
                       recipe.recipeName ?? '',
                       textAlign: TextAlign.center,
-                      style: TextSize.subtitletextsize,
+                      style: TextSize.subtitletext,
                     ),
                   ),
                   child: Image.network(

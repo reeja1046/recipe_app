@@ -40,7 +40,7 @@ class _DateEnteringFieldState extends State<DateEnteringField> {
       children: [
         Text(
           widget.text,
-          style: TextSize.subtitletextsize,
+          style: TextSize.subtitletext,
         ),
         SizedBox(
           height: 35,

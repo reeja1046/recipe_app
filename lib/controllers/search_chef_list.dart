@@ -36,4 +36,5 @@ class MyUserController extends GetxController {
       rethrow;
     }
   }
+  
 }

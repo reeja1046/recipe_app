@@ -40,9 +40,9 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
           ),
         ),
         sizeboxhelper.kheight10,
-        Text(
+      const Text(
           'Chicken Biriyani : Ingredients',
-          style: TextSize.subtitletextsize,
+          style: TextSize.subtitletext,
         ),
         SizedBox(
           height: 300, // Adjust the height as needed

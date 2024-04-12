@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:recipe_app/core/constants/appbar.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/widgets/user_payment.dart';
 
@@ -11,10 +12,8 @@ class MyCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        title: const Text('My Cart'),
+      appBar:  MyAppBar(
+        text : 'My Cart'
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -53,7 +52,7 @@ class MyCart extends StatelessWidget {
                           },
                           child: const Text(
                             'Pay Now',
-                            style: TextSize.subtitletextsize,
+                            style: TextSize.subtitletext,
                           ),
                         ),
                         TextButton(
@@ -62,7 +61,7 @@ class MyCart extends StatelessWidget {
                           },
                           child: const Text(
                             'cancel',
-                            style: TextSize.subtitletextsize,
+                            style: TextSize.subtitletext,
                           ),
                         ),
                       ],

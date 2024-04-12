@@ -8,7 +8,7 @@ import 'package:recipe_app/core/constants/sizedbox.dart';
 import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/models/user_class.dart';
 import 'package:recipe_app/view/profile/recipes/add_recipe/add_recipe_screen.dart';
-import 'package:recipe_app/view/search/chef/chef_profile.dart';
+import 'package:recipe_app/view/search/chef/widgets/chef_profile.dart';
 import 'package:recipe_app/widgets/ingredients.dart';
 import 'package:toast/toast.dart';
 
@@ -209,7 +209,7 @@ class DetailedRecipeScreen extends StatelessWidget {
                   children: [
                     const Text(
                       'Ingredients :',
-                      style: TextSize.subtitletextsize,
+                      style: TextSize.subtitletext,
                     ),
                     InkWell(
                       onTap: () {
@@ -240,7 +240,7 @@ class DetailedRecipeScreen extends StatelessWidget {
                 sizeBoxHelper.kheight10,
                 const Text(
                   'Instructions',
-                  style: TextSize.subtitletextsize,
+                  style: TextSize.subtitletext,
                 ),
                 ListView.builder(
                   shrinkWrap: true,

@@ -93,7 +93,7 @@ class MyHomePage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Categories', style: TextSize.titletextsize),
+                        const Text('Categories', style: TextSize.mainTitleText),
                         TextButton(
                           onPressed: () {
                             Get.to(() => CategoryScreen());
@@ -114,7 +114,7 @@ class MyHomePage extends StatelessWidget {
                     ),
                     sizedboxhelper.kheight10,
                     const Text('Recipe of the Day',
-                        style: TextSize.titletextsize),
+                        style: TextSize.mainTitleText),
                     sizedboxhelper.kheight10,
                     Stack(
                       children: [
@@ -162,7 +162,7 @@ class MyHomePage extends StatelessWidget {
                       ),
                     ),
                     sizedboxhelper.kheight10,
-                    const Text('Quick And Easy', style: TextSize.titletextsize),
+                    const Text('Quick And Easy', style: TextSize.mainTitleText),
                     sizedboxhelper.kheight10,
                     QuickAndEasyCard(),
                   ],

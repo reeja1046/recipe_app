@@ -67,6 +67,7 @@ class HeaderPart extends StatelessWidget {
                   radius: 60,
                 ),
               ),
+              const SizedBox(height: 20),
               Text(
                 userData['UserName'] ?? '',
                 style:
@@ -75,52 +76,52 @@ class HeaderPart extends StatelessWidget {
             ],
           ),
         ),
-        const Positioned(
-          bottom: 10,
-          left: 10,
-          right: 10,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: [
-                  Text(
-                    '1345',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  Text(
-                    'Followers',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Text(
-                    '567',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  Text(
-                    'Following',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        // const Positioned(
+        //   bottom: 10,
+        //   left: 10,
+        //   right: 10,
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //     children: [
+        //       Column(
+        //         children: [
+        //           Text(
+        //             '1345',
+        //             style: TextStyle(
+        //                 color: Colors.black,
+        //                 fontSize: 17,
+        //                 fontWeight: FontWeight.w500),
+        //           ),
+        //           Text(
+        //             'Followers',
+        //             style: TextStyle(
+        //               color: Colors.black,
+        //               fontSize: 15,
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //       Column(
+        //         children: [
+        //           Text(
+        //             '567',
+        //             style: TextStyle(
+        //                 color: Colors.black,
+        //                 fontSize: 17,
+        //                 fontWeight: FontWeight.w500),
+        //           ),
+        //           Text(
+        //             'Following',
+        //             style: TextStyle(
+        //               color: Colors.black,
+        //               fontSize: 15,
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }

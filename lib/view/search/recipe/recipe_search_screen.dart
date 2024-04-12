@@ -135,14 +135,14 @@ class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
           const SizedBox(height: 10),
           const Text(
             'All Recipes',
-            style: TextSize.subtitletextsize,
+            style: TextSize.subtitletext,
           ),
           const SizedBox(height: 10),
           _filteredRecipes.isEmpty
               ? const Center(
                   child: Text(
                     'No Recipes Available',
-                    style: TextSize.titletextsize,
+                    style: TextSize.mainTitleText,
                   ),
                 )
               : GridView.builder(

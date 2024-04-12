@@ -280,7 +280,7 @@ class _AddRecipeState extends State<AddRecipe> {
   Widget subtitletext(text) {
     return Text(
       text,
-      style: TextSize.subtitletextsize,
+      style: TextSize.subtitletext,
     );
   }
 

@@ -38,16 +38,16 @@ class PopularChefListTile extends StatelessWidget {
                   backgroundImage: NetworkImage(user.imageUrl!),
                 ),
                 title: Text(user.userName!),
-                trailing: OutlinedButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(const Size(0, 30)),
-                  ),
-                  child: const Text(
-                    'Follow',
-                    style: TextStyle(color: Colors.amber),
-                  ),
-                ),
+                // trailing: OutlinedButton(
+                //   onPressed: () {},
+                //   style: ButtonStyle(
+                //     minimumSize: MaterialStateProperty.all(const Size(0, 30)),
+                //   ),
+                //   child: const Text(
+                //     'Follow',
+                //     style: TextStyle(color: Colors.amber),
+                //   ),
+                // ),
               );
             },
             separatorBuilder: (BuildContext context, int index) =>

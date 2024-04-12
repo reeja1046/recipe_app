@@ -24,7 +24,7 @@ class MyRecipeScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           'My Recipes',
-          style: TextStyle(fontSize: 26),
+          style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500),
         ),
         actions: [
           PopupMenuButton(
@@ -56,7 +56,7 @@ class MyRecipeScreen extends StatelessWidget {
               return const Center(
                 child: Text(
                   'No Recipes Found',
-                  style: TextSize.subtitletextsize,
+                  style: TextSize.subtitletext,
                 ),
               );
             } else {

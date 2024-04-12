@@ -31,7 +31,7 @@ class FavRecipeGridView extends StatelessWidget {
           return const Center(
             child: Text(
               'No favorite recipes found.',
-              style: TextSize.subtitletextsize,
+              style: TextSize.subtitletext,
             ),
           );
         }

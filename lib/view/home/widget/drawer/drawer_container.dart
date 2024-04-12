@@ -97,7 +97,7 @@ class MyDrawerContainer extends StatelessWidget {
                             },
                             child: const Text(
                               'Cancel',
-                              style: TextSize.subtitletextsize,
+                              style: TextSize.subtitletext,
                             ),
                           ),
                           TextButton(
@@ -109,7 +109,7 @@ class MyDrawerContainer extends StatelessWidget {
                             },
                             child: const Text(
                               'Logout',
-                              style: TextSize.subtitletextsize,
+                              style: TextSize.subtitletext,
                             ),
                           ),
                         ],

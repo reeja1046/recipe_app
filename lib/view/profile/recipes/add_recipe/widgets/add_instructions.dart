@@ -57,7 +57,7 @@ class _AddInstructionsState extends State<AddInstructions> {
             children: [
               const Text(
                 'Instructions',
-                style: TextSize.subtitletextsize,
+                style: TextSize.subtitletext,
               ),
               TextButton(
                 onPressed: () {

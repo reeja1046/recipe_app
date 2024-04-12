@@ -51,7 +51,7 @@ class QuickAndEasyCard extends GetView<PremiumController> {
                             },
                             child: const Text(
                               'Pay Now',
-                              style: TextSize.subtitletextsize,
+                              style: TextSize.subtitletext,
                             ),
                           ),
                           TextButton(
@@ -69,7 +69,7 @@ class QuickAndEasyCard extends GetView<PremiumController> {
                             },
                             child: const Text(
                               'Add to Cart',
-                              style: TextSize.subtitletextsize,
+                              style: TextSize.subtitletext,
                             ),
                           ),
                         ],

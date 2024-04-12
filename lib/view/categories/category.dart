@@ -102,7 +102,7 @@ class CategoryScreen extends StatelessWidget {
                                           },
                                           child: const Text(
                                             'Pay Now',
-                                            style: TextSize.subtitletextsize,
+                                            style: TextSize.subtitletext,
                                           ),
                                         ),
                                         TextButton(
@@ -120,7 +120,7 @@ class CategoryScreen extends StatelessWidget {
                                           },
                                           child: const Text(
                                             'Add to Cart',
-                                            style: TextSize.subtitletextsize,
+                                            style: TextSize.subtitletext,
                                           ),
                                         ),
                                       ],

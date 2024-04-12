@@ -26,7 +26,7 @@ class _TextEnteringFieldState extends State<TextEnteringField> {
       children: [
         Text(
           widget.text, 
-          style: TextSize.subtitletextsize,
+          style: TextSize.subtitletext,
         ),
         SizedBox(
           height: 35,

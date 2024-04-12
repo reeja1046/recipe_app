@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/core/constants/colors.dart';
+import 'package:recipe_app/core/constants/appBar.dart';
 import 'package:recipe_app/view/wishlist/favrecipegridview.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -7,18 +7,11 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColor.baseColor,
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        title: const Text(
-          'Favorites',
-          style: TextStyle(fontSize: 26),
-        ),
+    return const Scaffold(
+      appBar: MyAppBar(
+        text: 'Favorites',
       ),
-      body: const Padding(
-          padding: EdgeInsets.all(10.0), child: FavRecipeGridView()),
+      body: Padding(padding: EdgeInsets.all(10.0), child: FavRecipeGridView()),
     );
   }
 }
