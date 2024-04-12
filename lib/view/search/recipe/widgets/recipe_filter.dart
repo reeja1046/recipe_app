@@ -107,11 +107,13 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
                         labelText: 'Enter the max time you have',
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15.0),
-                          borderSide: const BorderSide(color: Colors.black),
+                          borderSide:
+                              const BorderSide(color: AppColor.baseColor),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15.0),
-                          borderSide: const BorderSide(color: Colors.black),
+                          borderSide:
+                              const BorderSide(color: AppColor.baseColor),
                         ),
                         contentPadding: const EdgeInsets.only(left: 15),
                       ),

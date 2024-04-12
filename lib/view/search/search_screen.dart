@@ -33,8 +33,8 @@ class _SearchScreenState extends State<SearchScreen>
           style: TextSize.appBarTitle,
         ),
         bottom: TabBar(
-          labelColor: Colors.black,
-          indicatorColor: Colors.black,
+          labelColor: AppColor.subBlackColor,
+          indicatorColor: AppColor.subBlackColor,
           indicatorSize: TabBarIndicatorSize.tab,
           controller: _tabController,
           tabs: const [
@@ -49,9 +49,9 @@ class _SearchScreenState extends State<SearchScreen>
         padding: const EdgeInsets.all(10.0),
         child: TabBarView(
           controller: _tabController,
-          children: const [
+          children: [
             RecipeSearchScreen(),
-            ChefSearchScreen(),
+            const ChefSearchScreen(),
           ],
         ),
       ),
