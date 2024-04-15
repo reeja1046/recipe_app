@@ -270,7 +270,7 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
             category: recipe.category,
             time: recipe.time,
             difficultyLevel: recipe.difficultyLevel,
-            calories: '',
+            price: '',
           ));
         }
       }

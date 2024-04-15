@@ -89,7 +89,7 @@ class CategoryCard extends StatelessWidget {
                                       height: 20,
                                       width: 20,
                                     ),
-                                    Text(recipe.calories!),
+                                    Text(recipe.price!),
                                   ],
                                 ),
                                 Row(

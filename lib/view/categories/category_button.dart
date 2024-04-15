@@ -102,7 +102,7 @@ class _CategoryButtonsState extends State<CategoryButtons> {
               category: recipe.category,
               time: recipe.time,
               difficultyLevel: recipe.difficultyLevel,
-              calories: '',
+              price: '',
             ),
           );
         }

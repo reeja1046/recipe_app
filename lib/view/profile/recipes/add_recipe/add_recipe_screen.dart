@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/controllers/add_recipe.dart';
+import 'package:recipe_app/controllers/premium.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/show_toast.dart';
 import 'package:recipe_app/core/constants/sizedbox.dart';
@@ -32,11 +32,12 @@ class AddRecipe extends StatefulWidget {
 
 class _AddRecipeState extends State<AddRecipe> {
   final RecipeController rController = Get.put(RecipeController());
+  final PremiumController premiumController = Get.put(PremiumController());
 
   TextEditingController recipeNameController = TextEditingController();
   TextEditingController recipeCategoryController = TextEditingController();
   TextEditingController timeController = TextEditingController();
-  TextEditingController caloriesController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController difficultyController = TextEditingController();
   List<String> ingredientsController = [];
@@ -81,27 +82,15 @@ class _AddRecipeState extends State<AddRecipe> {
     recipeNameController.text = recipeDetail.data()!['recipeName'] ?? '';
     recipeCategoryController.text = recipeDetail.data()!['category'] ?? '';
     timeController.text = recipeDetail.data()!['time'] ?? '';
-    caloriesController.text = recipeDetail.data()!['calories'] ?? '';
+    priceController.text = recipeDetail.data()!['calories'] ?? '';
     descriptionController.text = recipeDetail.data()!['description'] ?? '';
     difficultyController.text = recipeDetail.data()!['difficultyText'] ?? '';
 
     recipeImageUrl = recipeDetail.data()!['imageUrl'] ?? '';
-    print('::::::::::::::::::::::::::::');
-    print(recipeImageUrl);
-
     List<dynamic> fetchIngredients = recipeDetail.data()!['ingredients'];
-    print('::::::::::::::::::::::::::::');
-    print(fetchIngredients);
-    print('::::::::::::::::::::::::::::');
     ingredientsList = List<String>.from(fetchIngredients);
-    print(ingredientsList);
-    print('::::::::::::::::::::::::::::');
     List<dynamic> fetchInstructions = recipeDetail.data()!['instructions'];
-    print(fetchInstructions);
-    print('::::::::::::::::::::::::::::');
     instructionsList = List<String>.from(fetchInstructions);
-    print(instructionsList);
-    print('::::::::::::::::::::::::::::');
   }
 
   void addNewCategory(String newCategoryName) {
@@ -119,10 +108,11 @@ class _AddRecipeState extends State<AddRecipe> {
   @override
   Widget build(BuildContext context) {
     print(categories);
+    bool isPremiumUser = premiumController.premiumUserIds.contains(userId);
     return Scaffold(
       body: Column(
         children: [
-          const CustomAppBar(),
+           CustomAppBar(),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -150,16 +140,19 @@ class _AddRecipeState extends State<AddRecipe> {
                                 controller: timeController),
                           ],
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            subtitletext('Calories'),
-                            sizedboxhelper.kheight10,
-                            TimeField(
-                                hintText: 'calories',
-                                controller: caloriesController),
-                          ],
-                        ),
+                        if (isPremiumUser) 
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              subtitletext('Est Price'),
+                              sizedboxhelper.kheight10,
+                              TimeField(
+                                hintText: 'price',
+                                controller: priceController,
+                              ),
+                            ],
+                          )
+                   
                       ],
                     ),
                     sizedboxhelper.kheight10,
@@ -237,7 +230,7 @@ class _AddRecipeState extends State<AddRecipe> {
                                 recipeNameController,
                                 recipeCategoryController,
                                 timeController,
-                                caloriesController,
+                                priceController,
                                 descriptionController,
                                 difficultyController,
                                 userId,
@@ -289,7 +282,7 @@ class _AddRecipeState extends State<AddRecipe> {
     if (recipeNameController.text.isEmpty ||
         recipeCategoryController.text.isEmpty ||
         timeController.text.isEmpty ||
-        caloriesController.text.isEmpty ||
+        priceController.text.isEmpty ||
         descriptionController.text.isEmpty ||
         difficultyController.text.isEmpty ||
         imageUrl.isEmpty ||
@@ -298,11 +291,6 @@ class _AddRecipeState extends State<AddRecipe> {
       showToast(message: 'Please fill all fields');
       return;
     }
-    print('::::::::::::::::');
-    print(recipeId);
-    print('::::::::::::::::');
-    print(userId);
-    print('::::::::::::::::');
     if (!mounted) {
       return; // Return if the widget is not mounted
     }
@@ -317,7 +305,7 @@ class _AddRecipeState extends State<AddRecipe> {
         'recipeName': recipeNameController.text,
         'category': recipeCategoryController.text,
         'time': timeController.text,
-        'calories': caloriesController.text,
+        'price': priceController.text,
         'description': descriptionController.text,
         'difficultyText': difficultyController.text,
         'imageUrl': imageUrl,

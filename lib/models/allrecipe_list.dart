@@ -8,7 +8,7 @@ class AllRecipesList {
   String? category;
   String? time;
   String? difficultyLevel;
-  String? calories;
+  String? price;
 
   AllRecipesList(
       {required this.recipeId,
@@ -18,7 +18,7 @@ class AllRecipesList {
       required this.category,
       required this.difficultyLevel,
       required this.time,
-      required this.calories});
+      required this.price});
 
   Map<String, dynamic> toMap() {
     return {
@@ -28,7 +28,7 @@ class AllRecipesList {
       'id': userId,
       'time': time,
       'difficultyText': difficultyLevel,
-      'calories': calories,
+      'price': price,
     };
   }
 
@@ -44,6 +44,6 @@ class AllRecipesList {
         category: data['category'] ?? 'Unknown',
         difficultyLevel: data['difficultyText'] ?? 'Unknown',
         time: data['time'] ?? 'Unknown',
-        calories: data['calories'] ?? '0');
+        price: data['price'] ?? '0');
   }
 }

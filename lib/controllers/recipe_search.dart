@@ -32,7 +32,7 @@ class RecipeSearchController extends GetxController {
   Future<void> navigateToFilterScreen() async {
     // Navigate to filter screen and get filtered recipes
     // Example implementation using GetX navigation
-    var result = await Get.to(() => RecipeFilterScreen()) as List<AllRecipesList>?;
+    var result = await Get.to(() => const RecipeFilterScreen()) as List<AllRecipesList>?;
     if (result != null) {
       filteredRecipes.assignAll(result);
     }

@@ -11,7 +11,7 @@ class RecipeValidator {
     TextEditingController recipeNameController,
     TextEditingController recipeCategoryController,
     TextEditingController timeController,
-    TextEditingController caloriesController,
+    TextEditingController priceController,
     TextEditingController descriptionController,
     TextEditingController difficultyController,
     String userId,
@@ -26,7 +26,9 @@ class RecipeValidator {
     }
 
     String recipetime = timeController.text;
-    String recipeCalories = caloriesController.text;
+    String recipePrice =
+        priceController.text.isEmpty ? " " : priceController.text;
+
     String recipename = recipeNameController.text;
     String category = recipeCategoryController.text;
     String difficultylevel = difficultyController.text;
@@ -36,7 +38,7 @@ class RecipeValidator {
         description.isEmpty ||
         category.isEmpty ||
         recipetime.isEmpty ||
-        recipeCalories.isEmpty ||
+        recipePrice.isEmpty ||
         difficultylevel.isEmpty ||
         imageUrl.isEmpty) {
       showDialog(
@@ -63,7 +65,7 @@ class RecipeValidator {
     rController.addRecipes(
       Recipes(
         imageUrl: imageUrl,
-        calories: caloriesController.text,
+        price: priceController.text,
         category: recipeCategoryController.text,
         difficultyText: difficultyController.text,
         description: descriptionController.text,
@@ -79,7 +81,7 @@ class RecipeValidator {
     recipeNameController.clear();
     recipeCategoryController.clear();
     timeController.clear();
-    caloriesController.clear();
+    priceController.clear();
     descriptionController.clear();
     imageUrl = '';
 
