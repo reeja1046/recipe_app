@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_app/core/constants/colors.dart';
 import 'package:recipe_app/core/constants/show_toast.dart';
+import 'package:recipe_app/core/constants/text_strings.dart';
 import 'package:recipe_app/core/serivces/add_service.dart';
 import 'package:recipe_app/models/allrecipe_list.dart';
 import 'package:toast/toast.dart';
@@ -28,7 +29,7 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
         centerTitle: true,
         title: const Text(
           'Search Filters',
-          style: TextStyle(fontWeight: FontWeight.w500),
+          style: TextSize.appBarTitle,
         ),
       ),
       body: SafeArea(
@@ -41,11 +42,7 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Categories',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                    ),
+                    const Text('Categories', style: TextSize.mainTitleText),
                     const SizedBox(height: 10),
                     StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
@@ -64,7 +61,7 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
                         final categories = snapshot.data!.docs;
 
                         return Wrap(
-                          spacing: 30,
+                          spacing: 15,
                           children: categories.map((category) {
                             final categoryName = category['name'] as String;
                             return OutlinedButton(
@@ -79,6 +76,23 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
                                   selectedCategory == categoryName
                                       ? AppColor.baseColor
                                       : Colors.white,
+                                ),
+                                overlayColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.hovered)) {
+                                      return AppColor.baseColor
+                                          .withOpacity(0.3);
+                                    }
+                                    return AppColor.baseColor;
+                                  },
+                                ),
+                                side: MaterialStateProperty.all<BorderSide>(
+                                  const BorderSide(
+                                    color: AppColor.baseColor,
+                                    width: 1,
+                                  ),
                                 ),
                               ),
                               child: Text(
@@ -95,11 +109,7 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
                       },
                     ),
                     const SizedBox(height: 10),
-                    const Text(
-                      'Time to Cook',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                    ),
+                    const Text('Time to Cook', style: TextSize.mainTitleText),
                     const SizedBox(height: 10),
                     TextFormField(
                       controller: timeController,
@@ -119,11 +129,7 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    const Text(
-                      'Difficulty',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                    ),
+                    const Text('Difficulty', style: TextSize.mainTitleText),
                     const SizedBox(height: 10),
                     Row(
                       children: [
@@ -139,6 +145,12 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
                                 selectedLevel == 'Easy'
                                     ? AppColor.baseColor
                                     : Colors.white,
+                              ),
+                              side: MaterialStateProperty.all<BorderSide>(
+                                const BorderSide(
+                                  color: AppColor.baseColor,
+                                  width: 1,
+                                ),
                               ),
                             ),
                             child: Text(
@@ -165,6 +177,12 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
                                     ? AppColor.baseColor
                                     : Colors.white,
                               ),
+                              side: MaterialStateProperty.all<BorderSide>(
+                                const BorderSide(
+                                  color: AppColor.baseColor,
+                                  width: 1,
+                                ),
+                              ),
                             ),
                             child: Text(
                               'Medium',
@@ -189,6 +207,12 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
                                 selectedLevel == 'Hard'
                                     ? AppColor.baseColor
                                     : Colors.white,
+                              ),
+                              side: MaterialStateProperty.all<BorderSide>(
+                                const BorderSide(
+                                  color: AppColor.baseColor,
+                                  width: 1,
+                                ),
                               ),
                             ),
                             child: Text(
@@ -245,13 +269,11 @@ class _RecipeFilterScreenState extends State<RecipeFilterScreen> {
     String? difficultyLevel,
     String? estimatedTimeStr,
   ) async {
-    print(category);
-    print(difficultyLevel);
-    print(estimatedTimeStr);
     ToastContext().init(context);
-    final List<AllRecipesList>? recipes = await RecipeService().getAllRecipes();
+    final List<AllRecipesList> recipes = await RecipeService().getAllRecipes();
     List<AllRecipesList>? filteredRecipes = [];
 
+    // ignore: unnecessary_null_comparison
     if (recipes != null) {
       int? estimatedTime =
           estimatedTimeStr != null ? int.tryParse(estimatedTimeStr) : null;

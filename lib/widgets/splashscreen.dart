@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
             top: MediaQuery.of(context).size.height * 0.5,
             left: animate ? kwidth : -80,
             child: const Text(
-              'Culinary Craft',
+              'Flavor Fusion',
               style: TextStyle(fontSize: 35, fontWeight: FontWeight.w600),
             ),
           ),

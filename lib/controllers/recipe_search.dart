@@ -25,14 +25,14 @@ class RecipeSearchController extends GetxController {
 
   void filterRecipes(String query) {
     filteredRecipes.value = allRecipes
-        .where((recipe) => recipe.recipeName!.toLowerCase().contains(query.toLowerCase()))
+        .where((recipe) =>
+            recipe.recipeName!.toLowerCase().contains(query.toLowerCase()))
         .toList();
   }
 
   Future<void> navigateToFilterScreen() async {
-    // Navigate to filter screen and get filtered recipes
-    // Example implementation using GetX navigation
-    var result = await Get.to(() => const RecipeFilterScreen()) as List<AllRecipesList>?;
+    var result =
+        await Get.to(() => const RecipeFilterScreen()) as List<AllRecipesList>?;
     if (result != null) {
       filteredRecipes.assignAll(result);
     }
